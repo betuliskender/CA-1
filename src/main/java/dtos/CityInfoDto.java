@@ -45,17 +45,14 @@ public class CityInfoDto implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CityInfoDto entity = (CityInfoDto) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.zipcode, entity.zipcode) &&
-                Objects.equals(this.city, entity.city) &&
-                Objects.equals(this.addresses, entity.addresses);
+        if (!(o instanceof CityInfoDto)) return false;
+        CityInfoDto that = (CityInfoDto) o;
+        return getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, zipcode, city, addresses);
+        return Objects.hash(getId());
     }
 
     @Override
@@ -100,16 +97,14 @@ public class CityInfoDto implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            AddressDto entity = (AddressDto) o;
-            return Objects.equals(this.id, entity.id) &&
-                    Objects.equals(this.street, entity.street) &&
-                    Objects.equals(this.additionalInfo, entity.additionalInfo);
+            if (!(o instanceof AddressDto)) return false;
+            AddressDto that = (AddressDto) o;
+            return getId().equals(that.getId());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, street, additionalInfo);
+            return Objects.hash(getId());
         }
 
         @Override

@@ -66,20 +66,14 @@ public class PersonDto implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PersonDto entity = (PersonDto) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.email, entity.email) &&
-                Objects.equals(this.firstName, entity.firstName) &&
-                Objects.equals(this.lastName, entity.lastName) &&
-                Objects.equals(this.address, entity.address) &&
-                Objects.equals(this.hobbies, entity.hobbies) &&
-                Objects.equals(this.phones, entity.phones);
+        if (!(o instanceof PersonDto)) return false;
+        PersonDto personDto = (PersonDto) o;
+        return getId().equals(personDto.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, firstName, lastName, address, hobbies, phones);
+        return Objects.hash(getId());
     }
 
     @Override
@@ -127,16 +121,14 @@ public class PersonDto implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            AddressDto entity = (AddressDto) o;
-            return Objects.equals(this.id, entity.id) &&
-                    Objects.equals(this.street, entity.street) &&
-                    Objects.equals(this.additionalInfo, entity.additionalInfo);
+            if (!(o instanceof AddressDto)) return false;
+            AddressDto that = (AddressDto) o;
+            return getId().equals(that.getId());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, street, additionalInfo);
+            return Objects.hash(getId());
         }
 
         @Override
