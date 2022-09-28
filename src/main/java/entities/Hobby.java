@@ -12,6 +12,11 @@ public class Hobby {
     public Hobby() {
     }
 
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

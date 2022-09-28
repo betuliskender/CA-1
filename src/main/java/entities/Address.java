@@ -30,6 +30,11 @@ public class Address {
     @OneToMany(mappedBy = "address")
     private Set<Person> people = new LinkedHashSet<>();
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_info_id", nullable = false)
+    private CityInfo cityInfo;
+
     public Integer getId() {
         return id;
     }
@@ -62,4 +67,11 @@ public class Address {
         this.people = people;
     }
 
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
+    }
 }
