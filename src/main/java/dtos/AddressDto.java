@@ -19,6 +19,8 @@ public class AddressDto implements Serializable {
     private final String additionalInfo;
     private final Set<PersonDto> people;
 
+
+
     public AddressDto(Integer id, String street, String additionalInfo, Set<PersonDto> people) {
         this.id = id;
         this.street = street;
