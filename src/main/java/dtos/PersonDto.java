@@ -38,8 +38,6 @@ public class PersonDto implements Serializable {
     }
 
 
-
-
     public Integer getId() {
         return id;
     }

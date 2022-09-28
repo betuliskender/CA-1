@@ -1,8 +1,8 @@
 package facades;
 
-import dtos.PersonDto;
+import entities.Address;
+import entities.CityInfo;
 import entities.Person;
-import entities.RenameMe;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -20,6 +21,9 @@ public class PersonFacadeTest {
     private static PersonFacade facade;
 
     private static Person p1, p2, p3;
+    private static CityInfo c1, c2, c3;
+    private static Address a1, a2, a3;
+
 
     public PersonFacadeTest() {
     }
@@ -40,12 +44,26 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        p1 = new Person("Morten@B.dk","Morten","Bendeke");
-        p2 = new Person("Denis@P.dk", "Denis", "Pedersen");
-        p3 = new Person("Betül@I.dk", "Betül", "Iskender");
+        c1 = new CityInfo("2300","Amager");
+        c2 = new CityInfo("2400","Nordvest");
+        c3 = new CityInfo("2100","Østerbro");
+
+        a1 = new Address("Amagerbrogade 12","3. TV",c1);
+        a2 = new Address("Stærevej 6","1.TH",c2);
+        a3 = new Address("Østerbrogade 271","ST, MF",c3);
+
+        p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
+        p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
+        p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(c1);
+            em.persist(c2);
+            em.persist(c3);
+            em.persist(a1);
+            em.persist(a2);
+            em.persist(a3);
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -62,19 +80,11 @@ public class PersonFacadeTest {
 
     @Test
     public void getAllPersons() throws Exception {
-        List<PersonDto> PersonDtoS;
+        List<Person> personList = facade.getAll();
 
-        PersonDtoS = given()
-                .contentType("application/json")
-                .when()
-                .get("/person/all")
-                .then()
-                .extract().body().jsonPath().getList("", PersonDto.class);
+        int expected = 3;
 
-        PersonDto p1DTO = new PersonDto(p1);
-        PersonDto p2DTO = new PersonDto(p2);
-        PersonDto p3DTO = new PersonDto(p3);
-        assertThat(PersonDtoS, containsInAnyOrder(p1DTO, p2DTO,p3DTO));
+        assertEquals(expected,personList.size() );
     }
 
 }

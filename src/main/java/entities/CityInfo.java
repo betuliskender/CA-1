@@ -30,6 +30,11 @@ public class CityInfo {
     @OneToMany(mappedBy = "cityInfo")
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    public CityInfo(String zipcode, String city) {
+        this.zipcode = zipcode;
+        this.city = city;
+    }
+
     public Integer getId() {
         return id;
     }
