@@ -7,7 +7,10 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 public class HobbyFacadeTest {
 
@@ -58,6 +61,38 @@ public class HobbyFacadeTest {
     void getById() {
         Hobby expected = h1;
         Hobby actual = facade.getById(1);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getAll(){
+        int expected = 2;
+        List<Hobby> hobbyList = facade.getAll();
+        assertEquals(expected, hobbyList.size());
+    }
+
+    @Test
+    void create() {
+        Hobby h = new Hobby("Madlavning", "Lav mad");
+        Hobby expected = h;
+        Hobby actual = facade.create(h);
+        assertEquals(expected, actual);
+        assertNotNull(actual.getId());
+    }
+
+    @Test
+    void update() {
+        h1.setName("Hækleri");
+        Hobby expected = h1;
+        Hobby actual = facade.update(h1);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void delete(){
+        facade.delete(h1);
+        int expected = 1;
+        int actual = facade.getAll().size();
         assertEquals(expected, actual);
     }
 }
