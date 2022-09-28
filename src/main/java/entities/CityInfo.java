@@ -9,6 +9,9 @@ import java.util.Set;
 @Entity
 @Table(name = "city_info")
 public class CityInfo {
+    public CityInfo() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

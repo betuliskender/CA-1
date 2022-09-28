@@ -19,12 +19,15 @@ public class AddressDto implements Serializable {
     private final String additionalInfo;
     private final Set<PersonDto> people;
 
+
+
     public AddressDto(Integer id, String street, String additionalInfo, Set<PersonDto> people) {
         this.id = id;
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.people = people;
     }
+
 
     public Integer getId() {
         return id;
@@ -45,17 +48,14 @@ public class AddressDto implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddressDto entity = (AddressDto) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.street, entity.street) &&
-                Objects.equals(this.additionalInfo, entity.additionalInfo) &&
-                Objects.equals(this.people, entity.people);
+        if (!(o instanceof AddressDto)) return false;
+        AddressDto that = (AddressDto) o;
+        return getId().equals(that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, street, additionalInfo, people);
+        return Objects.hash(getId());
     }
 
     @Override
@@ -108,17 +108,14 @@ public class AddressDto implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            PersonDto entity = (PersonDto) o;
-            return Objects.equals(this.id, entity.id) &&
-                    Objects.equals(this.email, entity.email) &&
-                    Objects.equals(this.firstName, entity.firstName) &&
-                    Objects.equals(this.lastName, entity.lastName);
+            if (!(o instanceof PersonDto)) return false;
+            PersonDto personDto = (PersonDto) o;
+            return getId().equals(personDto.getId());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, email, firstName, lastName);
+            return Objects.hash(getId());
         }
 
         @Override
@@ -130,4 +127,5 @@ public class AddressDto implements Serializable {
                     "lastName = " + lastName + ")";
         }
     }
+
 }
