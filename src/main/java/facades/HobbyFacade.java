@@ -5,6 +5,7 @@ import interfaces.facades.IFacade;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class HobbyFacade implements IFacade<Hobby> {
@@ -29,26 +30,58 @@ public class HobbyFacade implements IFacade<Hobby> {
 
     @Override
     public Hobby getById(Integer id) {
-        return null;
+        EntityManager em = getEntityManager();
+        Hobby h = em.find(Hobby.class, id);
+        return  h;
     }
 
     @Override
     public List<Hobby> getAll() {
-        return null;
+        EntityManager em = getEntityManager();
+        TypedQuery<Hobby> query =em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+        return query.getResultList();
     }
 
     @Override
     public Hobby create(Hobby hobby) {
-        return null;
+        EntityManager em = getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(hobby);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return hobby;
     }
 
     @Override
     public Hobby update(Hobby hobby) {
-        return null;
+        EntityManager em = getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.merge(hobby);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return hobby;
     }
 
     @Override
     public Hobby delete(Hobby hobby) {
-        return null;
+        EntityManager em = getEntityManager();
+        Hobby h = em.find(Hobby.class, hobby.getId());
+
+        try{
+            em.getTransaction().begin();
+            em.remove(h);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return h;
     }
 }
