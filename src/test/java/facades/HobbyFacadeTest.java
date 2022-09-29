@@ -40,7 +40,9 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            //em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            em.createQuery("DELETE From Hobby").executeUpdate();
+            em.createNativeQuery("ALTER TABLE Hobby AUTO_INCREMENT = 1").executeUpdate();
             h1 = new Hobby("Strikning", "Kun gamle damer strikker");
             h2 = new Hobby("Gaming", "Spil WOW med Morten");
             em.persist(h1);
