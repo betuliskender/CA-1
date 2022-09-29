@@ -62,7 +62,7 @@ public class HobbyFacadeTest {
     @Test
     void getById() {
         Hobby expected = h1;
-        Hobby actual = facade.getById(1);
+        Hobby actual = facade.getById(h1.getId());
         assertEquals(expected, actual);
     }
 

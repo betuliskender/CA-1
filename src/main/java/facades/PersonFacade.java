@@ -3,7 +3,9 @@ package facades;
 import entities.Person;
 import interfaces.facades.IFacade;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class PersonFacade implements IFacade<Person> {
@@ -18,29 +20,65 @@ public class PersonFacade implements IFacade<Person> {
         }
         return instance;
     }
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
 
     @Override
     public Person getById(Integer id) {
-        return null;
+        EntityManager em = getEntityManager();
+        Person p = em.find(Person.class, id);
+        return p;
     }
 
     @Override
     public List<Person> getAll() {
-        return null;
+        EntityManager em = getEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person P", Person.class);
+        return query.getResultList();
     }
 
     @Override
     public Person create(Person person) {
-        return null;
+        EntityManager em = getEntityManager();
+        try
+        {
+            em.getTransaction().begin();;
+            em.persist(person);
+            em.getTransaction().commit();;
+        }finally {
+            {
+                em.close();;
+            }
+        }
+        return person;
     }
 
     @Override
     public Person update(Person person) {
-        return null;
+        EntityManager em = getEntityManager();
+        try {
+
+                em.getTransaction().begin();
+                em.merge(person);
+                em.getTransaction().commit();
+
+        }finally {
+            em.close();
+        }return person;
     }
 
     @Override
     public Person delete(Person person) {
-        return null;
+        EntityManager em = getEntityManager();
+        Person p = em.find(Person.class, person.getId());
+        try{
+            em.getTransaction().begin();
+            em.remove(p);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return p;
     }
 }
