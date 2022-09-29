@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = "Person.deleteAllRows",query = "DELETE from Person")
 @Table(name = "person")
 public class Person {
     public Person() {
@@ -45,6 +46,19 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     private Set<Phone> phones = new LinkedHashSet<>();
+
+    public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Person(String email, String firstName, String lastName, Address address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
 
     public Integer getId() {
         return id;

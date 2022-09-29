@@ -35,6 +35,12 @@ public class Address {
     @JoinColumn(name = "city_info_id", nullable = false)
     private CityInfo cityInfo;
 
+    public Address(String street, String additionalInfo, CityInfo cityInfo) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = cityInfo;
+    }
+
     public Integer getId() {
         return id;
     }
