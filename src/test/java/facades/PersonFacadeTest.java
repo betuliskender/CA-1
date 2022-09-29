@@ -15,6 +15,7 @@ import static io.restassured.RestAssured.given;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PersonFacadeTest {
 
@@ -45,6 +46,7 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+
         c1 = new CityInfo("2300","Amager");
         c2 = new CityInfo("2400","Nordvest");
         c3 = new CityInfo("2100","Østerbro");
@@ -58,6 +60,10 @@ public class PersonFacadeTest {
         p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
         try {
             em.getTransaction().begin();
+
+            em.createQuery("DELETE From Person").executeUpdate();
+            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
+
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
@@ -79,14 +85,31 @@ public class PersonFacadeTest {
 //        Remove any data after each test was run
     }
 
-    @Test
-    void getById() {
+/*    @Test
+    public void getById() {
         Person expected = p1;
         Person actual = facade.getById(1);
         assertEquals(expected, actual);
+    }*/
+
+/*
+    @Test
+    public void create() {
+        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He" );
+        Person actual = facade.create(newPerson);
+        assertEquals(newPerson, actual);
+        assertNotNull(actual.getId());
     }
+*/
 
+    @Test
+    public void update() {
+        p1.setEmail("Bjergkøbing@email.com");
+        Person updatedPerson = p1;
+        Person actual = facade.update(p1);
+        assertEquals(updatedPerson, actual);
 
+    }
 
     @Test
     public void getAllPersons() throws Exception {
@@ -96,5 +119,13 @@ public class PersonFacadeTest {
 
         assertEquals(expected,personList.size() );
     }
+
+
+    /*@Test
+    public void delete() {
+        facade.delete(p1);
+        int actual = facade.getAll().size();
+        assertEquals(2, actual);
+    }*/
 
 }
