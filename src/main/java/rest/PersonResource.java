@@ -16,6 +16,13 @@ public class PersonResource {
     private static final PersonFacade FACADE = PersonFacade.getInstance(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String demo() {
+        return "{\"Hej" +
+                "\":\"Her kan du finde alle personerne gennem api\"}";
+    }
+
     @Path("{phone}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
