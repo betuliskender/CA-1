@@ -2,20 +2,17 @@ package facades;
 
 import entities.Address;
 import entities.CityInfo;
-import entities.Hobby;
 import entities.Person;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static junit.framework.Assert.assertNotNull;
 
 public class PersonFacadeTest {
 
@@ -47,24 +44,24 @@ public class PersonFacadeTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
 
-        c1 = new CityInfo("2300","Amager");
-        c2 = new CityInfo("2400","Nordvest");
-        c3 = new CityInfo("2100","Østerbro");
-
-        a1 = new Address("Amagerbrogade 12","3. TV",c1);
-        a2 = new Address("Stærevej 6","1.TH",c2);
-        a3 = new Address("Østerbrogade 271","ST, MF",c3);
-
-        p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
-        p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
-        p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
         try {
             em.getTransaction().begin();
 
             em.createQuery("DELETE From Person").executeUpdate();
             em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
 
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            c1 = new CityInfo("2300","Amager");
+            c2 = new CityInfo("2400","Nordvest");
+            c3 = new CityInfo("2100","Østerbro");
+
+            a1 = new Address("Amagerbrogade 12","3. TV",c1);
+            a2 = new Address("Stærevej 6","1.TH",c2);
+            a3 = new Address("Østerbrogade 271","ST, MF",c3);
+
+            p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
+            p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
+            p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
+            //em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(c3);
@@ -85,33 +82,36 @@ public class PersonFacadeTest {
 //        Remove any data after each test was run
     }
 
-/*    @Test
+   @Test
     public void getById() {
         Person expected = p1;
-        Person actual = facade.getById(1);
-        assertEquals(expected, actual);
-    }*/
+       Person actual = facade.getById(2);
+       assertEquals(expected, actual);
+    }
 
-/*
+
     @Test
     public void create() {
-        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He" );
+        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He", a1);
         Person actual = facade.create(newPerson);
         assertEquals(newPerson, actual);
         assertNotNull(actual.getId());
     }
-*/
+
+
+
 
     @Test
-    public void update() {
+    void update() {
         p1.setEmail("Bjergkøbing@email.com");
         Person updatedPerson = p1;
         Person actual = facade.update(p1);
+        System.out.println(actual);
         assertEquals(updatedPerson, actual);
-
     }
 
-    @Test
+
+   @Test
     public void getAllPersons() throws Exception {
         List<Person> personList = facade.getAll();
 
@@ -121,11 +121,16 @@ public class PersonFacadeTest {
     }
 
 
-    /*@Test
-    public void delete() {
+
+    @Test
+    void delete() {
         facade.delete(p1);
+        int expected = 2;
         int actual = facade.getAll().size();
-        assertEquals(2, actual);
-    }*/
+        assertEquals(expected,actual);
+    }
+
+
+
 
 }
