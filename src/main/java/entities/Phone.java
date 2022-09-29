@@ -3,12 +3,11 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "phone")
 public class Phone {
-    public Phone() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +27,33 @@ public class Phone {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
+
+    public Phone() {
+    }
+
+    public Phone(Integer number, String description) {
+        this.number = number;
+        this.description = description;
+    }
+
+    public Phone(Integer number, String description, Person person) {
+        this.number = number;
+        this.description = description;
+        this.person = person;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+        Phone phone = (Phone) o;
+        return getId().equals(phone.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 
     public Integer getId() {
         return id;
