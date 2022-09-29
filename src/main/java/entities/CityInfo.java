@@ -4,12 +4,26 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "city_info")
 public class CityInfo {
     public CityInfo() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CityInfo)) return false;
+        CityInfo cityInfo = (CityInfo) o;
+        return getId().equals(cityInfo.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     @Id
