@@ -1,5 +1,8 @@
 package dtos;
 
+import entities.Address;
+import entities.CityInfo;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -24,6 +27,14 @@ public class CityInfoDto implements Serializable {
         this.zipcode = zipcode;
         this.city = city;
         this.addresses = addresses;
+    }
+
+    public CityInfoDto(CityInfo cityInfo, Set<AddressDto> addresses){
+        this.id = cityInfo.getId();
+        this.zipcode = cityInfo.getZipcode();
+        this.city = cityInfo.getCity();
+        this.addresses = addresses;
+
     }
 
     public Integer getId() {

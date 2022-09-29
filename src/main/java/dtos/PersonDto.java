@@ -5,6 +5,8 @@ import entities.Person;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ public class PersonDto implements Serializable {
     private final Set<HobbyDto> hobbies;
     private final Set<PhoneDto> phones;
 
+
     public PersonDto(Integer id, String email, String firstName, String lastName, AddressDto address, Set<HobbyDto> hobbies, Set<PhoneDto> phones) {
         this.id = id;
         this.email = email;
@@ -37,6 +40,22 @@ public class PersonDto implements Serializable {
         this.phones = phones;
     }
 
+    public PersonDto(Person person, AddressDto address, Set<HobbyDto> hobbies, Set<PhoneDto> phones){
+        if(person.getId() !=null)
+            this.id = person.getId();
+        this.email = person.getEmail();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.address = address;
+        this.hobbies = hobbies;
+        this.phones = phones;
+
+    }
+    public static List<PersonDto> getDtos(List<Person> persons) {
+        List<PersonDto> personDtos = new ArrayList();
+        persons.forEach(person -> personDtos.add(new PersonDto(person)));
+        return personDtos;
+    }
 
     public Integer getId() {
         return id;

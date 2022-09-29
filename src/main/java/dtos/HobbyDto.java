@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Hobby;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -26,6 +28,12 @@ public class HobbyDto implements Serializable {
         this.people = people;
     }
 
+    public HobbyDto(Hobby hobby, Set<PersonDto>personDtos){
+       this.id = hobby.getId();
+       this.name = hobby.getName();
+       this.description = hobby.getDescription();
+       this.people = personDtos;
+    }
     public Integer getId() {
         return id;
     }
