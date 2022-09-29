@@ -14,6 +14,17 @@ public class Person {
     public Person() {
     }
 
+    public Person(String email, String firstName, String lastName, Address address, Set<Hobby> hobbies, Set<Phone> phones) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.hobbies = hobbies;
+        this.phones = phones;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
