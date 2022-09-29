@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Address;
+import entities.Hobby;
 import entities.Person;
 
 import javax.validation.constraints.NotNull;
@@ -40,17 +42,17 @@ public class PersonDto implements Serializable {
         this.phones = phones;
     }
 
-    public PersonDto(Person person, AddressDto address, Set<HobbyDto> hobbies, Set<PhoneDto> phones){
+    public PersonDto(Person person){
         if(person.getId() !=null)
             this.id = person.getId();
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.address = address;
-        this.hobbies = hobbies;
+        this.address = new AddressDto(person.getAddress());
+        this.hobbies = new HobbyDto(person.getHobbies());
         this.phones = phones;
-
     }
+
     public static List<PersonDto> getDtos(List<Person> persons) {
         List<PersonDto> personDtos = new ArrayList();
         persons.forEach(person -> personDtos.add(new PersonDto(person)));
@@ -127,6 +129,11 @@ public class PersonDto implements Serializable {
             this.street = street;
             this.additionalInfo = additionalInfo;
         }
+        public AddressDto (Address address) {
+            this.id = address.getId();
+            this.street = address.getStreet();
+            this.additionalInfo = address.getAdditionalInfo();
+        }
 
         public Integer getId() {
             return id;
@@ -178,6 +185,12 @@ public class PersonDto implements Serializable {
             this.id = id;
             this.name = name;
             this.description = description;
+        }
+
+        public HobbyDto (Hobby hobby) {
+            this.id = hobby.getId();
+            this.name = hobby.getName();
+            this.description = hobby.getDescription();
         }
 
         public Integer getId() {

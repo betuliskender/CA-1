@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import facades.PersonFacade;
 import utils.EMF_Creator;
-
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,12 +22,12 @@ public class PersonResource {
                 "\":\"Her kan du finde alle personerne gennem api\"}";
     }
 
-    @Path("{phone}")
+    /*@Path("{phone}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersonByPhone(@PathParam("phone") int phone) {
         return Response.ok().entity(GSON.toJson(FACADE.getByPhone(phone))).build();
-    }
+    }*/
 
     @GET
     @Path("all")
@@ -37,7 +36,4 @@ public class PersonResource {
     public Response getAll() {
         return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
     }
-
-
-
 }
