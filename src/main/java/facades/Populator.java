@@ -33,12 +33,14 @@ public class Populator {
         CityInfo cityInfo = cityInfoFacade.create(new CityInfo("3000", "Frederiksberg"));
         AddressFacade addressFacade = AddressFacade.getInstance(emf);
         Address address = addressFacade.create(new Address("Lyngbyvej 13", "MF", cityInfo));
+        PersonFacade personFacade = PersonFacade.getInstance(emf);
+        Person firstPerson = personFacade.create(new Person("hartmann@hardman.dk", "Thomas", "Hartmann", address));
         PhoneFacade phoneFacade = PhoneFacade.getInstance(emf);
-        Phone phone = phoneFacade.create(new Phone(45454545,"Hjemmetelefon"));
+        Phone phone = phoneFacade.create(new Phone(45454545,"Hjemmetelefon", firstPerson));
         Set<Phone> phoneSet = new HashSet<>();
         phoneSet.add(phone);
-        PersonFacade personFacade = PersonFacade.getInstance(emf);
-        personFacade.create(new Person("hartmann@hardman.dk", "Thomas", "Hartmann",address, hobbySet, phoneSet  ));
+        Person personToPost = personFacade.create(new Person(firstPerson.getEmail(),firstPerson.getFirstName(),firstPerson.getLastName(),firstPerson.getAddress(), hobbySet,phoneSet));
+        System.out.println(personToPost);
     }
     
     public static void main(String[] args) {

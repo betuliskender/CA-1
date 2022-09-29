@@ -23,6 +23,13 @@ public class PersonResource {
         return Response.ok().entity(GSON.toJson(FACADE.getByPhone(phone))).build();
     }
 
+    @GET
+    @Path("all")
+    @Produces({MediaType.APPLICATION_JSON})
+
+    public Response getAll() {
+        return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
+    }
 
 
 
