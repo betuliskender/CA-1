@@ -85,7 +85,7 @@ public class PersonFacadeTest {
    @Test
     public void getById() {
         Person expected = p1;
-       Person actual = facade.getById(2);
+       Person actual = facade.getById(p1.getId());
        assertEquals(expected, actual);
     }
 
