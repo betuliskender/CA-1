@@ -2,6 +2,7 @@ package facades;
 
 import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -77,6 +78,15 @@ public class PersonFacadeTest {
     public void tearDown() {
 //        Remove any data after each test was run
     }
+
+    @Test
+    void getById() {
+        Person expected = p1;
+        Person actual = facade.getById(1);
+        assertEquals(expected, actual);
+    }
+
+
 
     @Test
     public void getAllPersons() throws Exception {
