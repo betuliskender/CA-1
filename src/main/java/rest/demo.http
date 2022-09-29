@@ -5,6 +5,7 @@ Accept: application/json
 GET http://localhost:8080/devops_starter_war_exploded/api/person/all
 Accept: application/json
 
+
 ###
 POST http://localhost:8080/devops_starter_war_exploded/api/xxx
 Content-Type: application/json
