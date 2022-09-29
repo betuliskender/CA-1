@@ -31,6 +31,12 @@ public class PersonFacade implements IFacade<Person> {
         return p;
     }
 
+    public Person getByPhone(int phone) {
+        EntityManager em = getEntityManager();
+        Person p = em.find(Person.class, phone);
+        return p;
+    }
+
     @Override
     public List<Person> getAll() {
         EntityManager em = getEntityManager();
@@ -81,4 +87,6 @@ public class PersonFacade implements IFacade<Person> {
         }
         return p;
     }
+
+
 }
