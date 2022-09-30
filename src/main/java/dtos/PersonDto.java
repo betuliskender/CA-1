@@ -107,10 +107,7 @@ public class PersonDto implements Serializable {
                 "id = " + id + ", " +
                 "email = " + email + ", " +
                 "firstName = " + firstName + ", " +
-                "lastName = " + lastName + ", " +
-                "address = " + address + ", " +
-                "hobbies = " + hobbies + ", " +
-                "phones = " + phones + ")";
+                "lastName = " + lastName + ", ";
     }
 
     /**
@@ -267,6 +264,7 @@ public class PersonDto implements Serializable {
             return description;
         }
 
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -289,5 +287,7 @@ public class PersonDto implements Serializable {
                     "number = " + number + ", " +
                     "description = " + description + ")";
         }
+
     }
+
 }

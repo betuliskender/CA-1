@@ -12,3 +12,15 @@ Content-Type: application/json
 #User-Agent: Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion
 
 {"str1": "First Property", "str2": "Second Property"}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/person/1
+Content-Type:application/json
+
+{"email": "Long@long.dk", "firstName": "Long", "lastName": "Longesen"}
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/person
+Content-Type: application/json
+
+{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}

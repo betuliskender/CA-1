@@ -96,4 +96,14 @@ public class Address {
     public void setCityInfo(CityInfo cityInfo) {
         this.cityInfo = cityInfo;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", cityInfo=" + cityInfo +
+                '}';
+    }
 }

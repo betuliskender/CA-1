@@ -33,12 +33,37 @@ public class PersonResource {
         return Response.ok().entity(GSON.toJson(FACADE.getByPhone(phone))).build();
     }*/
 
+    @Path("{id}")
+    @GET
+    @Produces("text/plain")
+    public Response getPersonById(@PathParam("id") int id) {
+
+        return Response.ok().entity(GSON.toJson(FACADE.getById(id))).build();
+    }
+
     @GET
     @Path("all")
     @Produces({MediaType.APPLICATION_JSON})
-
     public Response getAll() {
-        List<PersonDto>personList = FACADE.getAll();
         return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
+    }
+    @PUT
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("{id}")
+    public Response updatePerson(@PathParam("id") int id, String jsonInput) {
+        Person person = GSON.fromJson(jsonInput, Person.class);
+        person.setId(id);
+        PersonDto personDto = new PersonDto(person);
+        return Response.ok().entity(GSON.toJson(FACADE.update(personDto))).build();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createPerson(String jsonInput) {
+        PersonDto personDto = GSON.fromJson(jsonInput, PersonDto.class);
+
+        return Response.ok().entity(GSON.toJson(FACADE.create(personDto))).build();
     }
 }

@@ -8,6 +8,7 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.List;
@@ -32,8 +33,10 @@ public class PersonFacade implements IFacade<PersonDto> {
 
     @Override
     public PersonDto getById(Integer id) {
-        EntityManager em = getEntityManager();
+        EntityManager em = emf.createEntityManager();
         Person p = em.find(Person.class, id);
+        if(p ==null)
+            throw new EntityNotFoundException("Not found");
         return new PersonDto(p);
     }
 
@@ -46,42 +49,44 @@ public class PersonFacade implements IFacade<PersonDto> {
 
     @Override
     public List<PersonDto> getAll() {
-        EntityManager em = getEntityManager();
-        TypedQuery<PersonDto> query = em.createQuery("SELECT p FROM Person P", PersonDto.class);
-        return query.getResultList();
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+        List<Person> personList = query.getResultList();
+        return PersonDto.getDtos(personList);
     }
 
     @Override
-    public PersonDto create(PersonDto person) {
+    public PersonDto create(PersonDto personDto) {
+        Person person = new Person(personDto.getEmail(), personDto.getFirstName(),personDto.getLastName());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            ;
             em.persist(person);
             em.getTransaction().commit();
-            ;
-        } finally {
-            {
-                em.close();
-                ;
-            }
-        }
-        return person;
-    }
-
-    @Override
-    public PersonDto update(PersonDto person) {
-        EntityManager em = getEntityManager();
-        try {
-
-            em.getTransaction().begin();
-            em.merge(person);
-            em.getTransaction().commit();
-
         } finally {
             em.close();
         }
-        return person;
+        return new PersonDto(person);
+    }
+
+    @Override
+    public PersonDto update(PersonDto personDTO) {
+
+        EntityManager em = getEntityManager();
+        Person fromDb = em.find(Person.class, personDTO.getId());
+        if(fromDb == null){
+            throw new EntityNotFoundException("No such person with that id: "+ personDTO.getId());
+        }
+        Person person = new Person(personDTO.getEmail(),personDTO.getFirstName(), personDTO.getLastName());
+
+        try {
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDto(person);
     }
 
     @Override
@@ -97,4 +102,6 @@ public class PersonFacade implements IFacade<PersonDto> {
         }
         return new PersonDto(p);
     }
+
+
 }
