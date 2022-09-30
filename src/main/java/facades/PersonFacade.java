@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.PersonDto;
 import entities.Person;
 import interfaces.facades.IFacade;
 
@@ -8,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class PersonFacade implements IFacade<Person> {
+public class PersonFacade implements IFacade<PersonDto> {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
@@ -25,9 +26,9 @@ public class PersonFacade implements IFacade<Person> {
     }
 
     @Override
-    public Person getById(Integer id) {
+    public PersonDto getById(Integer id) {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
+        PersonDto p = em.find(PersonDto.class, id);
         return p;
     }
 
@@ -39,14 +40,14 @@ public class PersonFacade implements IFacade<Person> {
     }*/
 
     @Override
-    public List<Person> getAll() {
+    public List<PersonDto> getAll() {
         EntityManager em = getEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person P", Person.class);
+        TypedQuery<PersonDto> query = em.createQuery("SELECT p FROM Person P", PersonDto.class);
         return query.getResultList();
     }
 
     @Override
-    public Person create(Person person) {
+    public PersonDto create(PersonDto person) {
         EntityManager em = getEntityManager();
         try
         {
@@ -62,7 +63,7 @@ public class PersonFacade implements IFacade<Person> {
     }
 
     @Override
-    public Person update(Person person) {
+    public PersonDto update(PersonDto person) {
         EntityManager em = getEntityManager();
         try {
 
@@ -76,9 +77,9 @@ public class PersonFacade implements IFacade<Person> {
     }
 
     @Override
-    public Person delete(Person person) {
+    public PersonDto delete(PersonDto person) {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, person.getId());
+        PersonDto p = em.find(PersonDto.class, person.getId());
         try{
             em.getTransaction().begin();
             em.remove(p);

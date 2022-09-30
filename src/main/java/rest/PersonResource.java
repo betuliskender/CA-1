@@ -38,6 +38,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
 
     public Response getAll() {
+        List<PersonDto>personList = FACADE.getAll();
         return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
     }
 }

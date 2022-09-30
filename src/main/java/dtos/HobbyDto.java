@@ -28,6 +28,7 @@ public class HobbyDto implements Serializable {
         this.people = people;
     }
 
+
     public HobbyDto(Hobby hobby, Set<PersonDto>personDtos){
        this.id = hobby.getId();
        this.name = hobby.getName();
