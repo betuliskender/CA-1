@@ -28,8 +28,8 @@ public class PersonFacade implements IFacade<PersonDto> {
     @Override
     public PersonDto getById(Integer id) {
         EntityManager em = getEntityManager();
-        PersonDto p = em.find(PersonDto.class, id);
-        return p;
+        Person p = em.find(Person.class, id);
+        return new PersonDto(p);
     }
 
     //ham her skal omskrives så det er et set af telefon-numre...
@@ -42,7 +42,7 @@ public class PersonFacade implements IFacade<PersonDto> {
     @Override
     public List<PersonDto> getAll() {
         EntityManager em = getEntityManager();
-        TypedQuery<PersonDto> query = em.createQuery("SELECT p FROM Person P", PersonDto.class);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person P", Person.class);
         return query.getResultList();
     }
 

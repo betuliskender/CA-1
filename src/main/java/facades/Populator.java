@@ -6,7 +6,6 @@
 package facades;
 
 import dtos.HobbyDto;
-import dtos.PersonDto;
 import dtos.RenameMeDTO;
 import entities.*;
 
@@ -25,7 +24,7 @@ public class Populator {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
 
         HobbyFacade hobbyFacade = HobbyFacade.getInstance(emf);
-        HobbyDto hobby1 = hobbyFacade.create(new HobbyDto("Bagning","Bag med Betül"));
+        Hobby hobby1 = hobbyFacade.create(new Hobby("Bagning","Bag med Betül"));
         Hobby hobby2 = hobbyFacade.create(new Hobby("Computerspil", "Computer for dig og mig"));
         Set<Hobby> hobbySet = new HashSet<>();
         hobbySet.add(hobby1);
@@ -35,7 +34,7 @@ public class Populator {
         AddressFacade addressFacade = AddressFacade.getInstance(emf);
         Address address = addressFacade.create(new Address("Lyngbyvej 13", "MF", cityInfo));
         PersonFacade personFacade = PersonFacade.getInstance(emf);
-        Person firstPerson = personFacade.create(new PersonDto(1,"hartmann@hardman.dk", "Thomas", "Hartmann", address));
+        Person firstPerson = personFacade.create(new Person("hartmann@hardman.dk", "Thomas", "Hartmann", address));
         PhoneFacade phoneFacade = PhoneFacade.getInstance(emf);
         Phone phone = phoneFacade.create(new Phone(45454545,"Hjemmetelefon", firstPerson));
         Set<Phone> phoneSet = new HashSet<>();
