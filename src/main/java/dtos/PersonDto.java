@@ -226,6 +226,8 @@ public class PersonDto implements Serializable {
             return description;
         }
 
+
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
