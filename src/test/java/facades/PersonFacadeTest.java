@@ -20,7 +20,7 @@ public class PersonFacadeTest {
     private static PersonFacade facade;
 
     private static Person p1, p2, p3;
-    private static CityInfo c1, c2, c3;
+//    private static CityInfo c1, c2, c3;
     private static Address a1, a2, a3;
 
 
@@ -50,21 +50,21 @@ public class PersonFacadeTest {
             em.createQuery("DELETE From Person").executeUpdate();
             em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
 
-            c1 = new CityInfo("2300","Amager");
-            c2 = new CityInfo("2400","Nordvest");
-            c3 = new CityInfo("2100","Østerbro");
+//            c1 = new CityInfo("2300","Amager");
+//            c2 = new CityInfo("2400","Nordvest");
+//            c3 = new CityInfo("2100","Østerbro");
 
-            a1 = new Address("Amagerbrogade 12","3. TV",c1);
-            a2 = new Address("Stærevej 6","1.TH",c2);
-            a3 = new Address("Østerbrogade 271","ST, MF",c3);
+            a1 = new Address("Amagerbrogade 12","3. TV", "3000 Helsingør");
+            a2 = new Address("Stærevej 6","1.TH", "2740 Skovlunde");
+            a3 = new Address("Østerbrogade 271","ST, MF", "3660 Stenløse");
 
             p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
             p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
             p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
             //em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.persist(c1);
-            em.persist(c2);
-            em.persist(c3);
+//            em.persist(c1);
+//            em.persist(c2);
+//            em.persist(c3);
             em.persist(a1);
             em.persist(a2);
             em.persist(a3);

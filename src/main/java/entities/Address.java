@@ -26,18 +26,23 @@ public class Address {
     @Column(name = "additional_info", nullable = false, length = 45)
     private String additionalInfo;
 
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "zip_code", nullable = false, length = 45)
+    private String zipCode;
+
     @OneToMany(mappedBy = "address")
     private Set<Person> people = new LinkedHashSet<>();
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "city_info_id", nullable = false)
-    private CityInfo cityInfo;
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "city_info_id", nullable = false)
+//    private CityInfo cityInfo;
 
-    public Address(String street, String additionalInfo, CityInfo cityInfo) {
+    public Address(String street, String additionalInfo, String zipCode) {
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.cityInfo = cityInfo;
+        this.zipCode = zipCode;
     }
 
     public Address() {
@@ -89,11 +94,11 @@ public class Address {
         this.people = people;
     }
 
-    public CityInfo getCityInfo() {
-        return cityInfo;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfo = cityInfo;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

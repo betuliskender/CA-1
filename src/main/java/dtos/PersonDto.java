@@ -27,6 +27,7 @@ public class PersonDto implements Serializable {
     private final Set<HobbyDto> hobbies;
     private final Set<PhoneDto> phones;
 
+
     public PersonDto(Integer id, String email, String firstName, String lastName, AddressDto address, Set<HobbyDto> hobbies, Set<PhoneDto> phones) {
         this.id = id;
         this.email = email;
@@ -235,6 +236,8 @@ public class PersonDto implements Serializable {
                     Objects.equals(this.number, entity.number) &&
                     Objects.equals(this.description, entity.description);
         }
+
+
 
         @Override
         public int hashCode() {

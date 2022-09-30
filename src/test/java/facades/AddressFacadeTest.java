@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertNotNull;
 public class AddressFacadeTest {
         private static EntityManagerFactory emf;
         private static AddressFacade facade;
-        CityInfo c1, c2, c3;
+//        CityInfo c1, c2, c3;
         Address a1, a2, a3;
 
         public AddressFacadeTest() {
@@ -30,9 +30,9 @@ public class AddressFacadeTest {
                 em.getTransaction().begin();
                 em.createQuery("DELETE From Address ").executeUpdate();
                 em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
-                em.createQuery("DELETE From CityInfo ").executeUpdate();
-                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-                em.getTransaction().commit();
+//                em.createQuery("DELETE From CityInfo ").executeUpdate();
+//                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+//                em.getTransaction().commit();
             }
             finally {
                 em.close();
@@ -60,17 +60,17 @@ public class AddressFacadeTest {
             try {
                 em.getTransaction().begin();
 
-                c1 = new CityInfo("2300","Amager");
-                c2 = new CityInfo("2400","Nordvest");
-                c3 = new CityInfo("2100","Østerbro");
+//                c1 = new CityInfo("2300","Amager");
+//                c2 = new CityInfo("2400","Nordvest");
+//                c3 = new CityInfo("2100","Østerbro");
 
-                a1 = new Address("Amagerbrogade 12","3. TV",c1);
-                a2 = new Address("Stærevej 6","1.TH",c2);
-                a3 = new Address("Østerbrogade 271","ST, MF",c3);
+                a1 = new Address("Amagerbrogade 12","3. TV", "1233 København K");
+                a2 = new Address("Stærevej 6","1.TH", "3660 Stenløse");
+                a3 = new Address("Østerbrogade 271","ST, MF","2740 Skovlunde");
 
-                em.persist(c1);
-                em.persist(c2);
-                em.persist(c3);
+//                em.persist(c1);
+//                em.persist(c2);
+//                em.persist(c3);
                 em.persist(a1);
                 em.persist(a2);
                 em.persist(a3);
@@ -103,7 +103,7 @@ public class AddressFacadeTest {
 
         @Test
         void create() {
-            Address address = new Address("Hagbartsvej", "5", c1);
+            Address address = new Address("Hagbartsvej", "5", "3000 Helsingør");
             Address expected = address;
             Address actual = facade.create(address);
             assertEquals(expected, actual);

@@ -10,13 +10,13 @@ import java.util.List;
 
 public class AddressFacade implements IFacade<Address> {
 
-        private static facades.AddressFacade instance;
+        private static AddressFacade instance;
         private static EntityManagerFactory emf;
 
         //Private Constructor to ensure Singleton
         private AddressFacade() {}
 
-        public static facades.AddressFacade getInstance(EntityManagerFactory _emf) {
+        public static AddressFacade getInstance(EntityManagerFactory _emf) {
             if (instance == null) {
                 emf = _emf;
                 instance = new facades.AddressFacade();
