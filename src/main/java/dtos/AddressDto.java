@@ -17,7 +17,6 @@ public class AddressDto implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String additionalInfo;
-
     private final Set<PersonDto> people;
 
 

@@ -16,7 +16,7 @@ public class PhoneFacadeTest
 {
     private static EntityManagerFactory emf;
     private static PhoneFacade facade;
-//    CityInfo c1, c2, c3;
+    CityInfo c1, c2, c3;
     Address a1, a2, a3;
     Person person1, person2; 
     Phone phone1, phone2;
@@ -38,8 +38,8 @@ public class PhoneFacadeTest
             em.createQuery("DELETE From Address ").executeUpdate();
             em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
             em.createQuery("DELETE From CityInfo ").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-//            em.getTransaction().commit();
+            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+            em.getTransaction().commit();
         }
         finally {
             em.close();
@@ -66,21 +66,21 @@ public class PhoneFacadeTest
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-//
-//            c1 = new CityInfo("2300","Amager");
-//            c2 = new CityInfo("2400","Nordvest");
-//            c3 = new CityInfo("2100","Østerbro");
 
-            a1 = new Address("Amagerbrogade 12","3. TV","2100 Østerbro");
-            a2 = new Address("Stærevej 6","1.TH", "2400 Nordvest");
-            a3 = new Address("Østerbrogade 271","ST, MF", "2300 Amager");
+            c1 = new CityInfo("2300","Amager");
+            c2 = new CityInfo("2400","Nordvest");
+            c3 = new CityInfo("2100","Østerbro");
+
+            a1 = new Address("Amagerbrogade 12","3. TV",c1);
+            a2 = new Address("Stærevej 6","1.TH",c2);
+            a3 = new Address("Østerbrogade 271","ST, MF",c3);
             person1 = new Person("Denis@P.dk", "Denis", "Pedersen", a1);
             person2 = new Person("Betül@I.dk", "Betül", "Iskender", a2);
             phone1 = new Phone(1020304, "Home", person1);
             phone2 = new Phone(5060708, "Work", person2);
-//            em.persist(c1);
-//            em.persist(c2);
-//            em.persist(c3);
+            em.persist(c1);
+            em.persist(c2);
+            em.persist(c3);
             em.persist(a1);
             em.persist(a2);
             em.persist(a3);
