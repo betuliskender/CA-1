@@ -1,13 +1,17 @@
 package facades;
 
+import dtos.HobbyDto;
 import dtos.PersonDto;
-import entities.Person;
+import entities.*;
 import interfaces.facades.IFacade;
+import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PersonFacade implements IFacade<PersonDto> {
 
@@ -21,6 +25,7 @@ public class PersonFacade implements IFacade<PersonDto> {
         }
         return instance;
     }
+
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
@@ -42,21 +47,23 @@ public class PersonFacade implements IFacade<PersonDto> {
     @Override
     public List<PersonDto> getAll() {
         EntityManager em = getEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person P", Person.class);
+        TypedQuery<PersonDto> query = em.createQuery("SELECT p FROM Person P", PersonDto.class);
         return query.getResultList();
     }
 
     @Override
     public PersonDto create(PersonDto person) {
         EntityManager em = getEntityManager();
-        try
-        {
-            em.getTransaction().begin();;
+        try {
+            em.getTransaction().begin();
+            ;
             em.persist(person);
-            em.getTransaction().commit();;
-        }finally {
+            em.getTransaction().commit();
+            ;
+        } finally {
             {
-                em.close();;
+                em.close();
+                ;
             }
         }
         return person;
@@ -67,28 +74,27 @@ public class PersonFacade implements IFacade<PersonDto> {
         EntityManager em = getEntityManager();
         try {
 
-                em.getTransaction().begin();
-                em.merge(person);
-                em.getTransaction().commit();
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
 
-        }finally {
+        } finally {
             em.close();
-        }return person;
+        }
+        return person;
     }
 
     @Override
     public PersonDto delete(PersonDto person) {
         EntityManager em = getEntityManager();
-        PersonDto p = em.find(PersonDto.class, person.getId());
-        try{
+        Person p = em.find(Person.class, person.getId());
+        try {
             em.getTransaction().begin();
             em.remove(p);
             em.getTransaction().commit();
-        }finally {
+        } finally {
             em.close();
         }
-        return p;
+        return new PersonDto(p);
     }
-
-
 }

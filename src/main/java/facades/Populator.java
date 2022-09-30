@@ -20,7 +20,7 @@ import java.util.Set;
  * @author tha
  */
 public class Populator {
-    public static void populate(){
+  /*  public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
 
         HobbyFacade hobbyFacade = HobbyFacade.getInstance(emf);
@@ -42,8 +42,8 @@ public class Populator {
         Person personToPost = personFacade.create(new Person(firstPerson.getEmail(),firstPerson.getFirstName(),firstPerson.getLastName(),firstPerson.getAddress(), hobbySet,phoneSet));
         System.out.println(personToPost);
     }
-    
-    public static void main(String[] args) {
+    */
+  /*  public static void main(String[] args) {
         populate();
-    }
+    }*/
 }
