@@ -3,14 +3,12 @@ package dtos;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Person} entity
@@ -27,30 +25,33 @@ public class PersonDto implements Serializable {
     @NotNull
     private final String lastName;
     @NotNull
-    private final AddressDto address;
-    private final Set<HobbyDto> hobbies;
-    private final Set<PhoneDto> phones;
+    private final PersonDto.InnerAddressDto address;
+    private final Set<InnerHobbyDto> hobbies = new HashSet<>();
+    private final Set<InnerPhoneDto> phones = new HashSet<>();
 
 
-    public PersonDto(Integer id, String email, String firstName, String lastName, AddressDto address, Set<HobbyDto> hobbies, Set<PhoneDto> phones) {
+    public PersonDto(Integer id, String email, String firstName, String lastName, InnerAddressDto address) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.hobbies = hobbies;
-        this.phones = phones;
+
     }
 
-    public PersonDto(Person person){
-        if(person.getId() !=null)
-            this.id = person.getId();
+    public PersonDto(Person person) {
+        this.id = person.getId();
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.address = new AddressDto(person.getAddress());
-        this.hobbies = new HobbyDto(person.getHobbies());
-        this.phones = phones;
+        this.address = new InnerAddressDto(person.getAddress());
+        person.getHobbies().forEach(hobby -> {
+            hobbies.add(new InnerHobbyDto(hobby));
+        });
+        person.getPhones().forEach(phone -> {
+            phones.add(new InnerPhoneDto(phone));
+
+        });
     }
 
     public static List<PersonDto> getDtos(List<Person> persons) {
@@ -75,15 +76,15 @@ public class PersonDto implements Serializable {
         return lastName;
     }
 
-    public AddressDto getAddress() {
+    public InnerAddressDto getAddress() {
         return address;
     }
 
-    public Set<HobbyDto> getHobbies() {
+    public Set<InnerHobbyDto> getHobbies() {
         return hobbies;
     }
 
-    public Set<PhoneDto> getPhones() {
+    public Set<InnerPhoneDto> getPhones() {
         return phones;
     }
 
@@ -115,7 +116,7 @@ public class PersonDto implements Serializable {
     /**
      * A DTO for the {@link entities.Address} entity
      */
-    public static class AddressDto implements Serializable {
+    public static class InnerAddressDto implements Serializable {
         private final Integer id;
         @Size(max = 45)
         @NotNull
@@ -124,12 +125,13 @@ public class PersonDto implements Serializable {
         @NotNull
         private final String additionalInfo;
 
-        public AddressDto(Integer id, String street, String additionalInfo) {
+        public InnerAddressDto(Integer id, String street, String additionalInfo) {
             this.id = id;
             this.street = street;
             this.additionalInfo = additionalInfo;
         }
-        public AddressDto (Address address) {
+
+        public InnerAddressDto(Address address) {
             this.id = address.getId();
             this.street = address.getStreet();
             this.additionalInfo = address.getAdditionalInfo();
@@ -150,8 +152,8 @@ public class PersonDto implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof AddressDto)) return false;
-            AddressDto that = (AddressDto) o;
+            if (!(o instanceof InnerAddressDto)) return false;
+            InnerAddressDto that = (InnerAddressDto) o;
             return getId().equals(that.getId());
         }
 
@@ -172,7 +174,7 @@ public class PersonDto implements Serializable {
     /**
      * A DTO for the {@link entities.Hobby} entity
      */
-    public static class HobbyDto implements Serializable {
+    public static class InnerHobbyDto implements Serializable {
         private final Integer id;
         @Size(max = 45)
         @NotNull
@@ -181,17 +183,18 @@ public class PersonDto implements Serializable {
         @NotNull
         private final String description;
 
-        public HobbyDto(Integer id, String name, String description) {
+        public InnerHobbyDto(Integer id, String name, String description) {
             this.id = id;
             this.name = name;
             this.description = description;
         }
 
-        public HobbyDto (Hobby hobby) {
+        public InnerHobbyDto(Hobby hobby) {
             this.id = hobby.getId();
             this.name = hobby.getName();
             this.description = hobby.getDescription();
         }
+
 
         public Integer getId() {
             return id;
@@ -209,7 +212,7 @@ public class PersonDto implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            HobbyDto entity = (HobbyDto) o;
+            InnerHobbyDto entity = (InnerHobbyDto) o;
             return Objects.equals(this.id, entity.id) &&
                     Objects.equals(this.name, entity.name) &&
                     Objects.equals(this.description, entity.description);
@@ -232,7 +235,7 @@ public class PersonDto implements Serializable {
     /**
      * A DTO for the {@link entities.Phone} entity
      */
-    public static class PhoneDto implements Serializable {
+    public static class InnerPhoneDto implements Serializable {
         private final Integer id;
         @NotNull
         private final Integer number;
@@ -240,10 +243,16 @@ public class PersonDto implements Serializable {
         @NotNull
         private final String description;
 
-        public PhoneDto(Integer id, Integer number, String description) {
+        public InnerPhoneDto(Integer id, Integer number, String description) {
             this.id = id;
             this.number = number;
             this.description = description;
+        }
+
+        public InnerPhoneDto(Phone phone) {
+            this.id = phone.getId();
+            this.number = phone.getNumber();
+            this.description = phone.getDescription();
         }
 
         public Integer getId() {
@@ -262,7 +271,7 @@ public class PersonDto implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            PhoneDto entity = (PhoneDto) o;
+            InnerPhoneDto entity = (InnerPhoneDto) o;
             return Objects.equals(this.id, entity.id) &&
                     Objects.equals(this.number, entity.number) &&
                     Objects.equals(this.description, entity.description);
