@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.PhoneDto;
 import entities.*;
 import entities.Phone;
 import org.junit.jupiter.api.*;
@@ -104,31 +105,30 @@ public class PhoneFacadeTest
     @Test
     void getById() {
         Phone expected = phone1;
-        Phone actual = facade.getById(phone1.getId());
+        PhoneDto actual = facade.getById(phone1.getId());
         assertEquals(expected, actual);
     }
 
     @Test
     void getAll(){
         int expected = 2;
-        List<Phone> PhoneList = facade.getAll();
+        List<PhoneDto> PhoneList = facade.getAll();
         assertEquals(expected, PhoneList.size());
     }
 
     @Test
     void create() {
         Phone phone = new Phone(12233445, "Work", person1);
-        Phone expected = phone;
-        Phone actual = facade.create(phone);
-        assertEquals(expected, actual);
+        PhoneDto phoneDto = new PhoneDto(phone);
+        PhoneDto actual = facade.create(phoneDto);
         assertNotNull(actual.getId());
     }
 
     @Test
     void update() {
         phone1.setDescription("Mobile");
-        Phone expected = phone1;
-        Phone actual = facade.update(phone1);
+        PhoneDto expected = new PhoneDto(phone1);
+        PhoneDto actual = facade.update(expected);
         assertEquals(expected, actual);
     }
 

@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.PhoneDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +43,14 @@ public class Phone {
         this.description = description;
         this.person = person;
     }
+
+    public Phone(PhoneDto phoneDto) {
+        this.number = phoneDto.getNumber();
+        this.description = phoneDto.getDescription();
+        this.person = new Person(phoneDto.getPerson());
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

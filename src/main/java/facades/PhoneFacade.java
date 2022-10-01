@@ -1,6 +1,9 @@
 package facades;
 
+import dtos.PersonDto;
+import dtos.PhoneDto;
 import entities.Hobby;
+import entities.Person;
 import entities.Phone;
 import entities.Phone;
 import interfaces.facades.IFacade;
@@ -8,9 +11,10 @@ import interfaces.facades.IFacade;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
-public class PhoneFacade implements IFacade<Phone> {
+public class PhoneFacade implements IFacade<PhoneDto> {
 
     private static PhoneFacade instance;
     private static EntityManagerFactory emf;
@@ -31,55 +35,71 @@ public class PhoneFacade implements IFacade<Phone> {
     }
     
     @Override
-    public Phone getById(Integer id) {
+    public PhoneDto getById(Integer id) {
         EntityManager em = getEntityManager();
        Phone phone = em.find(Phone.class, id);
 
         if(phone != null)
         {
-            return phone;
+            return new PhoneDto(phone);
         }
 
         return null;
     }
 
     @Override
-    public List<Phone> getAll() {
+    public List<PhoneDto> getAll() {
+        List<PhoneDto> phoneDtoList = new ArrayList<>();
         EntityManager em = getEntityManager();
         TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
-        return query.getResultList();
+        query.getResultList().forEach(phone -> {
+            phoneDtoList.add(new PhoneDto(phone));
+        });
+        return phoneDtoList;
     }
 
     @Override
-    public Phone create(Phone phone) {
+    public PhoneDto create(PhoneDto phoneDto) {
         EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, phoneDto.getPerson().getId());
+        Phone phone = new Phone(phoneDto);
 
         try {
             em.getTransaction().begin();
-            em.persist(phone);
+            if(person != null){
+                person.getPhones().add(phone);
+                em.merge(person);
+            }
+            else {
+
+                Person newPerson = new Person(phoneDto.getPerson());
+                newPerson.getPhones().add(phone);
+                em.persist(newPerson);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return phone;
+        return new PhoneDto(phone);
     }
 
     @Override
-    public Phone update(Phone phone) {
+    public PhoneDto update(PhoneDto phone) {
         EntityManager em = getEntityManager();
+        Phone p = new Phone(phone);
 
         try {
             em.getTransaction().begin();
-            em.merge(phone);
+            em.merge(p);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return phone;
+        return new PhoneDto(p);
     }
 
     @Override
-    public Phone delete(Integer id) {
+    public PhoneDto delete(Integer id) {
         EntityManager em = getEntityManager();
         Phone p = em.find(Phone.class, id);
 
@@ -90,6 +110,6 @@ public class PhoneFacade implements IFacade<Phone> {
         } finally {
             em.close();
         }
-        return p;
+        return new PhoneDto(p);
     }
 }

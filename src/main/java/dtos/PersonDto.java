@@ -37,7 +37,6 @@ public class PersonDto implements Serializable {
         this.phones = phones;
     }
 
-
     public Integer getId() {
         return id;
     }

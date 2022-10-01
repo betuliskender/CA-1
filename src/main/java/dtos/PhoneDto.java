@@ -1,5 +1,8 @@
 package dtos;
 
+import entities.Person;
+import entities.Phone;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -23,6 +26,13 @@ public class PhoneDto implements Serializable {
         this.number = number;
         this.description = description;
         this.person = person;
+    }
+
+    public PhoneDto(Phone phone){
+        this.id = phone.getId();
+        this.number = phone.getNumber();
+        this.description = phone.getDescription();
+        this.person = new PersonDto(phone.getPerson());
     }
 
     public Integer getId() {
@@ -84,6 +94,14 @@ public class PhoneDto implements Serializable {
             this.firstName = firstName;
             this.lastName = lastName;
         }
+
+        public PersonDto(Person person) {
+            this.id = person.getId();
+            this.email = person.getEmail();
+            this.firstName = person.getFirstName();
+            this.lastName = person.getLastName();
+        }
+
 
         public Integer getId() {
             return id;

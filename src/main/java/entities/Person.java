@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.PersonDto;
+import dtos.PhoneDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -73,6 +76,22 @@ public class Person {
         this.lastName = lastName;
         this.address = address;
     }
+
+    public Person(PersonDto personDto){
+        this.id = personDto.getId();
+        this.email = personDto.getEmail();
+        this.firstName = personDto.getFirstName();
+        this.lastName = personDto.getLastName();
+    }
+
+    public Person(PhoneDto.PersonDto personDto)
+    {
+        this.id = personDto.getId();
+        this.email = personDto.getEmail();
+        this.firstName = personDto.getFirstName();
+        this.lastName = personDto.getLastName();
+    }
+
 
     public Integer getId() {
         return id;
