@@ -34,6 +34,14 @@ public class CityInfoDto implements Serializable {
         this.city = cityInfo.getCity();
     }
 
+    public CityInfoDto(CityInfo cityInfo, Set<AddressDto> addresses){
+        this.id = cityInfo.getId();
+        this.zipcode = cityInfo.getZipcode();
+        this.city = cityInfo.getCity();
+        this.addresses = addresses;
+
+    }
+
     public Integer getId() {
         return id;
     }

@@ -91,4 +91,12 @@ public class CityInfo {
         this.addresses = addresses;
     }
 
+    @Override
+    public String toString() {
+        return "CityInfo{" +
+                "id=" + id +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }

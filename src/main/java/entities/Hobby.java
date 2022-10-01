@@ -96,4 +96,12 @@ public class Hobby {
         return Objects.hash(getId());
     }
 
+    @Override
+    public String toString() {
+        return "Hobby{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

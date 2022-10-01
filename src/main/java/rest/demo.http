@@ -1,4 +1,10 @@
-GET http://localhost:8080/devops_starter_war_exploded/api/xxx
+GET http://localhost:8080/devops_starter_war_exploded/api/person/phone
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person/all
+Accept: application/json
+
 
 ###
 POST http://localhost:8080/devops_starter_war_exploded/api/xxx
@@ -28,3 +34,18 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
 Content-Type: application/json
+=======
+{"str1": "First Property", "str2": "Second Property"}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/person/1
+Content-Type:application/json
+
+{"email": "Long@long.dk", "firstName": "Long", "lastName": "Longesen"}
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/person
+Content-Type: application/json
+
+{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
+

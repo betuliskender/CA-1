@@ -1,7 +1,10 @@
 package dtos;
 
 import entities.Hobby;
+<<<<<<< HEAD
 import entities.Person;
+=======
+>>>>>>> personApiBranch
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +33,7 @@ public class HobbyDto implements Serializable {
         this.people = people;
     }
 
+<<<<<<< HEAD
     public HobbyDto(Hobby hobby) {
         people = new LinkedHashSet<>();
         this.id = hobby.getId();
@@ -40,6 +44,15 @@ public class HobbyDto implements Serializable {
         });
     }
 
+=======
+
+    public HobbyDto(Hobby hobby, Set<PersonDto>personDtos){
+       this.id = hobby.getId();
+       this.name = hobby.getName();
+       this.description = hobby.getDescription();
+       this.people = personDtos;
+    }
+>>>>>>> personApiBranch
     public Integer getId() {
         return id;
     }
