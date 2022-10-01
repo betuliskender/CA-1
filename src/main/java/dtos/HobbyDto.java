@@ -1,8 +1,12 @@
 package dtos;
 
+import entities.Hobby;
+import entities.Person;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,6 +28,16 @@ public class HobbyDto implements Serializable {
         this.name = name;
         this.description = description;
         this.people = people;
+    }
+
+    public HobbyDto(Hobby hobby) {
+        people = new LinkedHashSet<>();
+        this.id = hobby.getId();
+        this.name = hobby.getName();
+        this.description = hobby.getDescription();
+        hobby.getPeople().forEach(person -> {
+            people.add(new PersonDto(person));
+        });
     }
 
     public Integer getId() {
@@ -84,6 +98,13 @@ public class HobbyDto implements Serializable {
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
+        }
+
+        public PersonDto(Person person) {
+            this.id = person.getId();
+            this.email = person.getEmail();
+            this.firstName = person.getFirstName();
+            this.lastName = person.getLastName();
         }
 
         public Integer getId() {

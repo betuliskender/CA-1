@@ -1,14 +1,16 @@
 package facades;
 
+import dtos.HobbyDto;
 import entities.Hobby;
 import interfaces.facades.IFacade;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
-public class HobbyFacade implements IFacade<Hobby> {
+public class HobbyFacade implements IFacade<HobbyDto> {
 
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
@@ -29,31 +31,35 @@ public class HobbyFacade implements IFacade<Hobby> {
     }
 
     @Override
-    public Hobby getById(Integer id) {
+    public HobbyDto getById(Integer id) {
         EntityManager em = getEntityManager();
         Hobby h = em.find(Hobby.class, id);
-        return  h;
+        return  new HobbyDto(h);
     }
 
     @Override
-    public List<Hobby> getAll() {
+    public List<HobbyDto> getAll() {
+        List<HobbyDto> hobbyDtos = new ArrayList<>();
         EntityManager em = getEntityManager();
         TypedQuery<Hobby> query =em.createQuery("SELECT h FROM Hobby h", Hobby.class);
-        return query.getResultList();
+        query.getResultList().forEach( hobby -> {
+            hobbyDtos.add(new HobbyDto(hobby));
+        });
+        return hobbyDtos;
     }
 
     @Override
-    public Hobby create(Hobby hobby) {
+    public HobbyDto create(HobbyDto hobbyDto) {
         EntityManager em = getEntityManager();
-
+        new Hobby(hobbyDto);
         try {
             em.getTransaction().begin();
-            em.persist(hobby);
+            em.persist(hobbyDto);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return hobby;
+        return hobbyDto;
     }
 
     @Override

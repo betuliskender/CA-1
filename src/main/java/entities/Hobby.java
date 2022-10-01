@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.HobbyDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,14 +12,6 @@ import java.util.Set;
 @Entity
 @Table(name = "hobby")
 public class Hobby {
-    public Hobby() {
-    }
-
-    public Hobby(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -69,6 +63,24 @@ public class Hobby {
 
     public void setPeople(Set<Person> people) {
         this.people = people;
+    }
+
+    public Hobby() {
+    }
+
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Hobby(HobbyDto hobbyDto) {
+        this.id = hobbyDto.getId();
+        this.name = hobbyDto.getName();
+        this.description = hobbyDto.getDescription();
+        hobbyDto.getPeople().forEach( personDto -> {
+            //people.add(personDto);
+        });
+
     }
 
     @Override
