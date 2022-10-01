@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.CityInfoDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,6 +40,11 @@ public class Address {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.cityInfo = cityInfo;
+    }
+
+    public Address(CityInfoDto.AddressDto addressDto){
+        this.street = addressDto.getStreet();
+        this.additionalInfo = addressDto.getAdditionalInfo();
     }
 
     public Address() {

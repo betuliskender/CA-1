@@ -1,8 +1,12 @@
 package dtos;
 
+import entities.Address;
+import entities.CityInfo;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,6 +28,16 @@ public class CityInfoDto implements Serializable {
         this.zipcode = zipcode;
         this.city = city;
         this.addresses = addresses;
+    }
+
+    public CityInfoDto(CityInfo cityInfo) {
+        addresses = new LinkedHashSet<>();
+        this.id = cityInfo.getId();
+        this.zipcode = cityInfo.getZipcode();
+        this.city = cityInfo.getCity();
+        cityInfo.getAddresses().forEach(address -> {
+            addresses.add(new AddressDto(address));
+        });
     }
 
     public Integer getId() {
@@ -80,6 +94,12 @@ public class CityInfoDto implements Serializable {
             this.id = id;
             this.street = street;
             this.additionalInfo = additionalInfo;
+        }
+
+        public AddressDto(Address address){
+            this.id = address.getId();
+            this.street = address.getStreet();
+            this.additionalInfo = address.getAdditionalInfo();
         }
 
         public Integer getId() {

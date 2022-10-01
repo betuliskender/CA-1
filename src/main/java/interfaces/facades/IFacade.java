@@ -1,5 +1,8 @@
 package interfaces.facades;
 
+import dtos.CityInfoDto;
+import entities.CityInfo;
+
 import java.util.List;
 
 public interface IFacade <T>

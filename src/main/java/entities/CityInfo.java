@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.CityInfoDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,14 +13,6 @@ import java.util.Set;
 @Table(name = "city_info")
 public class CityInfo {
     public CityInfo() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CityInfo)) return false;
-        CityInfo cityInfo = (CityInfo) o;
-        return getId().equals(cityInfo.getId());
     }
 
     @Override
@@ -47,6 +41,23 @@ public class CityInfo {
     public CityInfo(String zipcode, String city) {
         this.zipcode = zipcode;
         this.city = city;
+    }
+
+
+    public  CityInfo(CityInfoDto cityInfoDto){
+        this.zipcode = cityInfoDto.getZipcode();
+        this.city = cityInfoDto.getCity();
+        cityInfoDto.getAddresses().forEach( addressDto -> {
+            addresses.add(new Address(addressDto));
+        });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CityInfo)) return false;
+        CityInfo cityInfo = (CityInfo) o;
+        return getId().equals(cityInfo.getId());
     }
 
     public Integer getId() {

@@ -1,15 +1,17 @@
 package facades;
 
+import dtos.CityInfoDto;
 import entities.CityInfo;
 import interfaces.facades.IFacade;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class CityInfoFacade implements IFacade<CityInfo> {
+public class CityInfoFacade implements IFacade<CityInfoDto> {
 
     private static CityInfoFacade instance;
     private static EntityManagerFactory emf;
@@ -30,46 +32,55 @@ public class CityInfoFacade implements IFacade<CityInfo> {
     }
 
     @Override
-    public CityInfo getById(Integer id) {
+    public CityInfoDto getById(Integer id) {
         EntityManager em = getEntityManager();
         CityInfo cityInfo = em.find(CityInfo.class, id);
-        return cityInfo;
+        return new CityInfoDto(cityInfo);
     }
 
     @Override
-    public List<CityInfo> getAll() {
+    public List<CityInfoDto> getAll() {
+        List<CityInfoDto> cityInfoDtoList = new ArrayList<>();
         EntityManager em = getEntityManager();
         TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo  c", CityInfo.class);
-        return query.getResultList();
+        query.getResultList().forEach(cityInfo -> {
+            cityInfoDtoList.add(new CityInfoDto(cityInfo));
+        });
+        return cityInfoDtoList;
     }
 
     @Override
-    public CityInfo create(CityInfo cityInfo) {
+    public CityInfoDto create(CityInfoDto cityInfo) {
         EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(cityInfo);
-            em.getTransaction().commit();
-        }finally {
-            em.close();
-        }return cityInfo;
-    }
+        CityInfo c = new CityInfo(cityInfo);
 
-    @Override
-    public CityInfo update(CityInfo cityInfo) {
-        EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(cityInfo);
+            em.persist(c);
             em.getTransaction().commit();
         }finally {
             em.close();
         }
-        return cityInfo;
+        return new CityInfoDto(c);
     }
 
     @Override
-    public CityInfo delete(CityInfo cityInfo) {
+    public CityInfoDto update(CityInfoDto cityInfo) {
+        EntityManager em = getEntityManager();
+        CityInfo c = new CityInfo(cityInfo);
+
+        try {
+            em.getTransaction().begin();
+            em.merge(c);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return new CityInfoDto(c);
+    }
+
+    @Override
+    public CityInfoDto delete(CityInfoDto cityInfo) {
         EntityManager em = getEntityManager();
         CityInfo c = em.find(CityInfo.class, cityInfo.getId());
         try {
@@ -79,6 +90,6 @@ public class CityInfoFacade implements IFacade<CityInfo> {
         }finally {
             em.close();
         }
-        return c;
+        return cityInfo;
     }
 }

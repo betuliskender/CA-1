@@ -1,6 +1,7 @@
 package facades;
 
 
+import dtos.CityInfoDto;
 import entities.CityInfo;
 import entities.CityInfo;
 import org.junit.jupiter.api.*;
@@ -16,7 +17,7 @@ import static junit.framework.Assert.assertNotNull;
 public class CityInfoFacadeTest  {
     private static EntityManagerFactory emf;
     private static CityInfoFacade facade;
-    
+
     CityInfo c1, c2;
 
     public CityInfoFacadeTest() {
@@ -60,23 +61,23 @@ public class CityInfoFacadeTest  {
 
     @Test
     void getById() {
-        CityInfo expected = c1;
-        CityInfo actual = facade.getById(c1.getId());
+        CityInfoDto expected = new CityInfoDto(c1);
+        CityInfoDto actual = facade.getById(c1.getId());
         assertEquals(expected, actual);
     }
 
     @Test
     void getAll(){
         int expected = 2;
-        List<CityInfo> cityInfoList = facade.getAll();
+        List<CityInfoDto> cityInfoList = facade.getAll();
         assertEquals(expected, cityInfoList.size());
     }
 
     @Test
     void create() {
         CityInfo c = new CityInfo("2400", "Nordvest");
-        CityInfo expected = c;
-        CityInfo actual = facade.create(c);
+        CityInfoDto expected = new CityInfoDto(c);
+        CityInfoDto actual = facade.create(expected);
         assertEquals(expected, actual);
         assertNotNull(actual.getId());
     }
@@ -84,14 +85,14 @@ public class CityInfoFacadeTest  {
     @Test
     void update() {
         c1.setZipcode("2200");
-        CityInfo expected = c1;
-        CityInfo actual = facade.update(c1);
+        CityInfoDto expected = new CityInfoDto(c1);
+        CityInfoDto actual = facade.update(expected);
         assertEquals(expected, actual);
     }
 
     @Test
     void delete(){
-        facade.delete(c1);
+        facade.delete(new CityInfoDto(c1));
         int expected = 1;
         int actual = facade.getAll().size();
         assertEquals(expected, actual);
