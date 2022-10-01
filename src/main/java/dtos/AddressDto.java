@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Address;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -26,6 +28,13 @@ public class AddressDto implements Serializable {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.people = people;
+    }
+
+    public AddressDto(Address a) {
+        this.id = a.getId();
+        this.street = a.getStreet();
+        this.additionalInfo = a.getAdditionalInfo();
+
     }
 
 

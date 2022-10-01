@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.AddressDto;
 import entities.Address;
 import interfaces.facades.IFacade;
 
@@ -8,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class AddressFacade implements IFacade<Address> {
+public class AddressFacade implements IFacade<AddressDto> {
 
         private static facades.AddressFacade instance;
         private static EntityManagerFactory emf;
@@ -29,10 +30,10 @@ public class AddressFacade implements IFacade<Address> {
         }
 
         @Override
-        public Address getById(Integer id) {
+        public AddressDto getById(Integer id) {
             EntityManager em = getEntityManager();
             Address a = em.find(Address.class, id);
-            return  a;
+            return  new AddressDto(a);
         }
 
         @Override
