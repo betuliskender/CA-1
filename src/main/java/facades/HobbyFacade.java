@@ -63,7 +63,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     }
 
     @Override
-    public Hobby update(Hobby hobby) {
+    public HobbyDto update(HobbyDto hobby) {
         EntityManager em = getEntityManager();
 
         try {
@@ -77,7 +77,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     }
 
     @Override
-    public Hobby delete(Integer id) {
+    public HobbyDto delete(Integer id) {
         EntityManager em = getEntityManager();
         Hobby h = em.find(Hobby.class, id);
 
@@ -88,6 +88,6 @@ public class HobbyFacade implements IFacade<HobbyDto> {
         } finally {
             em.close();
         }
-        return h;
+        return new HobbyDto(h);
     }
 }
