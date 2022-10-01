@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.AddressDto;
+import dtos.PersonDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +44,11 @@ public class Address {
     }
 
     public Address() {
+    }
+    public Address(PersonDto.InnerAddressDto innerAddressDto) {
+        this.id = innerAddressDto.getId();
+        this.street = innerAddressDto.getStreet();
+        this.additionalInfo = innerAddressDto.getAdditionalInfo();
     }
 
 
