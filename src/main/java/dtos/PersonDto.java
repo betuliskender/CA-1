@@ -167,7 +167,7 @@ public class PersonDto implements Serializable {
                     "additionalInfo = " + additionalInfo + ")";
         }
 
-        public static class InnerCityInfo implements Serializable {
+        public static class InnerCityInfoDto implements Serializable {
             private final Integer id;
             @Size(max = 45)
             @NotNull
@@ -178,7 +178,7 @@ public class PersonDto implements Serializable {
 
 
 
-            public InnerCityInfo(Integer id, String zipcode, String city) {
+            public InnerCityInfoDto(Integer id, String zipcode, String city) {
                 this.id = id;
                 this.zipcode = zipcode;
                 this.city = city;
@@ -199,14 +199,23 @@ public class PersonDto implements Serializable {
             @Override
             public boolean equals(Object o) {
                 if (this == o) return true;
-                if (!(o instanceof InnerCityInfo)) return false;
-                InnerCityInfo that = (InnerCityInfo) o;
+                if (!(o instanceof InnerCityInfoDto)) return false;
+                InnerCityInfoDto that = (InnerCityInfoDto) o;
                 return getId().equals(that.getId());
             }
 
             @Override
             public int hashCode() {
                 return Objects.hash(getId());
+            }
+
+            @Override
+            public String toString() {
+                return "InnerCityInfo{" +
+                        "id=" + id +
+                        ", zipcode='" + zipcode + '\'' +
+                        ", city='" + city + '\'' +
+                        '}';
             }
         }
     }

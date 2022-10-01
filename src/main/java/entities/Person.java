@@ -1,8 +1,11 @@
 package entities;
 
+import dtos.PersonDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -83,6 +86,14 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+    }
+
+    public Person(PersonDto personDto) {
+        this.id = personDto.getId();
+        this.email = personDto.getEmail();
+        this.firstName = personDto.getFirstName();
+        this.lastName = personDto.getLastName();
+        this.address = new Address(new PersonDto.InnerAddressDto(personDto.getAddress(),
     }
 
     public Integer getId() {

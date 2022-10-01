@@ -1,7 +1,5 @@
 package facades;
 
-import dtos.AddressDto;
-import dtos.HobbyDto;
 import dtos.PersonDto;
 import entities.*;
 import interfaces.facades.IFacade;
@@ -11,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class PersonFacade implements IFacade<PersonDto> {
 
@@ -62,7 +58,7 @@ public class PersonFacade implements IFacade<PersonDto> {
         EntityManager em = getEntityManager();
 
         PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
-        PersonDto.InnerAddressDto.InnerCityInfo cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfo(3,"3300", "Kjøbenhavnstrup");
+        PersonDto.InnerAddressDto.InnerCityInfoDto cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfoDto(3,"3300", "Kjøbenhavnstrup");
 
         CityInfo cityInfo = new CityInfo(cityInfoDto.getZipcode(),cityInfoDto.getCity());
         Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(),cityInfo);
@@ -91,7 +87,7 @@ public class PersonFacade implements IFacade<PersonDto> {
             throw new EntityNotFoundException("No such person with that id: "+ personDto.getId());
         }
         PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
-        PersonDto.InnerAddressDto.InnerCityInfo cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfo(3,"3300", "Kjøbenhavnstrup");
+        PersonDto.InnerAddressDto.InnerCityInfoDto cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfoDto(3,"3300", "Kjøbenhavnstrup");
         Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(), new CityInfo("2300","Bagsværd"));
 
         fromDb = new Person(personDto.getEmail(),personDto.getFirstName(), personDto.getLastName(), address);

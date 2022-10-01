@@ -136,4 +136,54 @@ public class AddressDto implements Serializable {
         }
     }
 
+    public static class  InnerCityInfoDto implements Serializable {
+        private final Integer id;
+        @Size(max = 45)
+        @NotNull
+        private final String zipcode;
+        @Size(max = 45)
+        @NotNull
+        private final String city;
+
+        public InnerCityInfoDto(Integer id, String zipcode, String city) {
+            this.id = id;
+            this.zipcode = zipcode;
+            this.city = city;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public String getZipcode() {
+            return zipcode;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof InnerCityInfoDto)) return false;
+            InnerCityInfoDto that = (InnerCityInfoDto) o;
+            return getId().equals(that.getId());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getId());
+        }
+
+        @Override
+        public String toString() {
+            return "InnerCityInfoDto{" +
+                    "id=" + id +
+                    ", zipcode='" + zipcode + '\'' +
+                    ", city='" + city + '\'' +
+                    '}';
+        }
+    }
+
 }
