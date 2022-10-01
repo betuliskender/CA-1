@@ -71,9 +71,9 @@ public class AddressFacade implements IFacade<Address> {
         }
 
         @Override
-        public Address delete(Address address) {
+        public Address delete(Integer id) {
             EntityManager em = getEntityManager();
-            Address a = em.find(Address.class, address.getId());
+            Address a = em.find(Address.class, id);
 
             try{
                 em.getTransaction().begin();

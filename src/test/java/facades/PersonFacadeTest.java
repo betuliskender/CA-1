@@ -124,7 +124,7 @@ public class PersonFacadeTest {
 
     @Test
     void delete() {
-        facade.delete(p1);
+        facade.delete(p1.getId());
         int expected = 2;
         int actual = facade.getAll().size();
         assertEquals(expected,actual);

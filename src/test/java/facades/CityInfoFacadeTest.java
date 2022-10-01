@@ -3,7 +3,6 @@ package facades;
 
 import dtos.CityInfoDto;
 import entities.CityInfo;
-import entities.CityInfo;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -92,7 +91,7 @@ public class CityInfoFacadeTest  {
 
     @Test
     void delete(){
-        facade.delete(new CityInfoDto(c1));
+        facade.delete(c1.getId());
         int expected = 1;
         int actual = facade.getAll().size();
         assertEquals(expected, actual);

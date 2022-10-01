@@ -134,7 +134,7 @@ public class PhoneFacadeTest
 
     @Test
     void delete(){
-        facade.delete(phone1);
+        facade.delete(phone1.getId());
         int expected = 1;
         int actual = facade.getAll().size();
         assertEquals(expected, actual);

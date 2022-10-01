@@ -69,9 +69,9 @@ public class PersonFacade implements IFacade<Person> {
     }
 
     @Override
-    public Person delete(Person person) {
+    public Person delete(Integer id) {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, person.getId());
+        Person p = em.find(Person.class, id);
         try{
             em.getTransaction().begin();
             em.remove(p);

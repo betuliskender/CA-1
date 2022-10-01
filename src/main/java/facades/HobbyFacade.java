@@ -71,9 +71,9 @@ public class HobbyFacade implements IFacade<Hobby> {
     }
 
     @Override
-    public Hobby delete(Hobby hobby) {
+    public Hobby delete(Integer id) {
         EntityManager em = getEntityManager();
-        Hobby h = em.find(Hobby.class, hobby.getId());
+        Hobby h = em.find(Hobby.class, id);
 
         try{
             em.getTransaction().begin();

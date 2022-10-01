@@ -92,7 +92,7 @@ public class HobbyFacadeTest {
 
     @Test
     void delete(){
-        facade.delete(h1);
+        facade.delete(h1.getId());
         int expected = 1;
         int actual = facade.getAll().size();
         assertEquals(expected, actual);
