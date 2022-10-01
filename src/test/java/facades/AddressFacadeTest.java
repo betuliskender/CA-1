@@ -120,7 +120,7 @@ public class AddressFacadeTest {
 
         @Test
         void delete(){
-            facade.delete(a1);
+            facade.delete(a1.getId());
             int expected = 2;
             int actual = facade.getAll().size();
             assertEquals(expected, actual);

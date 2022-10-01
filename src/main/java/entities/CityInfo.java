@@ -44,9 +44,6 @@ public class CityInfo {
         this.id = cityInfoDto.getId();
         this.zipcode = cityInfoDto.getZipcode();
         this.city = cityInfoDto.getCity();
-        cityInfoDto.getAddresses().forEach( addressDto -> {
-            addresses.add(new Address(addressDto));
-        });
     }
 
     @Override

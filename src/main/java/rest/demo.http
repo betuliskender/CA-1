@@ -5,4 +5,26 @@ POST http://localhost:8080/devops_starter_war_exploded/api/xxx
 Content-Type: application/json
 #User-Agent: Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion
 
-{"str1": "First Property", "str2": "Second Property"}
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/cityinfo
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
+Accept: application/json
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/cityinfo
+Content-Type: application/json
+
+{"zipcode": "9689", "city": "Hej"}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
+Content-Type: application/json
+
+{"zipcode": "9989", "city": "Nej"}
+
+###
+DELETE http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
+Content-Type: application/json

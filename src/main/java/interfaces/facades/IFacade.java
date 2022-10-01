@@ -11,6 +11,6 @@ public interface IFacade <T>
     List<T> getAll();
     T create(T t);
     T update(T t);
-    T delete(T t);
+    T delete(Integer id);
 
 }

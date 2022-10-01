@@ -79,9 +79,9 @@ public class PhoneFacade implements IFacade<Phone> {
     }
 
     @Override
-    public Phone delete(Phone phone) {
+    public Phone delete(Integer id) {
         EntityManager em = getEntityManager();
-        Phone p = em.find(Phone.class, phone.getId());
+        Phone p = em.find(Phone.class, id);
 
         try{
             em.getTransaction().begin();

@@ -57,6 +57,12 @@ public class CityInfoFacade implements IFacade<CityInfoDto> {
         try {
             em.getTransaction().begin();
             em.persist(c);
+            if(c.getAddresses().size() > 0)
+            {
+                c.getAddresses().forEach( address -> {
+                    em.persist(address);
+                });
+            }
             em.getTransaction().commit();
         }finally {
             em.close();
@@ -80,9 +86,9 @@ public class CityInfoFacade implements IFacade<CityInfoDto> {
     }
 
     @Override
-    public CityInfoDto delete(CityInfoDto cityInfo) {
+    public CityInfoDto delete(Integer id) {
         EntityManager em = getEntityManager();
-        CityInfo c = em.find(CityInfo.class, cityInfo.getId());
+        CityInfo c = em.find(CityInfo.class, id);
         try {
             em.getTransaction().begin();
             em.remove(c);
@@ -90,6 +96,6 @@ public class CityInfoFacade implements IFacade<CityInfoDto> {
         }finally {
             em.close();
         }
-        return cityInfo;
+        return new CityInfoDto(c);
     }
 }
