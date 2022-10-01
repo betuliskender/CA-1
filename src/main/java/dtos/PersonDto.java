@@ -166,6 +166,49 @@ public class PersonDto implements Serializable {
                     "street = " + street + ", " +
                     "additionalInfo = " + additionalInfo + ")";
         }
+
+        public static class InnerCityInfo implements Serializable {
+            private final Integer id;
+            @Size(max = 45)
+            @NotNull
+            private final String zipcode;
+            @Size(max = 45)
+            @NotNull
+            private final String city;
+
+
+
+            public InnerCityInfo(Integer id, String zipcode, String city) {
+                this.id = id;
+                this.zipcode = zipcode;
+                this.city = city;
+            }
+
+            public Integer getId() {
+                return id;
+            }
+
+            public String getZipcode() {
+                return zipcode;
+            }
+
+            public String getCity() {
+                return city;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (!(o instanceof InnerCityInfo)) return false;
+                InnerCityInfo that = (InnerCityInfo) o;
+                return getId().equals(that.getId());
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(getId());
+            }
+        }
     }
 
     /**

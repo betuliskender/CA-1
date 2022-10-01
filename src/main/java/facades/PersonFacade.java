@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.AddressDto;
 import dtos.HobbyDto;
 import dtos.PersonDto;
 import entities.*;
@@ -57,10 +58,22 @@ public class PersonFacade implements IFacade<PersonDto> {
 
     @Override
     public PersonDto create(PersonDto personDto) {
-        Person person = new Person(personDto.getEmail(), personDto.getFirstName(),personDto.getLastName());
+
         EntityManager em = getEntityManager();
+
+        PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
+        PersonDto.InnerAddressDto.InnerCityInfo cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfo(3,"3300", "Kjøbenhavnstrup");
+
+        CityInfo cityInfo = new CityInfo(cityInfoDto.getZipcode(),cityInfoDto.getCity());
+        Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(),cityInfo);
+
+        Person person = new Person(personDto.getEmail(),personDto.getFirstName(), personDto.getLastName(), address);
+        System.out.println(person.getId());
+
         try {
             em.getTransaction().begin();
+            em.persist(cityInfo);
+            em.persist(person.getAddress());
             em.persist(person);
             em.getTransaction().commit();
         } finally {
@@ -70,23 +83,37 @@ public class PersonFacade implements IFacade<PersonDto> {
     }
 
     @Override
-    public PersonDto update(PersonDto personDTO) {
+    public PersonDto update(PersonDto personDto) {
 
         EntityManager em = getEntityManager();
-        Person fromDb = em.find(Person.class, personDTO.getId());
+        Person fromDb = em.find(Person.class, personDto.getId());
         if(fromDb == null){
-            throw new EntityNotFoundException("No such person with that id: "+ personDTO.getId());
+            throw new EntityNotFoundException("No such person with that id: "+ personDto.getId());
         }
-        Person person = new Person(personDTO.getEmail(),personDTO.getFirstName(), personDTO.getLastName());
+        PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
+        PersonDto.InnerAddressDto.InnerCityInfo cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfo(3,"3300", "Kjøbenhavnstrup");
+        Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(), new CityInfo("2300","Bagsværd"));
+
+        fromDb = new Person(personDto.getEmail(),personDto.getFirstName(), personDto.getLastName(), address);
+        System.out.println(fromDb.getId());
 
         try {
             em.getTransaction().begin();
-            em.merge(person);
+            em.merge(fromDb);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PersonDto(person);
+        return new PersonDto(fromDb);
+    }
+
+    public static void main(String[] args) {
+        emf = EMF_Creator.createEntityManagerFactory();
+        PersonFacade personFacade = getInstance(emf);
+        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
+        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+
     }
 
     @Override
