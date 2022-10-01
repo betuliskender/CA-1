@@ -6,6 +6,7 @@ import interfaces.facades.IFacade;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -37,42 +38,46 @@ public class AddressFacade implements IFacade<AddressDto> {
         }
 
         @Override
-        public List<Address> getAll() {
+        public List<AddressDto> getAll() {
             EntityManager em = getEntityManager();
             TypedQuery<Address> query =em.createQuery("SELECT a FROM Address a", Address.class);
-            return query.getResultList();
+            List<Address>addressList = query.getResultList();
+            return AddressDto.getDtos(addressList);
         }
 
         @Override
-        public Address create(Address address) {
+        public AddressDto create(AddressDto addressDto) {
             EntityManager em = getEntityManager();
 
             try {
                 em.getTransaction().begin();
-                em.persist(address);
+                em.persist(addressDto);
                 em.getTransaction().commit();
             } finally {
                 em.close();
             }
-            return address;
+            return new AddressDto(addressDto);
         }
 
         @Override
-        public Address update(Address address) {
+        public AddressDto update(AddressDto address) {
             EntityManager em = getEntityManager();
-
+            Address fromDB = em.find(Address.class,address.getId());
+            if(fromDB == null){
+                throw new EntityNotFoundException("Adress not found");
+            }
             try {
                 em.getTransaction().begin();
-                em.merge(address);
+                em.merge(fromDB);
                 em.getTransaction().commit();
             } finally {
                 em.close();
             }
-            return address;
+            return new AddressDto(fromDB);
         }
 
-        @Override
-        public Address delete(Integer id) {
+    @Override
+        public AddressDto delete(Integer id) {
             EntityManager em = getEntityManager();
             Address a = em.find(Address.class, id);
 
@@ -83,6 +88,6 @@ public class AddressFacade implements IFacade<AddressDto> {
             } finally {
                 em.close();
             }
-            return a;
+            return new AddressDto(a);
         }
     }

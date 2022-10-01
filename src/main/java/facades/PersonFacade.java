@@ -102,19 +102,10 @@ public class PersonFacade implements IFacade<PersonDto> {
         return new PersonDto(fromDb);
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        PersonFacade personFacade = getInstance(emf);
-        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
-        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-
-    }
-
     @Override
-    public PersonDto delete(PersonDto person) {
+    public PersonDto delete(Integer Id) {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, person.getId());
+        Person p = em.find(Person.class, Id);
         try {
 
             em.getTransaction().begin();
@@ -124,6 +115,15 @@ public class PersonFacade implements IFacade<PersonDto> {
             em.close();
         }
         return new PersonDto(p);
+    }
+
+    public static void main(String[] args) {
+        emf = EMF_Creator.createEntityManagerFactory();
+        PersonFacade personFacade = getInstance(emf);
+        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
+        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+
     }
 
 }

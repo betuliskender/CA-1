@@ -1,13 +1,5 @@
 package interfaces.facades;
 
-<<<<<<< HEAD
-import dtos.CityInfoDto;
-import entities.CityInfo;
-=======
-import dtos.PersonDto;
-import entities.Person;
->>>>>>> personApiBranch
-
 import java.util.List;
 
 public interface IFacade <T>
@@ -17,11 +9,8 @@ public interface IFacade <T>
     T create(T t);
 
     T update(T t);
-<<<<<<< HEAD
-    T delete(Integer id);
-=======
 
-    T delete(T t);
->>>>>>> personApiBranch
+    T delete(Integer id);
+
 
 }

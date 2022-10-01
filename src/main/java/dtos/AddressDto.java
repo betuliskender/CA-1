@@ -1,10 +1,13 @@
 package dtos;
 
 import entities.Address;
+import entities.Person;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,6 +45,18 @@ public class AddressDto implements Serializable {
         this.additionalInfo = address.getAdditionalInfo();
         this.people = personDtos;
 
+    }
+
+    public AddressDto(AddressDto address) {
+        this.id = address.getId();
+        this.street = address.getStreet();
+        this.additionalInfo = address.getAdditionalInfo();
+    }
+
+    public static List<AddressDto> getDtos(List<Address> addresses) {
+        List<AddressDto> addressDtos = new ArrayList();
+        addresses.forEach(address -> addressDtos.add(new dtos.AddressDto(address)));
+        return addressDtos;
     }
 
     public Integer getId() {
