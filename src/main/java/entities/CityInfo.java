@@ -12,13 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "city_info")
 public class CityInfo {
-    public CityInfo() {
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +32,16 @@ public class CityInfo {
     @OneToMany(mappedBy = "cityInfo")
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    public CityInfo() {
+    }
+
     public CityInfo(String zipcode, String city) {
         this.zipcode = zipcode;
         this.city = city;
     }
 
-
     public  CityInfo(CityInfoDto cityInfoDto){
+        this.id = cityInfoDto.getId();
         this.zipcode = cityInfoDto.getZipcode();
         this.city = cityInfoDto.getCity();
         cityInfoDto.getAddresses().forEach( addressDto -> {
@@ -58,6 +55,11 @@ public class CityInfo {
         if (!(o instanceof CityInfo)) return false;
         CityInfo cityInfo = (CityInfo) o;
         return getId().equals(cityInfo.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     public Integer getId() {
