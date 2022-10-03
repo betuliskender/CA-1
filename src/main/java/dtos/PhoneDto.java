@@ -12,7 +12,7 @@ import java.util.Objects;
  * A DTO for the {@link entities.Phone} entity
  */
 public class PhoneDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @NotNull
     private final Integer number;
     @Size(max = 45)
