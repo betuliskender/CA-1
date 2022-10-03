@@ -94,6 +94,10 @@ public class AddressDto implements Serializable {
                 "people = " + people + ")";
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     /**
      * A DTO for the {@link entities.Person} entity
      */

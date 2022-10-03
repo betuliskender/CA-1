@@ -103,3 +103,28 @@ Content-Type: application/json
 
 {"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
 
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/address/1
+Accept: application/json
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/address
+Content-Type: application/json
+
+{"street": "Gladsaxe Møllevej 8", "additionalInfo": "til højre", "innerCityInfoDto":{
+  "id": 4, "zipcode": "2300", "city": "Bagsværd"
+}
+}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/address/10
+Content-Type: application/json
+
+{"street": "Mortensvej 99", "additionalInfo": "indenfor", "innerCityInfoDto": {
+  "id": 1, "zipcode": "3300", "city": "Frederiksberg"
+}
+}
+
+###
+DELETE http://localhost:8080/devops_starter_war_exploded/api/address/9
+Content-Type: application/json

@@ -5,6 +5,7 @@ import dtos.CityInfoDto;
 import entities.Address;
 import entities.CityInfo;
 import interfaces.facades.IFacade;
+import services.AddressHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -65,20 +66,21 @@ public class AddressFacade implements IFacade<AddressDto> {
     }
 
     @Override
-    public AddressDto update(AddressDto address) {
+    public AddressDto update(AddressDto addressdto) {
         EntityManager em = getEntityManager();
-        Address fromDB = em.find(Address.class, address.getId());
-        if (fromDB == null) {
+        Address existingAddress = em.find(Address.class, addressdto.getId());
+        Address address = AddressHandler.mergmergeDTOAndEntity(addressdto, existingAddress);
+        if (existingAddress == null) {
             throw new EntityNotFoundException("Adress not found");
         }
         try {
             em.getTransaction().begin();
-            em.merge(fromDB);
+            em.merge(address);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new AddressDto(fromDB);
+        return new AddressDto(address);
     }
 
     @Override
