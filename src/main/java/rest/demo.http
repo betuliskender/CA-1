@@ -53,13 +53,10 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/devops_starter_war_exploded/api/phone/2
+PUT http://localhost:8080/devops_starter_war_exploded/api/phone/4
 Content-Type: application/json
 
-{"number": 222222, "description": "mobil", "person": {
-  "id": 1, "email": "a@a.dk", "firstName": "hej", "lastName": "hej"
-}
-}
+{"number": 111111}
 
 ###
 DELETE http://localhost:8080/devops_starter_war_exploded/api/phone/2
