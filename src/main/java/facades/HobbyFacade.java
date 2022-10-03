@@ -75,7 +75,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
         } finally {
             em.close();
         }
-        return hobbyDto;
+        return new HobbyDto(hobby);
     }
 
     @Override
