@@ -28,3 +28,33 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
 Content-Type: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/phone
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/phone/1
+Accept: application/json
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/phone
+Content-Type: application/json
+
+{"number": 12321312, "description": "mobil", "person": {
+  "id": 1, "email": "a@a.dk", "firstName": "hej", "lastName": "hej"
+  }
+}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/phone/2
+Content-Type: application/json
+
+{"number": 222222, "description": "mobil", "person": {
+  "id": 1, "email": "a@a.dk", "firstName": "hej", "lastName": "hej"
+}
+}
+
+###
+DELETE http://localhost:8080/devops_starter_war_exploded/api/phone/2
+Content-Type: application/json

@@ -67,13 +67,12 @@ public class PhoneFacade implements IFacade<PhoneDto> {
         try {
             em.getTransaction().begin();
             if(person != null){
-                person.getPhones().add(phone);
+                em.persist(phone);
                 em.merge(person);
             }
             else {
-
                 Person newPerson = new Person(phoneDto.getPerson());
-                newPerson.getPhones().add(phone);
+                em.persist(phone);
                 em.persist(newPerson);
             }
             em.getTransaction().commit();

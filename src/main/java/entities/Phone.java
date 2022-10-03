@@ -45,12 +45,11 @@ public class Phone {
     }
 
     public Phone(PhoneDto phoneDto) {
+        this.id = phoneDto.getId();
         this.number = phoneDto.getNumber();
         this.description = phoneDto.getDescription();
         this.person = new Person(phoneDto.getPerson());
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -63,6 +62,16 @@ public class Phone {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number=" + number +
+                ", description='" + description + '\'' +
+                ", person=" + person +
+                '}';
     }
 
     public Integer getId() {
