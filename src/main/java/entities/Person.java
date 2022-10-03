@@ -93,7 +93,6 @@ public class Person {
         this.email = personDto.getEmail();
         this.firstName = personDto.getFirstName();
         this.lastName = personDto.getLastName();
-        this.address = new Address(new PersonDto.InnerAddressDto(personDto.getAddress(),
     }
 
     public Integer getId() {
