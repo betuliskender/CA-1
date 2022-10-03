@@ -1,6 +1,7 @@
-/*
+
 package facades;
 
+import dtos.HobbyDto;
 import entities.Hobby;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -62,32 +63,31 @@ public class HobbyFacadeTest {
 
     @Test
     void getById() {
-        Hobby expected = h1;
-        Hobby actual = facade.getById(h1.getId());
+        HobbyDto expected = new HobbyDto(h1);
+        HobbyDto actual = facade.getById(h1.getId());
         assertEquals(expected, actual);
     }
 
     @Test
     void getAll(){
         int expected = 2;
-        List<Hobby> hobbyList = facade.getAll();
+        List<HobbyDto> hobbyList = facade.getAll();
         assertEquals(expected, hobbyList.size());
     }
 
     @Test
     void create() {
         Hobby h = new Hobby("Madlavning", "Lav mad");
-        Hobby expected = h;
-        Hobby actual = facade.create(h);
-        assertEquals(expected, actual);
+        HobbyDto expected = new HobbyDto(h);
+        HobbyDto actual = facade.create(expected);
         assertNotNull(actual.getId());
     }
 
     @Test
     void update() {
         h1.setName("Hækleri");
-        Hobby expected = h1;
-        Hobby actual = facade.update(h1);
+        HobbyDto expected = new HobbyDto(h1);
+        HobbyDto actual = facade.update(expected);
         assertEquals(expected, actual);
     }
 
@@ -99,4 +99,4 @@ public class HobbyFacadeTest {
         assertEquals(expected, actual);
     }
 }
-*/
+
