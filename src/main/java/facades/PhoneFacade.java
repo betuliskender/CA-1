@@ -7,6 +7,7 @@ import entities.Person;
 import entities.Phone;
 import entities.Phone;
 import interfaces.facades.IFacade;
+import services.PhoneHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -85,7 +86,8 @@ public class PhoneFacade implements IFacade<PhoneDto> {
     @Override
     public PhoneDto update(PhoneDto phone) {
         EntityManager em = getEntityManager();
-        Phone p = new Phone(phone);
+        Phone existingPhone = em.find(Phone.class, phone.getId());
+        Phone p = PhoneHandler.mergeDTOAndEntity(phone, existingPhone);
 
         try {
             em.getTransaction().begin();
@@ -94,7 +96,7 @@ public class PhoneFacade implements IFacade<PhoneDto> {
         } finally {
             em.close();
         }
-        return new PhoneDto(p);
+        return phone;
     }
 
     @Override
