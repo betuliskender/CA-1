@@ -104,7 +104,7 @@ public class PhoneFacadeTest
 
     @Test
     void getById() {
-        Phone expected = phone1;
+        PhoneDto expected = new PhoneDto(phone1);
         PhoneDto actual = facade.getById(phone1.getId());
         assertEquals(expected, actual);
     }
@@ -121,6 +121,7 @@ public class PhoneFacadeTest
         Phone phone = new Phone(12233445, "Work", person1);
         PhoneDto phoneDto = new PhoneDto(phone);
         PhoneDto actual = facade.create(phoneDto);
+        System.out.println(actual);
         assertNotNull(actual.getId());
     }
 

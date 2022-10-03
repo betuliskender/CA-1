@@ -12,7 +12,7 @@ import java.util.Objects;
  * A DTO for the {@link entities.Phone} entity
  */
 public class PhoneDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @NotNull
     private final Integer number;
     @Size(max = 45)
@@ -21,8 +21,7 @@ public class PhoneDto implements Serializable {
     @NotNull
     private final PersonDto person;
 
-    public PhoneDto(Integer id, Integer number, String description, PersonDto person) {
-        this.id = id;
+    public PhoneDto(Integer number, String description, PersonDto person) {
         this.number = number;
         this.description = description;
         this.person = person;
@@ -33,6 +32,23 @@ public class PhoneDto implements Serializable {
         this.number = phone.getNumber();
         this.description = phone.getDescription();
         this.person = new PersonDto(phone.getPerson());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PhoneDto)) return false;
+        PhoneDto phoneDto = (PhoneDto) o;
+        return getId().equals(phoneDto.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -49,19 +65,6 @@ public class PhoneDto implements Serializable {
 
     public PersonDto getPerson() {
         return person;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhoneDto)) return false;
-        PhoneDto phoneDto = (PhoneDto) o;
-        return getId().equals(phoneDto.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 
     @Override
