@@ -11,7 +11,7 @@ import java.util.*;
  * A DTO for the {@link entities.Address} entity
  */
 public class AddressDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @Size(max = 45)
     @NotNull
     private final String street;
@@ -20,6 +20,7 @@ public class AddressDto implements Serializable {
     private final String additionalInfo;
     private final Set<InnerPersonDto> people = new HashSet<>();
 
+    private InnerCityInfoDto innerCityInfoDto;
 
     public AddressDto(Integer id, String street, String additionalInfo) {
         this.id = id;
@@ -34,12 +35,15 @@ public class AddressDto implements Serializable {
         a.getPeople().forEach(person -> {
             people.add(new InnerPersonDto(person.getId(),person.getEmail(),person.getFirstName(),person.getLastName()));
         });
+        this.innerCityInfoDto = new InnerCityInfoDto(a.getCityInfo().getId(), a.getCityInfo().getZipcode(), a.getCityInfo().getCity());
+
     }
 
     public AddressDto(AddressDto addressDto) {
         this.id = addressDto.getId();
         this.street = addressDto.getStreet();
         this.additionalInfo = addressDto.getAdditionalInfo();
+
     }
 
     public static List<AddressDto> getDtos(List<Address> addresses) {
@@ -58,6 +62,10 @@ public class AddressDto implements Serializable {
 
     public String getAdditionalInfo() {
         return additionalInfo;
+    }
+
+    public InnerCityInfoDto getInnerCityInfoDto() {
+        return innerCityInfoDto;
     }
 
     public Set<InnerPersonDto> getPeople() {

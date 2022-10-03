@@ -37,13 +37,27 @@ public class Address {
     @JoinColumn(name = "city_info_id", nullable = false)
     private CityInfo cityInfo;
 
+    public Address(Integer id,String street, String additionalInfo, CityInfo cityInfo) {
+        this.id = id;
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = cityInfo;
+    }
     public Address(String street, String additionalInfo, CityInfo cityInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.cityInfo = cityInfo;
     }
 
+
     public Address() {
+    }
+
+    public Address(AddressDto addressDto) {
+        this.id = addressDto.getId();
+        this.street = addressDto.getStreet();
+        this.additionalInfo = addressDto.getAdditionalInfo();
+        this.cityInfo = new CityInfo(addressDto.getInnerCityInfoDto().getId(),addressDto.getInnerCityInfoDto().getZipcode(),addressDto.getInnerCityInfoDto().getCity());
     }
 
 
