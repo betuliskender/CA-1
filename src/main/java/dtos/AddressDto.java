@@ -37,18 +37,10 @@ public class AddressDto implements Serializable {
         });
     }
 
-    public AddressDto(Address address, Set<PersonDto> personDtos) {
-        this.id = address.getId();
-        this.street = address.getStreet();
-        this.additionalInfo = address.getAdditionalInfo();
-        this.people = personDtos;
-
-    }
-
-    public AddressDto(AddressDto address) {
-        this.id = address.getId();
-        this.street = address.getStreet();
-        this.additionalInfo = address.getAdditionalInfo();
+    public AddressDto(AddressDto addressDto) {
+        this.id = addressDto.getId();
+        this.street = addressDto.getStreet();
+        this.additionalInfo = addressDto.getAdditionalInfo();
     }
 
     public static List<AddressDto> getDtos(List<Address> addresses) {
@@ -116,8 +108,6 @@ public class AddressDto implements Serializable {
             this.firstName = firstName;
             this.lastName = lastName;
         }
-
-
 
 
         public Integer getId() {
