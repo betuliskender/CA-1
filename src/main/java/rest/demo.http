@@ -58,3 +58,27 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/devops_starter_war_exploded/api/phone/2
 Content-Type: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/phone
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/hobby/1
+Accept: application/json
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/hobby
+Content-Type: application/json
+
+{"name": "Gaming", "description": "Gaming"}
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/hobby/2
+Content-Type: application/json
+
+{"name": "Strikning"}
+
+###
+DELETE http://localhost:8080/devops_starter_war_exploded/api/hobby/2
+Content-Type: application/json

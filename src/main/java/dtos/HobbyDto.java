@@ -30,6 +30,11 @@ public class HobbyDto implements Serializable {
         this.description = description;
     }
 
+    public HobbyDto(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public HobbyDto(Hobby hobby) {
         this.id = hobby.getId();
         this.name = hobby.getName();
