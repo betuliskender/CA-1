@@ -64,16 +64,6 @@ public class Phone {
         return Objects.hash(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Phone{" +
-                "id=" + id +
-                ", number=" + number +
-                ", description='" + description + '\'' +
-                ", person=" + person +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }
@@ -106,4 +96,13 @@ public class Phone {
         this.person = person;
     }
 
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number=" + number +
+                ", description='" + description + '\'' +
+                ", person=" + person +
+                '}';
+    }
 }

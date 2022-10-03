@@ -1,8 +1,8 @@
 package dtos;
 
+
 import entities.Person;
 import entities.Phone;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -34,14 +34,13 @@ public class PhoneDto implements Serializable {
         this.person = new PersonDto(phone.getPerson());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhoneDto)) return false;
-        PhoneDto phoneDto = (PhoneDto) o;
-        return getId().equals(phoneDto.getId());
-    }
+    public PhoneDto(Phone phone, PersonDto personDto){
+        this.id = phone.getId();
+        this.number = phone.getNumber();
+        this.description = phone.getDescription();
+        this.person = personDto;
 
+    }
     @Override
     public int hashCode() {
         return Objects.hash(getId());
@@ -50,6 +49,15 @@ public class PhoneDto implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PhoneDto)) return false;
+        PhoneDto phoneDto = (PhoneDto) o;
+        return getId().equals(phoneDto.getId());
+    }
+
 
     public Integer getId() {
         return id;

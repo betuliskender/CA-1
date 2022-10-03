@@ -46,6 +46,12 @@ public class CityInfo {
         this.city = cityInfoDto.getCity();
     }
 
+    public CityInfo(Integer id, String zipcode, String city) {
+        this.id = id;
+        this.zipcode = zipcode;
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,4 +97,12 @@ public class CityInfo {
         this.addresses = addresses;
     }
 
+    @Override
+    public String toString() {
+        return "CityInfo{" +
+                "id=" + id +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }

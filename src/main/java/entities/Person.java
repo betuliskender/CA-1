@@ -3,9 +3,11 @@ package entities;
 import dtos.PersonDto;
 import dtos.PhoneDto;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,6 +18,17 @@ import java.util.Set;
 public class Person {
     public Person() {
     }
+
+    public Person(String email, String firstName, String lastName, Address address, Set<Hobby> hobbies, Set<Phone> phones) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.hobbies = hobbies;
+        this.phones = phones;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -77,21 +90,13 @@ public class Person {
         this.address = address;
     }
 
-    public Person(PersonDto personDto){
+    public Person(PhoneDto.PersonDto personDto) {
+
         this.id = personDto.getId();
         this.email = personDto.getEmail();
         this.firstName = personDto.getFirstName();
         this.lastName = personDto.getLastName();
     }
-
-    public Person(PhoneDto.PersonDto personDto)
-    {
-        this.id = personDto.getId();
-        this.email = personDto.getEmail();
-        this.firstName = personDto.getFirstName();
-        this.lastName = personDto.getLastName();
-    }
-
 
     public Integer getId() {
         return id;
@@ -149,4 +154,14 @@ public class Person {
         this.phones = phones;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address=" + address +
+                '}';
+    }
 }

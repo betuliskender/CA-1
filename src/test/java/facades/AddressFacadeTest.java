@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.AddressDto;
 import entities.Address;
 import entities.CityInfo;
 import org.junit.jupiter.api.*;
@@ -89,32 +90,32 @@ public class AddressFacadeTest {
 
         @Test
         void getById() {
-            Address expected = a1;
-            Address actual = facade.getById(a1.getId());
+            AddressDto expected = new AddressDto(a1);
+            AddressDto actual = facade.getById(a1.getId());
             assertEquals(expected, actual);
         }
 
         @Test
         void getAll(){
             int expected = 3;
-            List<Address> AddressList = facade.getAll();
+            List<AddressDto> AddressList = facade.getAll();
             assertEquals(expected, AddressList.size());
         }
 
         @Test
         void create() {
             Address address = new Address("Hagbartsvej", "5", c1);
-            Address expected = address;
-            Address actual = facade.create(address);
-            assertEquals(expected, actual);
+            AddressDto expected = new AddressDto(address);
+            AddressDto actual = facade.create(expected);
+            System.out.println(actual);
             assertNotNull(actual.getId());
         }
 
         @Test
         void update() {
             a1.setStreet("Bygaden");
-            Address expected = a1;
-            Address actual = facade.update(a1);
+            AddressDto expected = new AddressDto(a1);
+            AddressDto actual = facade.update(expected);
             assertEquals(expected, actual);
         }
 
