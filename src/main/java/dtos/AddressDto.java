@@ -1,7 +1,6 @@
 package dtos;
 
 import entities.Address;
-import entities.Person;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,7 +18,7 @@ public class AddressDto implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String additionalInfo;
-    private final Set<PersonDto> people = new HashSet<>();
+    private final Set<InnerPersonDto> people = new HashSet<>();
 
 
     public AddressDto(Integer id, String street, String additionalInfo) {
@@ -33,7 +32,7 @@ public class AddressDto implements Serializable {
         this.street = a.getStreet();
         this.additionalInfo = a.getAdditionalInfo();
         a.getPeople().forEach(person -> {
-            people.add(new PersonDto(person.getId(),person.getEmail(),person.getFirstName(),person.getLastName()));
+            people.add(new InnerPersonDto(person.getId(),person.getEmail(),person.getFirstName(),person.getLastName()));
         });
     }
 
@@ -61,7 +60,7 @@ public class AddressDto implements Serializable {
         return additionalInfo;
     }
 
-    public Set<PersonDto> getPeople() {
+    public Set<InnerPersonDto> getPeople() {
         return people;
     }
 
@@ -90,7 +89,7 @@ public class AddressDto implements Serializable {
     /**
      * A DTO for the {@link entities.Person} entity
      */
-    public static class PersonDto implements Serializable {
+    public static class InnerPersonDto implements Serializable {
         private final Integer id;
         @Size(max = 45)
         @NotNull
@@ -102,7 +101,7 @@ public class AddressDto implements Serializable {
         @NotNull
         private final String lastName;
 
-        public PersonDto(Integer id, String email, String firstName, String lastName) {
+        public InnerPersonDto(Integer id, String email, String firstName, String lastName) {
             this.id = id;
             this.email = email;
             this.firstName = firstName;
@@ -129,8 +128,8 @@ public class AddressDto implements Serializable {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof PersonDto)) return false;
-            PersonDto personDto = (PersonDto) o;
+            if (!(o instanceof InnerPersonDto)) return false;
+            InnerPersonDto personDto = (InnerPersonDto) o;
             return getId().equals(personDto.getId());
         }
 
