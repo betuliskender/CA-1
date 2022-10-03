@@ -6,10 +6,7 @@ import entities.Person;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Address} entity
@@ -22,21 +19,22 @@ public class AddressDto implements Serializable {
     @Size(max = 45)
     @NotNull
     private final String additionalInfo;
-    private final Set<PersonDto> people;
+    private final Set<PersonDto> people = new HashSet<>();
 
 
-    public AddressDto(Integer id, String street, String additionalInfo, Set<PersonDto> people) {
+    public AddressDto(Integer id, String street, String additionalInfo) {
         this.id = id;
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.people = people;
     }
 
     public AddressDto(Address a) {
         this.id = a.getId();
         this.street = a.getStreet();
         this.additionalInfo = a.getAdditionalInfo();
-
+        a.getPeople().forEach(person -> {
+            people.add(new PersonDto(person.getId(),person.getEmail(),person.getFirstName(),person.getLastName()));
+        });
     }
 
     public AddressDto(Address address, Set<PersonDto> personDtos) {
@@ -118,6 +116,9 @@ public class AddressDto implements Serializable {
             this.firstName = firstName;
             this.lastName = lastName;
         }
+
+
+
 
         public Integer getId() {
             return id;
