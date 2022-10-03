@@ -3,6 +3,7 @@ package facades;
 import dtos.HobbyDto;
 import entities.Hobby;
 import interfaces.facades.IFacade;
+import services.HobbyHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -51,21 +52,22 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     @Override
     public HobbyDto create(HobbyDto hobbyDto) {
         EntityManager em = getEntityManager();
-        new Hobby(hobbyDto);
+        Hobby hobby = new Hobby(hobbyDto);
         try {
             em.getTransaction().begin();
-            em.persist(hobbyDto);
+            em.persist(hobby);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return hobbyDto;
+        return new HobbyDto(hobby);
     }
 
     @Override
-    public HobbyDto update(HobbyDto hobby) {
+    public HobbyDto update(HobbyDto hobbyDto) {
         EntityManager em = getEntityManager();
-
+        Hobby existingHobby = em.find(Hobby.class, hobbyDto.getId());
+        Hobby hobby = HobbyHandler.mergeDTOAndEntity(hobbyDto, existingHobby);
         try {
             em.getTransaction().begin();
             em.merge(hobby);
@@ -73,7 +75,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
         } finally {
             em.close();
         }
-        return hobby;
+        return hobbyDto;
     }
 
     @Override

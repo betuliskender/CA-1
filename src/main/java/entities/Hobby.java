@@ -77,11 +77,9 @@ public class Hobby {
         this.id = hobbyDto.getId();
         this.name = hobbyDto.getName();
         this.description = hobbyDto.getDescription();
-        hobbyDto.getPeople().forEach( personDto -> {
-            //people.add(personDto);
-        });
+    };
 
-    }
+
 
     @Override
     public boolean equals(Object o) {
