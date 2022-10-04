@@ -28,7 +28,15 @@ public class Person {
         this.phones = phones;
     }
 
-
+    public Person(Integer id, String email, String firstName, String lastName, Address address, Set<Hobby> hobbies, Set<Phone> phones) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.hobbies = hobbies;
+        this.phones = phones;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -78,6 +86,13 @@ public class Person {
     private Set<Phone> phones = new LinkedHashSet<>();
 
     public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Person(Integer id, String email, String firstName, String lastName) {
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
