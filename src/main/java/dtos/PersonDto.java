@@ -103,13 +103,26 @@ public class PersonDto implements Serializable {
         return Objects.hash(getId());
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "email = " + email + ", " +
                 "firstName = " + firstName + ", " +
                 "lastName = " + lastName + ", ";
+    }*/
+
+    @Override
+    public String toString() {
+        return "PersonDto{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address=" + address +
+                ", hobbies=" + hobbies +
+                ", phones=" + phones +
+                '}';
     }
 
     /**
