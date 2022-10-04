@@ -25,7 +25,7 @@ public class PersonFacadeTest {
     private static CityInfo c1, c2, c3;
     private static Address a1, a2, a3;
 
-    private static Hobby h1;
+    private static Hobby h1, h2;
 
 
     public PersonFacadeTest() {
@@ -63,6 +63,7 @@ public class PersonFacadeTest {
             a3 = new Address("Østerbrogade 271","ST, MF",c3);
 
             h1 = new Hobby("Gaming", "something");
+            h2 = new Hobby("Strikning", "something");
 
             p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
             p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
@@ -75,6 +76,7 @@ public class PersonFacadeTest {
             em.persist(a2);
             em.persist(a3);
             em.persist(h1);
+            em.persist(h2);
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -111,10 +113,12 @@ public class PersonFacadeTest {
     @Test
     void update() {
         p1.setEmail("Bjergkøbing@email.com");
+        p1.getHobbies().add(h2);
         PersonDto updatedPerson = new PersonDto(p1);
         PersonDto actual = facade.update(updatedPerson);
         System.out.println(actual);
         assertEquals(updatedPerson, actual);
+        assertEquals(2, updatedPerson.getHobbies().size());
     }
 
 
