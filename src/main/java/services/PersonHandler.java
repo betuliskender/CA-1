@@ -27,9 +27,7 @@ public class PersonHandler {
         }
         if(personDto.getAddress() != null && !personDto.getAddress().equals(person.getAddress()))
         {
-            updatedPerson.setAddress(new Address(personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo());
-
-this.cityInfo = new CityInfo(addressDto.getInnerCityInfoDto().getId(),addressDto.getInnerCityInfoDto().getZipcode(),addressDto.getInnerCityInfoDto().getCity());
+            updatedPerson.setAddress(new Address(personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity())));
 
         }
 
