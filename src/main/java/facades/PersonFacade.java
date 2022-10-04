@@ -75,13 +75,13 @@ public class PersonFacade implements IFacade<PersonDto> {
         Address address = em.find(Address.class, personDto.getAddress().getId());
 
         Person person = new Person(personDto);
-        person.getPhones().addAll(phoneSet);
-        person.getHobbies().addAll(hobbySet);
+        person.setPhones(phoneSet);
+        person.setHobbies(hobbySet);
+        person.setAddress(address);
 
         try {
             em.getTransaction().begin();
             em.persist(person);
-            em.merge(address);
             em.getTransaction().commit();
         } finally {
             em.close();
