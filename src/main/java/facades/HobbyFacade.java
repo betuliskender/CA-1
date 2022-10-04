@@ -73,6 +73,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
             em.merge(hobby);
             em.getTransaction().commit();
         } finally {
+
             em.close();
         }
         return new HobbyDto(hobby);

@@ -98,6 +98,15 @@ public class Person {
         this.lastName = personDto.getLastName();
     }
 
+    public Person(PersonDto personDto){
+        this.id = personDto.getId();
+        this.email = personDto.getEmail();
+        this.firstName = personDto.getFirstName();
+        this.lastName = personDto.getLastName();
+        this.address = new Address(personDto.getAddress().getId(), personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity()));
+
+    }
+
     public Integer getId() {
         return id;
     }

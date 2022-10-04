@@ -88,6 +88,8 @@ public class PersonDto implements Serializable {
         return phones;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,16 +124,20 @@ public class PersonDto implements Serializable {
         @NotNull
         private final String additionalInfo;
 
-        public InnerAddressDto(Integer id, String street, String additionalInfo) {
+        private final InnerCityInfoDto innerCityInfoDto;
+
+        public InnerAddressDto(Integer id, String street, String additionalInfo, InnerCityInfoDto innerCityInfoDto) {
             this.id = id;
             this.street = street;
             this.additionalInfo = additionalInfo;
+            this.innerCityInfoDto = innerCityInfoDto;
         }
 
         public InnerAddressDto(Address address) {
             this.id = address.getId();
             this.street = address.getStreet();
             this.additionalInfo = address.getAdditionalInfo();
+            this.innerCityInfoDto = new InnerCityInfoDto(address.getCityInfo().getId(), address.getCityInfo().getZipcode(), address.getCityInfo().getCity());
         }
 
         public Integer getId() {
@@ -144,6 +150,10 @@ public class PersonDto implements Serializable {
 
         public String getAdditionalInfo() {
             return additionalInfo;
+        }
+
+        public InnerCityInfoDto getInnerCityInfoDto() {
+            return innerCityInfoDto;
         }
 
         @Override

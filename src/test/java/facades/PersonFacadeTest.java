@@ -1,6 +1,7 @@
-/*
+
 package facades;
 
+import dtos.PersonDto;
 import entities.Address;
 import entities.CityInfo;
 import entities.Person;
@@ -85,56 +86,54 @@ public class PersonFacadeTest {
 
    @Test
     public void getById() {
-        Person expected = p1;
-       Person actual = facade.getById(p1.getId());
+        PersonDto expected = new PersonDto(p1);
+       PersonDto actual = facade.getById(p1.getId());
        assertEquals(expected, actual);
     }
 
 
 
 
-    @Test
-    public void create() {
-        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He", a1);
-        Person actual = facade.create(newPerson);
-        assertEquals(newPerson, actual);
-        assertNotNull(actual.getId());
-    }
+//    @Test
+//    public void create() {
+//        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He", a1);
+//        Person actual = facade.create(newPerson);
+//        assertNotNull(actual.getId());
+//    }
 
 
 
-
-    @Test
-    void update() {
-        p1.setEmail("Bjergkøbing@email.com");
-        Person updatedPerson = p1;
-        Person actual = facade.update(p1);
-        System.out.println(actual);
-        assertEquals(updatedPerson, actual);
-    }
-
-
-   @Test
-    public void getAllPersons() throws Exception {
-        List<Person> personList = facade.getAll();
-
-        int expected = 3;
-
-        assertEquals(expected,personList.size() );
-    }
-
-
-
-    @Test
-    void delete() {
-        facade.delete(p1.getId());
-        int expected = 2;
-        int actual = facade.getAll().size();
-        assertEquals(expected,actual);
-    }
-
+//
+//    @Test
+//    void update() {
+//        p1.setEmail("Bjergkøbing@email.com");
+//        Person updatedPerson = p1;
+//        Person actual = facade.update(p1);
+//        System.out.println(actual);
+//        assertEquals(updatedPerson, actual);
+//    }
+//
+//
+//   @Test
+//    public void getAllPersons() throws Exception {
+//        List<Person> personList = facade.getAll();
+//
+//        int expected = 3;
+//
+//        assertEquals(expected,personList.size() );
+//    }
+//
+//
+//
+//    @Test
+//    void delete() {
+//        facade.delete(p1.getId());
+//        int expected = 2;
+//        int actual = facade.getAll().size();
+//        assertEquals(expected,actual);
+//    }
+//
 
 
 
 }
-*/

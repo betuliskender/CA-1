@@ -9,7 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PersonFacade implements IFacade<PersonDto> {
 
@@ -46,36 +49,41 @@ public class PersonFacade implements IFacade<PersonDto> {
 
     @Override
     public List<PersonDto> getAll() {
+        List<PersonDto> personDtoList = new ArrayList<>();
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> personList = query.getResultList();
-        return PersonDto.getDtos(personList);
+        query.getResultList().forEach(person -> {
+            personDtoList.add(new PersonDto(person));
+        });
+        return personDtoList;
     }
 
     @Override
     public PersonDto create(PersonDto personDto) {
-
         EntityManager em = getEntityManager();
+        Set<Hobby> hobbySet = new LinkedHashSet<>();
+        personDto.getHobbies().forEach(innerHobbyDto -> {
+            hobbySet.add(em.find(Hobby.class, innerHobbyDto.getId()));
+        });
 
-        PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
-        PersonDto.InnerAddressDto.InnerCityInfoDto cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfoDto(3,"3300", "Kjøbenhavnstrup");
+        Set<Phone> phoneSet = new LinkedHashSet<>();
+        personDto.getPhones().forEach(innerPhoneDto -> {
+            phoneSet.add(em.find(Phone.class, innerPhoneDto.getId()));
+        });
 
-        CityInfo cityInfo = new CityInfo(cityInfoDto.getZipcode(),cityInfoDto.getCity());
-        Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(),cityInfo);
+        Address address = em.find(Address.class, personDto.getAddress().getId());
 
-        Person person = new Person(personDto.getEmail(),personDto.getFirstName(), personDto.getLastName(), address);
-        System.out.println(person.getId());
+        Person person = new Person(personDto);
+
 
         try {
             em.getTransaction().begin();
-            em.persist(cityInfo);
-            em.persist(person.getAddress());
-            em.persist(person);
+
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PersonDto(person);
+        return null;
     }
 
     public PersonDto update(PersonDto personDto) {
