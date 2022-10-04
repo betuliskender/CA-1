@@ -30,7 +30,6 @@ public class PhoneFacadeTest
         EntityManager em = emf.createEntityManager();
 
         try{
-
             em.getTransaction().begin();
             em.createQuery("DELETE From Phone").executeUpdate();
             em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
