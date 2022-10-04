@@ -89,18 +89,6 @@ Content-Type: application/json
 {"str1": "First Property", "str2": "Second Property"}
 
 ###
-PUT http://localhost:8080/devops_starter_war_exploded/api/person/1
-Content-Type:application/json
-
-{"email": "Long@long.dk", "firstName": "Long", "lastName": "Longesen"}
-
-###
-POST http://localhost:8080/devops_starter_war_exploded/api/person
-Content-Type: application/json
-
-{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
-
-###
 GET http://localhost:8080/devops_starter_war_exploded/api/address/1
 Accept: application/json
 
@@ -125,3 +113,15 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/devops_starter_war_exploded/api/address/9
 Content-Type: application/json
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/person/1
+Content-Type:application/json
+
+{"email": "nej@jegvilhjem.dk"}
+
+###
+POST http://localhost:8080/devops_starter_war_exploded/api/person
+Content-Type: application/json
+
+{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
