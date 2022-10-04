@@ -61,6 +61,7 @@ public class PersonFacade implements IFacade<PersonDto> {
     @Override
     public PersonDto create(PersonDto personDto) {
         EntityManager em = getEntityManager();
+
         Set<Hobby> hobbySet = new LinkedHashSet<>();
         personDto.getHobbies().forEach(innerHobbyDto -> {
             hobbySet.add(em.find(Hobby.class, innerHobbyDto.getId()));
@@ -74,6 +75,25 @@ public class PersonFacade implements IFacade<PersonDto> {
         Address address = em.find(Address.class, personDto.getAddress().getId());
 
         Person person = new Person(personDto);
+        person.getPhones().addAll(phoneSet);
+        person.getHobbies().addAll(hobbySet);
+
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.merge(address);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        System.out.println(person);
+        return new PersonDto(person);
+    }
+
+    public PersonDto update(PersonDto personDto) {
+
+        EntityManager em = getEntityManager();
+
 
 
         try {
@@ -84,30 +104,6 @@ public class PersonFacade implements IFacade<PersonDto> {
             em.close();
         }
         return null;
-    }
-
-    public PersonDto update(PersonDto personDto) {
-
-        EntityManager em = getEntityManager();
-        Person fromDb = em.find(Person.class, personDto.getId());
-        if(fromDb == null){
-            throw new EntityNotFoundException("No such person with that id: "+ personDto.getId());
-        }
-        PersonDto.InnerAddressDto addressDto = new PersonDto.InnerAddressDto(1,"Her", "der");
-        PersonDto.InnerAddressDto.InnerCityInfoDto cityInfoDto = new PersonDto.InnerAddressDto.InnerCityInfoDto(3,"3300", "Kjøbenhavnstrup");
-        Address address = new Address(addressDto.getStreet(), addressDto.getAdditionalInfo(), new CityInfo("2300","Bagsværd"));
-
-        fromDb = new Person(personDto.getEmail(),personDto.getFirstName(), personDto.getLastName(), address);
-        System.out.println(fromDb.getId());
-
-        try {
-            em.getTransaction().begin();
-            em.merge(fromDb);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return new PersonDto(fromDb);
     }
 
     @Override
@@ -125,13 +121,13 @@ public class PersonFacade implements IFacade<PersonDto> {
         return new PersonDto(p);
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        PersonFacade personFacade = getInstance(emf);
-        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
-        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-
-    }
+//    public static void main(String[] args) {
+//        emf = EMF_Creator.createEntityManagerFactory();
+//        PersonFacade personFacade = getInstance(emf);
+//        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
+//        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+//        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
+//
+//    }
 
 }
