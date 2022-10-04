@@ -38,8 +38,8 @@ public class PhoneResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
         PhoneDto p = GSON.fromJson(content, PhoneDto.class);
-        PhoneDto newP = FACADE.create(p);
-        return Response.ok().entity(GSON.toJson(newP)).build();
+        p = FACADE.create(p);
+        return Response.ok().entity(GSON.toJson(p)).build();
     }
 
     @PUT
@@ -49,15 +49,14 @@ public class PhoneResource {
     public Response update(@PathParam("id") int id, String content) {
         PhoneDto p = GSON.fromJson(content, PhoneDto.class);
         p.setId(id);
-        PhoneDto updated = FACADE.update(p);
-        return Response.ok().entity(GSON.toJson(updated)).build();
+        p = FACADE.update(p);
+        return Response.ok().entity(GSON.toJson(p)).build();
     }
 
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) {
-
         PhoneDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
