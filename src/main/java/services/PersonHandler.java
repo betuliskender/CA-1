@@ -28,6 +28,9 @@ public class PersonHandler {
         if(personDto.getAddress() != null && !personDto.getAddress().equals(person.getAddress()))
         {
             updatedPerson.setAddress(new Address(personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity())));
+        }
+        if(personDto.getHobbies() != null && !personDto.getHobbies().equals(person.getHobbies()))
+        {
 
         }
 
