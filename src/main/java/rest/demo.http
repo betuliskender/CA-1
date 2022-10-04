@@ -156,3 +156,11 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/devops_starter_war_exploded/api/person/hobby/something
 Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person/hobby/amount/something
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person/city/1150
+Accept: application/json

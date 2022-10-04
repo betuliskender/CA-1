@@ -76,9 +76,9 @@ public class PersonResource {
     }
 
     @GET
-    @Path("city/{city}")
+    @Path("city/{zip}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getByHobby(@PathParam("city") int city) {
-        return Response.ok().entity(GSON.toJson(FACADE.getAllPersonsInCity(city))).build();
+    public Response getByCity(@PathParam("zip") String zip) {
+        return Response.ok().entity(GSON.toJson(FACADE.getAllPersonsInCity(zip))).build();
     }
 }

@@ -76,7 +76,7 @@ public class PersonFacade implements IFacade<PersonDto> {
         return personDtoList.size();
     }
 
-    public List<PersonDto> getAllPersonsInCity(int zip) {
+    public List<PersonDto> getAllPersonsInCity(String zip) {
         List<PersonDto> personDtoList = new ArrayList<>();
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a JOIN a.cityInfo c WHERE c.zipcode = :zip", Person.class);
