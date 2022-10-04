@@ -51,6 +51,12 @@ public class Phone {
         this.person = new Person(phoneDto.getPerson());
     }
 
+    public Phone(Integer id, Integer number, String description) {
+        this.id = id;
+        this.number = number;
+        this. description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

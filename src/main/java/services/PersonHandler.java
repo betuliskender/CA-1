@@ -34,7 +34,7 @@ public class PersonHandler {
             updatedPerson.setAddress(convertedAddress);
         }
         Set<Hobby> convertedHobbies = hobbyFromDtoConverter(personDto.getHobbies(), person.getHobbies());
-        if(!convertedHobbies.equals(person.getHobbies())) {
+        if(convertedHobbies != (person.getHobbies())) {
             updatedPerson.setHobbies(convertedHobbies);
         }
         Set<Phone> convertedPhones = phoneFromDtoConverter(personDto.getPhones(), person.getPhones());
@@ -50,14 +50,14 @@ public class PersonHandler {
 
     private static Set<Hobby> hobbyFromDtoConverter(Set<PersonDto.InnerHobbyDto> innerHobbyDtos, Set<Hobby> hobbySet) {
         innerHobbyDtos.forEach(innerHobbyDto -> {
-            Hobby updatedHobby = new Hobby(innerHobbyDto.getName(),innerHobbyDto.getDescription());
+            Hobby updatedHobby = new Hobby(innerHobbyDto.getId(), innerHobbyDto.getName(),innerHobbyDto.getDescription());
             hobbySet.add(updatedHobby);
         });
         return hobbySet;
     }
     private static Set<Phone> phoneFromDtoConverter(Set<PersonDto.InnerPhoneDto> innerPhoneDtos, Set<Phone> phoneSet) {
         innerPhoneDtos.forEach(innerPhoneDto -> {
-            Phone updatedPhone = new Phone(innerPhoneDto.getNumber(), innerPhoneDto.getDescription());
+            Phone updatedPhone = new Phone(innerPhoneDto.getId(), innerPhoneDto.getNumber(), innerPhoneDto.getDescription());
             phoneSet.add(updatedPhone);
         });
         return phoneSet;

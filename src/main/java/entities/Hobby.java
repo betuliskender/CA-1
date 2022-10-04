@@ -33,6 +33,7 @@ public class Hobby {
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Set<Person> people = new LinkedHashSet<>();
 
+
     public Integer getId() {
         return id;
     }
@@ -78,6 +79,13 @@ public class Hobby {
         this.name = hobbyDto.getName();
         this.description = hobbyDto.getDescription();
     };
+
+
+    public Hobby(Integer id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
 
 

@@ -114,6 +114,7 @@ public class PersonFacadeTest {
     void update() {
         p1.setEmail("Bjergkøbing@email.com");
         p1.getHobbies().add(h2);
+        p1.getHobbies().add(h1);
         PersonDto updatedPerson = new PersonDto(p1);
         PersonDto actual = facade.update(updatedPerson);
         System.out.println(actual);
