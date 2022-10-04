@@ -14,7 +14,7 @@ import java.util.*;
  * A DTO for the {@link entities.Person} entity
  */
 public class PersonDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @Size(max = 45)
     @NotNull
     private final String email;
@@ -62,6 +62,10 @@ public class PersonDto implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getEmail() {

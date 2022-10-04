@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDto;
+import dtos.PhoneDto;
 import entities.Person;
 import facades.PersonFacade;
 import utils.EMF_Creator;
@@ -19,25 +20,10 @@ public class PersonResource {
     private static final PersonFacade FACADE = PersonFacade.getInstance(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String demo() {
-        return "{\"Hej" +
-                "\":\"Her kan du finde alle personerne gennem api\"}";
-    }
-
-    /*@Path("{phone}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonByPhone(@PathParam("phone") int phone) {
-        return Response.ok().entity(GSON.toJson(FACADE.getByPhone(phone))).build();
-    }*/
-
     @Path("{id}")
     @GET
     @Produces("text/plain")
     public Response getPersonById(@PathParam("id") int id) {
-
         return Response.ok().entity(GSON.toJson(FACADE.getById(id))).build();
     }
 
@@ -47,23 +33,32 @@ public class PersonResource {
     public Response getAll() {
         return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
     }
+
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response updatePerson(@PathParam("id") int id, String jsonInput) {
-        Person person = GSON.fromJson(jsonInput, Person.class);
+    public Response update(@PathParam("id") int id, String jsonInput) {
+        PersonDto person = GSON.fromJson(jsonInput, PersonDto.class);
         person.setId(id);
-        PersonDto personDto = new PersonDto(person);
-        return Response.ok().entity(GSON.toJson(FACADE.update(personDto))).build();
+        person = FACADE.update(person);
+        return Response.ok().entity(GSON.toJson(person)).build();
     }
 
-    @GET
+    @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response createPerson(String jsonInput) {
+    public Response create(String jsonInput) {
         PersonDto personDto = GSON.fromJson(jsonInput, PersonDto.class);
+        personDto = FACADE.create(personDto);
+        return Response.ok().entity(GSON.toJson(personDto)).build();
+    }
 
-        return Response.ok().entity(GSON.toJson(FACADE.create(personDto))).build();
+    @DELETE
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response delete(@PathParam("id") int id) {
+        PersonDto deleted = FACADE.delete(id);
+        return Response.ok().entity(GSON.toJson(deleted)).build();
     }
 }
