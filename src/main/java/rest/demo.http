@@ -164,3 +164,10 @@ Accept: application/json
 ###
 GET http://localhost:8080/devops_starter_war_exploded/api/person/city/1150
 Accept: application/json
+
+{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person/45454545
+Accept: application/json
+

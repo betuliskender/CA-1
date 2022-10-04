@@ -62,6 +62,7 @@ public class PersonResource {
     }
 
     @GET
+
     @Path("hobby/{hobby}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getByHobby(@PathParam("hobby") String hobbyName) {
@@ -80,5 +81,16 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getByCity(@PathParam("zip") String zip) {
         return Response.ok().entity(GSON.toJson(FACADE.getAllPersonsInCity(zip))).build();
+
     }
-}
+
+        @Path("/{phone}")
+        @Produces({MediaType.APPLICATION_JSON})
+        public Response getByPhone (@PathParam("phone") Integer phone){
+            PersonDto p = FACADE.getByPhone(phone);
+            return Response.ok().entity(GSON.toJson(p)).build();
+
+        }
+    }
+
+

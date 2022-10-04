@@ -6,10 +6,7 @@ import interfaces.facades.IFacade;
 import services.PersonHandler;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -36,7 +33,7 @@ public class PersonFacade implements IFacade<PersonDto> {
     public PersonDto getById(Integer id) {
         EntityManager em = emf.createEntityManager();
         Person p = em.find(Person.class, id);
-        if(p ==null)
+        if (p == null)
             throw new EntityNotFoundException("Not found");
         return new PersonDto(p);
     }
@@ -131,9 +128,8 @@ public class PersonFacade implements IFacade<PersonDto> {
 
         try {
             em.getTransaction().begin();
-            person.getPhones().forEach( phone -> {
-                if (phone.getId() == null)
-                {
+            person.getPhones().forEach(phone -> {
+                if (phone.getId() == null) {
                     em.persist(phone);
                 }
             });
@@ -160,5 +156,17 @@ public class PersonFacade implements IFacade<PersonDto> {
         return new PersonDto(p);
     }
 
+    public PersonDto getByPhone(Integer phone) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p from Person p JOIN p.phones ph WHERE ph.number =:number", Person.class);
+            query.setParameter("number", phone);
+            PersonDto personDto = new PersonDto(query.getSingleResult());
+            return personDto;
+
+        } finally {
+            em.close();
+        }
+    }
 
 }
