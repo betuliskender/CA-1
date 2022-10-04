@@ -12,7 +12,6 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -107,10 +106,9 @@ public class PersonFacadeTest {
         PersonDto personDto = new PersonDto(newPerson);
         PersonDto actual = facade.create(personDto);
         assertNotNull(actual.getId());
-        System.out.println(newPerson);
-        System.out.println(newPerson.getHobbies());
+        System.out.println(actual);
+        System.out.println(actual.getHobbies());
     }
-
 
 
 //
