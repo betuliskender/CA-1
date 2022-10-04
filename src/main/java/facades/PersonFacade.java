@@ -124,8 +124,9 @@ public class PersonFacade implements IFacade<PersonDto> {
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p from Person p JOIN p.phones ph WHERE ph.number =:number", Person.class);
             query.setParameter("number", phone);
-            System.out.println(query);
-            return query);
+            PersonDto personDto = new PersonDto(query.getSingleResult());
+            return personDto;
+
         } finally {
             em.close();
         }
