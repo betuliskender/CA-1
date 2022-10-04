@@ -109,19 +109,18 @@ public class PersonFacadeTest {
         System.out.println(actual);
         System.out.println(actual.getHobbies());
     }
+
+
+    @Test
+    void update() {
+        p1.setEmail("Bjergkøbing@email.com");
+        PersonDto updatedPerson = new PersonDto(p1);
+        PersonDto actual = facade.update(updatedPerson);
+        System.out.println(actual);
+        assertEquals(updatedPerson, actual);
     }
 
-//
-//    @Test
-//    void update() {
-//        p1.setEmail("Bjergkøbing@email.com");
-//        Person updatedPerson = p1;
-//        Person actual = facade.update(p1);
-//        System.out.println(actual);
-//        assertEquals(updatedPerson, actual);
-//    }
-//
-//
+
 //   @Test
 //    public void getAllPersons() throws Exception {
 //        List<Person> personList = facade.getAll();
@@ -140,6 +139,8 @@ public class PersonFacadeTest {
 //        int actual = facade.getAll().size();
 //        assertEquals(expected,actual);
 //    }
-//
+
+    }
+
 
 

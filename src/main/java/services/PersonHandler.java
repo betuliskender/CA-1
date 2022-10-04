@@ -29,16 +29,16 @@ public class PersonHandler {
             updatedPerson.setLastName(personDto.getLastName());
         }
         Address convertedAddress = addressFromDtoConverter(personDto.getAddress());
-        if(personDto.getAddress() != null && !convertedAddress.equals(person.getAddress()))
+        if(convertedAddress != null && !convertedAddress.equals(person.getAddress()))
         {
             updatedPerson.setAddress(new Address(personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity())));
         }
         Set<Hobby> convertedHobbies = hobbyFromDtoConverter(personDto.getHobbies(), person.getHobbies());
-        if(personDto.getHobbies() != null && !convertedHobbies.equals(person.getHobbies())) {
+        if(convertedHobbies != null && !convertedHobbies.equals(person.getHobbies())) {
             updatedPerson.setHobbies(convertedHobbies);
         }
         Set<Phone> convertedPhones = phoneFromDtoConverter(personDto.getPhones(), person.getPhones());
-        if(personDto.getPhones() != null && !convertedPhones.equals(person.getPhones())) {
+        if(convertedPhones != null && !convertedPhones.equals(person.getPhones())) {
             updatedPerson.setPhones(convertedPhones);
         }
         return updatedPerson;

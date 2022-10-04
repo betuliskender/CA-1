@@ -88,15 +88,16 @@ public class PersonFacade implements IFacade<PersonDto> {
 
         EntityManager em = getEntityManager();
         Person existingPerson = em.find(Person.class, personDto.getId());
+        Person person = PersonHandler.mergeDTOAndEntity(personDto, existingPerson);
 
         try {
             em.getTransaction().begin();
-
+            em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return null;
+        return new PersonDto(person);
     }
 
     @Override
