@@ -106,9 +106,16 @@ public class PersonFacadeTest {
         PersonDto personDto = new PersonDto(newPerson);
         PersonDto actual = facade.create(personDto);
         assertNotNull(actual.getId());
+<<<<<<< HEAD
         System.out.println(actual);
         System.out.println(actual.getHobbies());
     }
+=======
+        System.out.println(newPerson);
+        System.out.println(newPerson.getHobbies());
+    }
+
+>>>>>>> 12e9d8f (person id er null)
 
 
 //

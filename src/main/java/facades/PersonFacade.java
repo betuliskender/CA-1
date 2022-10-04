@@ -88,7 +88,6 @@ public class PersonFacade implements IFacade<PersonDto> {
 
         EntityManager em = getEntityManager();
         Person existingPerson = em.find(Person.class, personDto.getId());
-        Person person = PersonHandler.mer
 
         try {
             em.getTransaction().begin();
@@ -114,4 +113,5 @@ public class PersonFacade implements IFacade<PersonDto> {
         }
         return new PersonDto(p);
     }
+
 }
