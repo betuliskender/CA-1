@@ -61,4 +61,12 @@ public class PersonResource {
         PersonDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
+    @GET
+    @Path("/{phone}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getById(@PathParam("phone") String phone) {
+        PersonDto p = FACADE.getByPhone(phone);
+        return Response.ok().entity(GSON.toJson(p)).build();
+    }
 }

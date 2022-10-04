@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.CityInfoDto;
+import dtos.PersonDto;
 import dtos.PhoneDto;
 import facades.CityInfoFacade;
 import facades.PhoneFacade;
@@ -60,4 +61,5 @@ public class PhoneResource {
         PhoneDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
 }

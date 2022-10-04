@@ -122,4 +122,13 @@ public class PersonFacade implements IFacade<PersonDto> {
         }
         return new PersonDto(p);
     }
+
+    public PersonDto getByPhone(String phone) {
+        EntityManager em = emf.createEntityManager();
+        Phone p = em.find(Phone.class, phone);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE ", Person.class);
+        if(p ==null)
+            throw new EntityNotFoundException("Not found");
+        return new PersonDto(p);
+    }
 }
