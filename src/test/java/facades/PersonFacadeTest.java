@@ -2,10 +2,7 @@
 package facades;
 
 import dtos.PersonDto;
-import entities.Address;
-import entities.CityInfo;
-import entities.Hobby;
-import entities.Person;
+import entities.*;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -24,8 +21,9 @@ public class PersonFacadeTest {
     private static Person p1, p2, p3;
     private static CityInfo c1, c2, c3;
     private static Address a1, a2, a3;
-
     private static Hobby h1, h2;
+
+    private static Phone phone1, phone2;
 
 
     public PersonFacadeTest() {
@@ -65,9 +63,15 @@ public class PersonFacadeTest {
             h1 = new Hobby("Gaming", "something");
             h2 = new Hobby("Strikning", "something");
 
+            phone1 = new Phone(1232312, "mobile");
+            phone2 = new Phone(234234242, "home");
+
             p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
             p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
             p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
+
+
+
             //em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
@@ -77,6 +81,7 @@ public class PersonFacadeTest {
             em.persist(a3);
             em.persist(h1);
             em.persist(h2);
+
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -115,11 +120,14 @@ public class PersonFacadeTest {
         p1.setEmail("Bjergkøbing@email.com");
         p1.getHobbies().add(h2);
         p1.getHobbies().add(h1);
+        p1.getPhones().add(phone1);
+        p1.getPhones().add(phone2);
         PersonDto updatedPerson = new PersonDto(p1);
         PersonDto actual = facade.update(updatedPerson);
         System.out.println(actual);
         assertEquals(updatedPerson, actual);
         assertEquals(2, updatedPerson.getHobbies().size());
+        assertEquals(2, updatedPerson.getPhones().size());
     }
 
 
