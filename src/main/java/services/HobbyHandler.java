@@ -19,7 +19,7 @@ public class HobbyHandler {
             updatedHobby.setDescription(hobbyDto.getDescription());
         }
 
-
         return updatedHobby;
     }
+
 }
