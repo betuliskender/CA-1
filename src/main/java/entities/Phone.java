@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.PersonDto;
 import dtos.PhoneDto;
 
 import javax.persistence.*;
@@ -62,7 +63,7 @@ public class Phone {
         if (this == o) return true;
         if (!(o instanceof Phone)) return false;
         Phone phone = (Phone) o;
-        return getId().equals(phone.getId());
+        return getNumber().equals(phone.getNumber());
     }
 
     @Override
