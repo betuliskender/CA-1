@@ -62,19 +62,21 @@ public class PersonFacade implements IFacade<PersonDto> {
         });
 
         Set<Phone> phoneSet = new LinkedHashSet<>();
-        personDto.getPhones().forEach(innerPhoneDto -> {
-            phoneSet.add(em.find(Phone.class, innerPhoneDto.getId()));
-        });
 
         Address address = em.find(Address.class, personDto.getAddress().getId());
 
         Person person = new Person(personDto);
-        person.setPhones(phoneSet);
         person.setHobbies(hobbySet);
         person.setAddress(address);
 
         try {
             em.getTransaction().begin();
+            personDto.getPhones().forEach(innerPhoneDto -> {
+            Phone phone = new Phone(innerPhoneDto.getNumber(), innerPhoneDto.getDescription(), person);
+            em.persist(phone);
+            phoneSet.add(phone);
+            person.setPhones(phoneSet);
+        });
             em.persist(person);
             em.getTransaction().commit();
         } finally {
