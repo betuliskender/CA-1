@@ -124,4 +124,31 @@ Content-Type:application/json
 POST http://localhost:8080/devops_starter_war_exploded/api/person
 Content-Type: application/json
 
-{"email": "long@long.dk","first_name": "long","last_name": "loooong","address": [],"hobby": [],"phone": []}
+{
+  "email": "a@a.dk",
+  "firstName": "hej",
+  "lastName": "hej",
+  "address": {
+    "id": 1,
+    "street": "something",
+    "additionalInfo": "something",
+    "innerCityInfoDto": {
+      "id": 1,
+      "zipcode": "1150",
+      "city": "København K"
+    }
+  },
+  "hobbies": [
+    {
+      "id": 1,
+      "name": "something",
+      "description": "something"
+    }
+  ],
+  "phones": [
+    {
+      "number": 116565762,
+      "description": "mobil"
+    }
+  ]
+}

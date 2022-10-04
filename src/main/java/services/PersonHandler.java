@@ -28,18 +28,24 @@ public class PersonHandler {
         {
             updatedPerson.setLastName(personDto.getLastName());
         }
-        Address convertedAddress = addressFromDtoConverter(personDto.getAddress());
-        if(convertedAddress != (person.getAddress()))
+        if(personDto.getAddress() != null)
         {
+        Address convertedAddress = addressFromDtoConverter(personDto.getAddress());
+        if(!convertedAddress.equals(person.getAddress())){
             updatedPerson.setAddress(convertedAddress);
         }
-        Set<Hobby> convertedHobbies = hobbyFromDtoConverter(personDto.getHobbies(), person.getHobbies());
-        if(convertedHobbies != (person.getHobbies())) {
-            updatedPerson.setHobbies(convertedHobbies);
         }
-        Set<Phone> convertedPhones = phoneFromDtoConverter(personDto.getPhones(), person.getPhones());
-        if(convertedPhones != null && !convertedPhones.equals(person.getPhones())) {
+        if(personDto.getHobbies() != null) {
+        Set<Hobby> convertedHobbies = hobbyFromDtoConverter(personDto.getHobbies(), person.getHobbies());
+            if(!convertedHobbies.equals(person.getHobbies())){
+            updatedPerson.setHobbies(convertedHobbies);
+            }
+        }
+        if(personDto.getPhones() != null) {
+        Set<Phone> convertedPhones = phoneFromDtoConverter(personDto.getPhones(), person.getPhones(), personDto);
+            if(!convertedPhones.equals(person.getPhones())){
             updatedPerson.setPhones(convertedPhones);
+            }
         }
         return updatedPerson;
     }
@@ -55,9 +61,10 @@ public class PersonHandler {
         });
         return hobbySet;
     }
-    private static Set<Phone> phoneFromDtoConverter(Set<PersonDto.InnerPhoneDto> innerPhoneDtos, Set<Phone> phoneSet) {
+    private static Set<Phone> phoneFromDtoConverter(Set<PersonDto.InnerPhoneDto> innerPhoneDtos, Set<Phone> phoneSet, PersonDto personDto) {
         innerPhoneDtos.forEach(innerPhoneDto -> {
-            Phone updatedPhone = new Phone(innerPhoneDto.getId(), innerPhoneDto.getNumber(), innerPhoneDto.getDescription());
+            Person person = new Person(personDto);
+            Phone updatedPhone = new Phone(innerPhoneDto.getNumber(), innerPhoneDto.getDescription(), person);
             phoneSet.add(updatedPhone);
         });
         return phoneSet;

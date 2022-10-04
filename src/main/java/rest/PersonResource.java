@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("person")
+@Path("/person")
 public class PersonResource {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final PersonFacade FACADE = PersonFacade.getInstance(EMF);
@@ -28,7 +28,6 @@ public class PersonResource {
     }
 
     @GET
-    @Path("all")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
         return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();

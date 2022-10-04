@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
@@ -29,14 +31,37 @@ public class PersonFacadeTest {
     public PersonFacadeTest() {
     }
 
+    public static void deleteData()
+    {
+        EntityManager em = emf.createEntityManager();
+
+        try{
+            em.getTransaction().begin();
+            em.createQuery("DELETE From Phone").executeUpdate();
+            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
+            em.createQuery("DELETE From Person ").executeUpdate();
+            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
+            em.createQuery("DELETE From Address ").executeUpdate();
+            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
+            em.createQuery("DELETE From CityInfo ").executeUpdate();
+            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+            em.getTransaction().commit();
+        }
+        finally {
+            em.close();
+        }
+    }
+
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PersonFacade.getInstance(emf);
+        deleteData();
     }
 
     @AfterAll
     public static void tearDownClass() {
+
 //        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
 
@@ -93,14 +118,15 @@ public class PersonFacadeTest {
 
     @AfterEach
     public void tearDown() {
+        deleteData();
 //        Remove any data after each test was run
     }
 
    @Test
     public void getById() {
         PersonDto expected = new PersonDto(p1);
-       PersonDto actual = facade.getById(p1.getId());
-       assertEquals(expected, actual);
+        PersonDto actual = facade.getById(p1.getId());
+        assertEquals(expected, actual);
     }
 
 
@@ -130,25 +156,22 @@ public class PersonFacadeTest {
         assertEquals(2, updatedPerson.getPhones().size());
     }
 
+   @Test
+    public void getAllPersons() throws Exception {
+        List<PersonDto> personDtoList = facade.getAll();
+        int expected = 3;
+        assertEquals(expected,personDtoList.size() );
+    }
 
-//   @Test
-//    public void getAllPersons() throws Exception {
-//        List<Person> personList = facade.getAll();
-//
-//        int expected = 3;
-//
-//        assertEquals(expected,personList.size() );
-//    }
-//
-//
-//
-//    @Test
-//    void delete() {
-//        facade.delete(p1.getId());
-//        int expected = 2;
-//        int actual = facade.getAll().size();
-//        assertEquals(expected,actual);
-//    }
+
+
+    @Test
+    void delete() {
+        facade.delete(p1.getId());
+        int expected = 2;
+        int actual = facade.getAll().size();
+        assertEquals(expected,actual);
+    }
 
     }
 
