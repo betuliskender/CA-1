@@ -68,5 +68,10 @@ public class PersonResource {
         return Response.ok().entity(GSON.toJson(FACADE.getAllPersonsWithHobby(hobbyName))).build();
     }
 
-
+    @GET
+    @Path("hobby/amount/{hobby}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getByHobbyAmount(@PathParam("hobby") String hobbyName) {
+        return Response.ok().entity(GSON.toJson(FACADE.getAmountOfPersonsWithHobby(hobbyName))).build();
+    }
 }

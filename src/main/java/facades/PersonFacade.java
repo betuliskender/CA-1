@@ -64,6 +64,18 @@ public class PersonFacade implements IFacade<PersonDto> {
         return personDtoList;
     }
 
+    public int getAmountOfPersonsWithHobby(String hobbyName)
+    {
+        List<PersonDto> personDtoList = new ArrayList<>();
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :name", Person.class);
+        query.setParameter("name" , hobbyName);
+        query.getResultList().forEach(person -> {
+            personDtoList.add(new PersonDto(person));
+        });
+        return personDtoList.size();
+    }
+
     @Override
     public PersonDto create(PersonDto personDto) {
         EntityManager em = getEntityManager();
