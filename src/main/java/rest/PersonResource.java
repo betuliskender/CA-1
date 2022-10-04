@@ -65,7 +65,7 @@ public class PersonResource {
     @GET
     @Path("/{phone}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("phone") String phone) {
+    public Response getByPhone(@PathParam("phone") Integer phone) {
         PersonDto p = FACADE.getByPhone(phone);
         return Response.ok().entity(GSON.toJson(p)).build();
     }
