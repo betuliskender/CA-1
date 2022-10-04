@@ -60,4 +60,13 @@ public class PersonResource {
         PersonDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
+    @GET
+    @Path("hobby/{hobby}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getByHobby(@PathParam("hobby") String hobbyName) {
+        return Response.ok().entity(GSON.toJson(FACADE.getAllPersonsWithHobby(hobbyName))).build();
+    }
+
+
 }
