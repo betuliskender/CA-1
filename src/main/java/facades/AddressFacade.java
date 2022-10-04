@@ -4,6 +4,7 @@ import dtos.AddressDto;
 import dtos.CityInfoDto;
 import entities.Address;
 import entities.CityInfo;
+import entities.Person;
 import interfaces.facades.IFacade;
 import services.AddressHandler;
 
@@ -83,6 +84,7 @@ public class AddressFacade implements IFacade<AddressDto> {
         return new AddressDto(address);
     }
 
+
     @Override
     public AddressDto delete(Integer id) {
         EntityManager em = getEntityManager();
@@ -97,4 +99,27 @@ public class AddressFacade implements IFacade<AddressDto> {
         }
         return new AddressDto(a);
     }
+
+//    @Override
+//    public AddressDto delete(Integer id) {
+//        EntityManager em = getEntityManager();
+//        Address a = em.find(Address.class, id);
+//        Address undefined = new Address("undefined", "undefined", new CityInfo("undefined", "undefined"));
+//        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.address.id = :id", Person.class);
+//        query.setParameter("id", id);
+//
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(undefined);
+//        query.getResultList().forEach(person -> {
+//            person.setAddress(undefined);
+//            em.persist(person);
+//        });
+//            em.remove(a);
+//            em.getTransaction().commit();
+//        } finally {
+//            em.close();
+//        }
+//        return new AddressDto(a);
+//    }
 }
