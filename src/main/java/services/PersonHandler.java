@@ -2,12 +2,15 @@ package services;
 
 import dtos.AddressDto;
 import dtos.CityInfoDto;
+import dtos.HobbyDto;
 import dtos.PersonDto;
-import entities.Address;
-import entities.CityInfo;
-import entities.Person;
+import entities.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PersonHandler {
+
     public static Person mergeDTOAndEntity(PersonDto personDto, Person person)
     {
         Person updatedPerson = person;
@@ -25,14 +28,38 @@ public class PersonHandler {
         {
             updatedPerson.setLastName(personDto.getLastName());
         }
-        if(personDto.getAddress() != null && !personDto.getAddress().equals(person.getAddress()))
+        Address convertedAddress = addressFromDtoConverter(personDto.getAddress());
+        if(personDto.getAddress() != null && !convertedAddress.equals(person.getAddress()))
         {
             updatedPerson.setAddress(new Address(personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity())));
         }
-        if(personDto.getHobbies() != null && !personDto.getHobbies().equals(person.getHobbies()))
-        {
-
+        Set<Hobby> convertedHobbies = hobbyFromDtoConverter(personDto.getHobbies(), person.getHobbies());
+        if(personDto.getHobbies() != null && !convertedHobbies.equals(person.getHobbies())) {
+            updatedPerson.setHobbies(convertedHobbies);
+        }
+        Set<Phone> convertedPhones = phoneFromDtoConverter(personDto.getPhones(), person.getPhones());
+        if(personDto.getPhones() != null && !convertedPhones.equals(person.getPhones())) {
+            updatedPerson.setPhones(convertedPhones);
         }
         return updatedPerson;
+    }
+    private static Address addressFromDtoConverter(PersonDto.InnerAddressDto innerAddressDto) {
+        Address updatedAddress = new Address(innerAddressDto.getStreet(), innerAddressDto.getAdditionalInfo(), new CityInfo(innerAddressDto.getInnerCityInfoDto().getId(),innerAddressDto.getInnerCityInfoDto().getZipcode(),innerAddressDto.getInnerCityInfoDto().getCity()));
+        return updatedAddress;
+    }
+
+    private static Set<Hobby> hobbyFromDtoConverter(Set<PersonDto.InnerHobbyDto> innerHobbyDtos, Set<Hobby> hobbySet) {
+        innerHobbyDtos.forEach(innerHobbyDto -> {
+            Hobby updatedHobby = new Hobby(innerHobbyDto.getName(),innerHobbyDto.getDescription());
+            hobbySet.add(updatedHobby);
+        });
+        return hobbySet;
+    }
+    private static Set<Phone> phoneFromDtoConverter(Set<PersonDto.InnerPhoneDto> innerPhoneDtos, Set<Phone> phoneSet) {
+        innerPhoneDtos.forEach(innerPhoneDto -> {
+            Phone updatedPhone = new Phone(innerPhoneDto.getNumber(), innerPhoneDto.getDescription());
+            phoneSet.add(updatedPhone);
+        });
+        return phoneSet;
     }
 }
