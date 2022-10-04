@@ -40,13 +40,6 @@ public class PersonFacade implements IFacade<PersonDto> {
         return new PersonDto(p);
     }
 
-    //ham her skal omskrives så det er et set af telefon-numre...
-    /*public Person getByPhone(int phone) {
-        EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, phone);
-        return p;
-    }*/
-
     @Override
     public List<PersonDto> getAll() {
         List<PersonDto> personDtoList = new ArrayList<>();
@@ -120,14 +113,4 @@ public class PersonFacade implements IFacade<PersonDto> {
         }
         return new PersonDto(p);
     }
-
-//    public static void main(String[] args) {
-//        emf = EMF_Creator.createEntityManagerFactory();
-//        PersonFacade personFacade = getInstance(emf);
-//        personFacade.getAll().forEach(personDto -> System.out.println(personDto));
-//        //personFacade.update(new PersonDto(3,"John@klklklklklk.com","Betül", "Iskender",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-//        personFacade.create(new PersonDto(9,"anders@klklklklklk.com","Anders", "And",new PersonDto.InnerAddressDto(3, "Paradisæblevej", "113")));
-//
-//    }
-
 }
