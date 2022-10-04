@@ -91,8 +91,15 @@ public class PersonFacade implements IFacade<PersonDto> {
         Person existingPerson = em.find(Person.class, personDto.getId());
         Person person = PersonHandler.mergeDTOAndEntity(personDto, existingPerson);
 
+
         try {
             em.getTransaction().begin();
+            person.getPhones().forEach( phone -> {
+                if (phone.getId() == null)
+                {
+                    em.persist(phone);
+                }
+            });
             em.merge(person);
             em.getTransaction().commit();
         } finally {
