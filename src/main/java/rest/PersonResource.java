@@ -61,4 +61,6 @@ public class PersonResource {
         PersonDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
+
 }
