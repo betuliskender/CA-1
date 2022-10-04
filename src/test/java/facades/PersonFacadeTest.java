@@ -4,6 +4,7 @@ package facades;
 import dtos.PersonDto;
 import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -24,6 +25,8 @@ public class PersonFacadeTest {
     private static Person p1, p2, p3;
     private static CityInfo c1, c2, c3;
     private static Address a1, a2, a3;
+
+    private static Hobby h1;
 
 
     public PersonFacadeTest() {
@@ -60,6 +63,8 @@ public class PersonFacadeTest {
             a2 = new Address("Stærevej 6","1.TH",c2);
             a3 = new Address("Østerbrogade 271","ST, MF",c3);
 
+            h1 = new Hobby("Gaming", "something");
+
             p1 = new Person("Morten@B.dk", "Morten", "Bendeke",a1);
             p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
             p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
@@ -70,6 +75,7 @@ public class PersonFacadeTest {
             em.persist(a1);
             em.persist(a2);
             em.persist(a3);
+            em.persist(h1);
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -94,12 +100,16 @@ public class PersonFacadeTest {
 
 
 
-//    @Test
-//    public void create() {
-//        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He", a1);
-//        Person actual = facade.create(newPerson);
-//        assertNotNull(actual.getId());
-//    }
+    @Test
+    public void create() {
+        Person newPerson = new Person("stiickish@yelong.dk", "Yelong","Hartl-He", a1);
+        newPerson.getHobbies().add(h1);
+        PersonDto personDto = new PersonDto(newPerson);
+        PersonDto actual = facade.create(personDto);
+        assertNotNull(actual.getId());
+        System.out.println(newPerson);
+        System.out.println(newPerson.getHobbies());
+    }
 
 
 
