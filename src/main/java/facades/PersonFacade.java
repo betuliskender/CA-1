@@ -3,6 +3,7 @@ package facades;
 import dtos.PersonDto;
 import entities.*;
 import interfaces.facades.IFacade;
+import services.PersonHandler;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
@@ -86,8 +87,8 @@ public class PersonFacade implements IFacade<PersonDto> {
     public PersonDto update(PersonDto personDto) {
 
         EntityManager em = getEntityManager();
-
-
+        Person existingPerson = em.find(Person.class, personDto.getId());
+        Person person = PersonHandler.mer
 
         try {
             em.getTransaction().begin();
