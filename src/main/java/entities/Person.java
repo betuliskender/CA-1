@@ -106,7 +106,6 @@ public class Person {
     }
 
     public Person(PhoneDto.PersonDto personDto) {
-
         this.id = personDto.getId();
         this.email = personDto.getEmail();
         this.firstName = personDto.getFirstName();
@@ -119,7 +118,6 @@ public class Person {
         this.firstName = personDto.getFirstName();
         this.lastName = personDto.getLastName();
         this.address = new Address(personDto.getAddress().getId(), personDto.getAddress().getStreet(), personDto.getAddress().getAdditionalInfo(), new CityInfo(personDto.getAddress().getInnerCityInfoDto().getId(), personDto.getAddress().getInnerCityInfoDto().getZipcode(), personDto.getAddress().getInnerCityInfoDto().getCity()));
-
     }
 
     public Integer getId() {
