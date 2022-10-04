@@ -33,7 +33,6 @@ public class PersonHandler {
         {
 
         }
-
         return updatedPerson;
     }
 }
