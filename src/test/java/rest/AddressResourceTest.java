@@ -1,7 +1,10 @@
 package rest;
 
+import entities.Address;
+import entities.CityInfo;
 import entities.RenameMe;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
@@ -19,7 +22,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
 
@@ -27,7 +30,8 @@ public class AddressResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1, r2;
+    private static CityInfo c1, c2;
+    private static Address a1, a2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -65,13 +69,17 @@ public class AddressResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new RenameMe("Some txt", "More text");
-        r2 = new RenameMe("aaa", "bbb");
+        c1 = new CityInfo("2630", "Værebro");
+        c2 = new CityInfo("8880", "Aalborg");
+        a1 = new Address( "Bælgevej 16", "Til højre",c1 );
+        a2 = new Address("Paradisæblevej 111", "Her", c2);
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(r1);
-            em.persist(r2);
+            em.persist(c1);
+            em.persist(c2);
+            em.persist(a1);
+            em.persist(a2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -83,25 +91,33 @@ public class AddressResourceTest {
         System.out.println("Testing is server UP");
         given().when().get("/xxx").then().statusCode(200);
     }
-
-    //This test assumes the database contains two rows
     @Test
-    public void testDummyMsg() throws Exception {
+    public void testLogRequest() {
+        System.out.println("Testing logging request details");
+        given().log().all()
+                .when().get("/address")
+                .then().statusCode(200);
+    }
+    @Test
+    public void testLogResponse() {
+        System.out.println("Testing logging response details");
         given()
-                .contentType("application/json")
-                .get("/xxx/").then()
+                .when().get("/address")
+                .then().log().body().statusCode(200);
+    }
+    @Test
+    public void testGetById()  {
+        given()
+                .contentType(ContentType.JSON)
+//                .pathParam("id", p1.getId()).when()
+                .get("/address/{id}",a1.getId())
+                .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("Hello World"));
+                .body("id", equalTo(a1.getId()))
+                .body("street", equalTo(a1.getStreet()))
+                .body("additional_info", equalTo(a1.getAdditionalInfo()))
+                .body("city_info", hasItems(hasEntry("zip","2630"),hasEntry("city","Værebro")));
     }
 
-    @Test
-    public void testCount() throws Exception {
-        given()
-                .contentType("application/json")
-                .get("/xxx/count").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
-    }
 }
