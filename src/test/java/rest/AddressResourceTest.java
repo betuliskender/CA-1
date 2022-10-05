@@ -82,8 +82,8 @@ public class AddressResourceTest {
         a2 = new Address("Paradisæblevej 111", "Her", c2);
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(a1);

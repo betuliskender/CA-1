@@ -39,11 +39,11 @@ public class PhoneFacadeTest
 //            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
 //            em.createQuery("DELETE From CityInfo ").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-
-            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//
+//            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.getTransaction().commit();
         }
         finally {

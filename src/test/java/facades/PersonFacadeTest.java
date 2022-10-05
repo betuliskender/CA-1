@@ -46,10 +46,10 @@ public class PersonFacadeTest {
 //            em.createQuery("DELETE From CityInfo ").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
 
-            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.getTransaction().commit();
         }
         finally {
@@ -79,10 +79,10 @@ public class PersonFacadeTest {
         try {
             em.getTransaction().begin();
 
-            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
 
             c1 = new CityInfo("2300","Amager");
             c2 = new CityInfo("2400","Nordvest");

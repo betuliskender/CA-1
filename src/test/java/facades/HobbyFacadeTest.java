@@ -43,7 +43,7 @@ public class HobbyFacadeTest {
         try {
             em.getTransaction().begin();
             //em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE Hobby AUTO_INCREMENT = 1").executeUpdate();
             h1 = new Hobby("Strikning", "Kun gamle damer strikker");
             h2 = new Hobby("Gaming", "Spil WOW med Morten");

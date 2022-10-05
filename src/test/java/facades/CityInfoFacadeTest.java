@@ -40,7 +40,7 @@ public class CityInfoFacadeTest  {
         try {
             em.getTransaction().begin();
             //em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             c1 = new CityInfo("2730", "Herlev");
             c2 = new CityInfo("2700", "Brønshøj");
             em.persist(c1);

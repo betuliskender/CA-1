@@ -35,8 +35,8 @@ public class AddressFacadeTest {
 //                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
 //                em.getTransaction().commit();
 
-                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
 
             }
             finally {

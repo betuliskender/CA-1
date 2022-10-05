@@ -79,7 +79,7 @@ public class HobbyResourceTest {
         h2 = new Hobby("aaa", "bbb");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
             em.persist(h1);
             em.persist(h2);
             em.getTransaction().commit();

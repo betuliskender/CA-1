@@ -84,7 +84,7 @@ public class CityInfoResourceTest {
         c2 = new CityInfo("8880", "Aalborg");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.getTransaction().commit();
