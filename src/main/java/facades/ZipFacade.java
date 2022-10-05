@@ -18,7 +18,7 @@ import java.net.URLConnection;
 public class ZipFacade {
 
     private static EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-
+//h
     public static void main(String[] args) throws IOException, InterruptedException {
         Gson GSON = new GsonBuilder().create();
         String urlString = "https://api.dataforsyningen.dk/postnumre";
