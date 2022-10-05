@@ -91,20 +91,20 @@ public class HobbyResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/address").then().statusCode(200);
+        given().when().get("/hobby").then().statusCode(200);
     }
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
         given().log().all()
-                .when().get("/address")
+                .when().get("/hobby")
                 .then().statusCode(200);
     }
     @Test
     public void testLogResponse() {
         System.out.println("Testing logging response details");
         given()
-                .when().get("/address")
+                .when().get("/hobby")
                 .then().log().body().statusCode(200);
     }
 
