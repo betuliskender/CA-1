@@ -25,12 +25,12 @@ public class PhoneFacadeTest
     public PhoneFacadeTest() {
     }
 
-    public static void deleteData()
-    {
-        EntityManager em = emf.createEntityManager();
-
-        try{
-            em.getTransaction().begin();
+//    public static void deleteData()
+//    {
+//        EntityManager em = emf.createEntityManager();
+//
+//        try{
+//            em.getTransaction().begin();
 //            em.createQuery("DELETE From Phone").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
 //            em.createQuery("DELETE From Person ").executeUpdate();
@@ -44,18 +44,17 @@ public class PhoneFacadeTest
 //            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
 //            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
 //            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            em.getTransaction().commit();
-        }
-        finally {
-            em.close();
-        }
-    }
+//            em.getTransaction().commit();
+//        }
+//        finally {
+//            em.close();
+//        }
+//    }
 
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PhoneFacade.getInstance(emf);
-        deleteData();
 
     }
 
@@ -69,13 +68,10 @@ public class PhoneFacadeTest
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
 
             c1 = new CityInfo("2300","Amager");
             c2 = new CityInfo("2400","Nordvest");
             c3 = new CityInfo("2100","Østerbro");
-
             a1 = new Address("Amagerbrogade 12","3. TV",c1);
             a2 = new Address("Stærevej 6","1.TH",c2);
             a3 = new Address("Østerbrogade 271","ST, MF",c3);
@@ -83,6 +79,14 @@ public class PhoneFacadeTest
             person2 = new Person("Betül@I.dk", "Betül", "Iskender", a2);
             phone1 = new Phone(1020304, "Home", person1);
             phone2 = new Phone(5060708, "Work", person2);
+
+        try {
+            em.getTransaction().begin();
+
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(c3);
@@ -102,7 +106,6 @@ public class PhoneFacadeTest
 
     @AfterEach
     public void tearDown() {
-        deleteData();
 //        Remove any data after each test was run
     }
 

@@ -40,16 +40,16 @@ public class HobbyFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            //em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE Hobby AUTO_INCREMENT = 1").executeUpdate();
+
             h1 = new Hobby("Strikning", "Kun gamle damer strikker");
             h2 = new Hobby("Gaming", "Spil WOW med Morten");
+
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+//            em.createNativeQuery("ALTER TABLE Hobby AUTO_INCREMENT = 1").executeUpdate();
             em.persist(h1);
             em.persist(h2);
-
             em.getTransaction().commit();
         } finally {
             em.close();

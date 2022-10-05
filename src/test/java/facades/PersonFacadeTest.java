@@ -31,12 +31,12 @@ public class PersonFacadeTest {
     public PersonFacadeTest() {
     }
 
-    public static void deleteData()
-    {
-        EntityManager em = emf.createEntityManager();
-
-        try{
-            em.getTransaction().begin();
+//    public static void deleteData()
+//    {
+//        EntityManager em = emf.createEntityManager();
+//
+//        try{
+//            em.getTransaction().begin();
 //            em.createQuery("DELETE From Phone").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
 //            em.createQuery("DELETE From Person ").executeUpdate();
@@ -45,23 +45,22 @@ public class PersonFacadeTest {
 //            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
 //            em.createQuery("DELETE From CityInfo ").executeUpdate();
 //            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-
+//
 //            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
 //            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
 //            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
 //            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            em.getTransaction().commit();
-        }
-        finally {
-            em.close();
-        }
-    }
+//            em.getTransaction().commit();
+//        }
+//        finally {
+//            em.close();
+//        }
+//    }
 
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PersonFacade.getInstance(emf);
-        deleteData();
     }
 
     @AfterAll
@@ -75,14 +74,6 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-
-        try {
-            em.getTransaction().begin();
-
-//            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
 
             c1 = new CityInfo("2300","Amager");
             c2 = new CityInfo("2400","Nordvest");
@@ -102,9 +93,13 @@ public class PersonFacadeTest {
             p2 = new Person("Denis@P.dk", "Denis", "Pedersen",a2);
             p3 = new Person("Betül@I.dk", "Betül", "Iskender", a3);
 
-
-
-            //em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(c3);
@@ -113,7 +108,6 @@ public class PersonFacadeTest {
             em.persist(a3);
             em.persist(h1);
             em.persist(h2);
-
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
@@ -125,7 +119,6 @@ public class PersonFacadeTest {
 
     @AfterEach
     public void tearDown() {
-        deleteData();
 //        Remove any data after each test was run
     }
 

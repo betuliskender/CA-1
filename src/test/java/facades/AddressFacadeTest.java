@@ -22,33 +22,32 @@ public class AddressFacadeTest {
         public AddressFacadeTest() {
         }
 
-        public static void deleteData()
-        {
-            EntityManager em = emf.createEntityManager();
-
-            try{
-
+//        public static void deleteData()
+//        {
+//            EntityManager em = emf.createEntityManager();
+//
+//            try{
+//
 //                em.getTransaction().begin();
 //                em.createQuery("DELETE From Address ").executeUpdate();
 //                em.createNativeQuery("ALTER TABLE address AUTO_INCREMENT = 1").executeUpdate();
 //                em.createQuery("DELETE From CityInfo ").executeUpdate();
 //                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
 //                em.getTransaction().commit();
-
-//                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//
 //                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-
-            }
-            finally {
-                em.close();
-            }
-        }
+//                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+//
+//            }
+//            finally {
+//                em.close();
+//            }
+//        }
 
         @BeforeAll
         public static void setUpClass() {
             emf = EMF_Creator.createEntityManagerFactoryForTest();
             facade = AddressFacade.getInstance(emf);
-            deleteData();
 
         }
 
@@ -62,8 +61,6 @@ public class AddressFacadeTest {
         @BeforeEach
         public void setUp() {
             EntityManager em = emf.createEntityManager();
-            try {
-                em.getTransaction().begin();
 
                 c1 = new CityInfo("2300","Amager");
                 c2 = new CityInfo("2400","Nordvest");
@@ -73,6 +70,10 @@ public class AddressFacadeTest {
                 a2 = new Address("Stærevej 6","1.TH",c2);
                 a3 = new Address("Østerbrogade 271","ST, MF",c3);
 
+            try {
+                em.getTransaction().begin();
+                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
                 em.persist(c1);
                 em.persist(c2);
                 em.persist(c3);
@@ -88,7 +89,6 @@ public class AddressFacadeTest {
 
         @AfterEach
         public void tearDown() {
-            deleteData();
 //        Remove any data after each test was run
         }
 
