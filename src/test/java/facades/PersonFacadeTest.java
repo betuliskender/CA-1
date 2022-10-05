@@ -149,6 +149,7 @@ public class PersonFacadeTest {
         p1.getPhones().add(phone1);
         p1.getPhones().add(phone2);
         PersonDto updatedPerson = new PersonDto(p1);
+        System.out.println(updatedPerson);
         PersonDto actual = facade.update(updatedPerson);
         System.out.println(actual);
         assertEquals(updatedPerson, actual);
@@ -162,8 +163,6 @@ public class PersonFacadeTest {
         int expected = 3;
         assertEquals(expected,personDtoList.size() );
     }
-
-
 
     @Test
     void delete() {
