@@ -78,6 +78,7 @@ public class HobbyFacade implements IFacade<HobbyDto> {
             throw new CustomException("Could not update Hobby with id: " + hobbyDto.getId());
 
         Hobby hobby = HobbyHandler.mergeDTOAndEntity(hobbyDto, existingHobby);
+
         try {
             em.getTransaction().begin();
             em.merge(hobby);
