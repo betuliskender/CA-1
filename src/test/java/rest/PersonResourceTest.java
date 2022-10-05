@@ -86,17 +86,24 @@ public class PersonResourceTest {
         a2 = new Address("Paradisæblevej 111", "Her", c2);
         p1 = new Person("Arnemail@email.com", "Arne", "Bjarne", a1);
         p2 = new Person("Johns@email.com", "John", "Larsen", a2);
+        h1 = new Hobby("Dans med Long", "Lær at danse som en rigtig dansetrold");
+        h2 = new Hobby("Karate", "Haiiii");
+
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
             em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(a1);
             em.persist(a2);
             em.persist(p1);
             em.persist(p2);
+            em.persist(h1);
+            em.persist(h2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -141,19 +148,17 @@ public class PersonResourceTest {
     }
 
 
- /*   @Test
+    /*@Test
     public void testGetById()  {
-        System.out.println(p1);
-        System.out.println(a1);
-        System.out.println(p2);
         given()
                 .contentType(ContentType.JSON)
 //                .pathParam("id", p1.getId()).when()
-                .get("/person/{id}",p1.getId())
+                .get("/person/{id}",p2.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("id", equalTo(p1.getId()));
+                .body("id", equalTo(p2.getId()));
+
     }*/
     @Test
     public void create() {
@@ -189,8 +194,7 @@ public class PersonResourceTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(a1.getId()))
-                .body("email", equalTo("MyNewEmail@email.com"))
-                .body("firstName", equalTo("Arne"));
+                .body("id", equalTo(p1.getId()))
+                .body("email", equalTo("MyNewEmail@email.com"));
     }
 }

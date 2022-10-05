@@ -50,7 +50,7 @@ public class PersonHandler {
         return updatedPerson;
     }
     private static Address addressFromDtoConverter(PersonDto.InnerAddressDto innerAddressDto) {
-        Address updatedAddress = new Address(innerAddressDto.getStreet(), innerAddressDto.getAdditionalInfo(), new CityInfo(innerAddressDto.getInnerCityInfoDto().getId(),innerAddressDto.getInnerCityInfoDto().getZipcode(),innerAddressDto.getInnerCityInfoDto().getCity()));
+        Address updatedAddress = new Address(innerAddressDto.getId(), innerAddressDto.getStreet(), innerAddressDto.getAdditionalInfo(), new CityInfo(innerAddressDto.getInnerCityInfoDto().getId(),innerAddressDto.getInnerCityInfoDto().getZipcode(),innerAddressDto.getInnerCityInfoDto().getCity()));
         return updatedAddress;
     }
 
