@@ -119,21 +119,13 @@ public class AddressResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("id", equalTo(a1.getId()))
                 .body("street", equalTo(a1.getStreet()))
-                .body("additional_info", equalTo(a1.getAdditionalInfo()))
-                .body("city_info", hasItems(hasEntry("zip","2630"),hasEntry("city","Værebro")));
+                .body("additionalInfo", equalTo(a1.getAdditionalInfo()))
+                .body("innerCityInfoDto", hasEntry("id", a1.getCityInfo().getId()))
+                .body("innerCityInfoDto", hasEntry("zipcode", a1.getCityInfo().getZipcode()))
+                .body("innerCityInfoDto", hasEntry("city", a1.getCityInfo().getCity()));
+
     }
-    @Test
-    public void testError() {
-        given()
-                .contentType(ContentType.JSON)
-//                .pathParam("id", p1.getId()).when()
-                .get("/address/{id}",999999999)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode())
-                .body("code", equalTo(404))
-                .body("message", equalTo("The Address entity with ID: 999999999 Was not found"));
-    }
+
     @Test
     public void testPrintResponse(){
         Response response = given().when().get("/address/"+a1.getId());
