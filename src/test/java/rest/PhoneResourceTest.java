@@ -94,18 +94,18 @@ public class PhoneResourceTest {
         p2 = new Phone(87654321, "hjem", per2);
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
             em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
-            em.persist(per2);
-            em.persist(per1);
             em.persist(a1);
             em.persist(a2);
-            em.persist(p2);
+            em.persist(per1);
+            em.persist(per2);
             em.persist(p1);
+            em.persist(p2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -185,10 +185,10 @@ public class PhoneResourceTest {
                 .body("id", notNullValue())
                 .body("number", equalTo(23232323))
                 .body("description", equalTo("hjem"))
-                .body("personDto", hasEntry("id", phoneDto.getPerson().getId()))
-                .body("personDto", hasEntry("email", phoneDto.getPerson().getEmail()))
-                .body("personDto", hasEntry("firstName", phoneDto.getPerson().getFirstName()))
-                .body("personDto", hasEntry("lastName", phoneDto.getPerson().getLastName()));
+                .body("person", hasEntry("id", phoneDto.getPerson().getId()))
+                .body("person", hasEntry("email", phoneDto.getPerson().getEmail()))
+                .body("person", hasEntry("firstName", phoneDto.getPerson().getFirstName()))
+                .body("person", hasEntry("lastName", phoneDto.getPerson().getLastName()));
 
     }
     @Test
