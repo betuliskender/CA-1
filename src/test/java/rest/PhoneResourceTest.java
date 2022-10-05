@@ -166,6 +166,7 @@ public class PhoneResourceTest {
 
     }
 
+
     @Test
     public void create() {
         Phone p = new Phone(23232323, "hjem", per1);
@@ -191,8 +192,9 @@ public class PhoneResourceTest {
                 .body("person", hasEntry("lastName", phoneDto.getPerson().getLastName()));
 
     }
+
     @Test
-    public void updateTest() {
+    public void updatePhone() {
         p1.setNumber(88888888);
         PhoneDto phoneDto = new PhoneDto(p1);
         String requestBody = GSON.toJson(phoneDto);
@@ -201,7 +203,7 @@ public class PhoneResourceTest {
                 .header("Content-type", ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .put("/phone/"+p1.getId())
+                .put("/phone/" + p1.getId())
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -209,6 +211,7 @@ public class PhoneResourceTest {
                 .body("number", equalTo(88888888))
                 .body("description", equalTo("arbejde"));
     }
+
     @Test
     public void deletePhone() {
         given()
@@ -217,7 +220,6 @@ public class PhoneResourceTest {
                 .delete("/phone/{id}")
                 .then()
                 .statusCode(200)
-                .body("id",equalTo(p1.getId()));
+                .body("id", equalTo(p1.getId()));
     }
-
 }
