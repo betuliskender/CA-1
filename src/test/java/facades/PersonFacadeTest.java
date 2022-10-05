@@ -37,14 +37,19 @@ public class PersonFacadeTest {
 
         try{
             em.getTransaction().begin();
-            em.createQuery("DELETE From Phone").executeUpdate();
-            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
-            em.createQuery("DELETE From Person ").executeUpdate();
-            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
-            em.createQuery("DELETE From Address ").executeUpdate();
-            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
-            em.createQuery("DELETE From CityInfo ").executeUpdate();
-            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+//            em.createQuery("DELETE From Phone").executeUpdate();
+//            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
+//            em.createQuery("DELETE From Person ").executeUpdate();
+//            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
+//            em.createQuery("DELETE From Address ").executeUpdate();
+//            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
+//            em.createQuery("DELETE From CityInfo ").executeUpdate();
+//            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.getTransaction().commit();
         }
         finally {
@@ -74,8 +79,10 @@ public class PersonFacadeTest {
         try {
             em.getTransaction().begin();
 
-            em.createQuery("DELETE From Person").executeUpdate();
-            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
 
             c1 = new CityInfo("2300","Amager");
             c2 = new CityInfo("2400","Nordvest");

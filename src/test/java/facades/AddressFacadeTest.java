@@ -28,12 +28,16 @@ public class AddressFacadeTest {
 
             try{
 
-                em.getTransaction().begin();
-                em.createQuery("DELETE From Address ").executeUpdate();
-                em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
-                em.createQuery("DELETE From CityInfo ").executeUpdate();
-                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-                em.getTransaction().commit();
+//                em.getTransaction().begin();
+//                em.createQuery("DELETE From Address ").executeUpdate();
+//                em.createNativeQuery("ALTER TABLE address AUTO_INCREMENT = 1").executeUpdate();
+//                em.createQuery("DELETE From CityInfo ").executeUpdate();
+//                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
+//                em.getTransaction().commit();
+
+                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+
             }
             finally {
                 em.close();
