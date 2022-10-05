@@ -72,8 +72,11 @@ public class AddressFacadeTest {
 
             try {
                 em.getTransaction().begin();
+                em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+                em.createNamedQuery("Person.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Address.deleteAllRows").executeUpdate();
                 em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
+                em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
                 em.persist(c1);
                 em.persist(c2);
                 em.persist(c3);

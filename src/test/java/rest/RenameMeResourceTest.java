@@ -32,7 +32,7 @@
 //    private static HttpServer httpServer;
 //    private static EntityManagerFactory emf;
 //
-
+//
 //    static HttpServer startServer() {
 //        ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
 //        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
