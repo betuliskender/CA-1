@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name ="Hobby.deleteAllRows",query = "DELETE from Hobby ")
 @Table(name = "hobby")
 public class Hobby {
     @Id
