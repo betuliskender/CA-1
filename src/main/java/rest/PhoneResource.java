@@ -2,9 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.CityInfoDto;
 import dtos.PhoneDto;
-import facades.CityInfoFacade;
 import facades.PhoneFacade;
 import utils.EMF_Creator;
 
