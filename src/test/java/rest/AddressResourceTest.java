@@ -5,13 +5,11 @@ import com.google.gson.GsonBuilder;
 import dtos.AddressDto;
 import entities.Address;
 import entities.CityInfo;
-import entities.RenameMe;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
-import org.eclipse.yasson.YassonJsonb;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -29,7 +27,6 @@ import java.net.URI;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 //Uncomment the line below, to temporarily disable this test

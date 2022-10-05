@@ -1,11 +1,19 @@
 package rest;
 
-import dtos.AddressDto;
+import dtos.PersonDto;
 import dtos.PhoneDto;
-import entities.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dtos.AddressDto;
+import entities.Address;
+import entities.CityInfo;
+import entities.Person;
+import entities.Phone;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -37,6 +45,8 @@ public class PhoneResourceTest {
     private static Address a1, a2;
     private static Person per1, per2;
     private static CityInfo c1, c2;
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -76,26 +86,26 @@ public class PhoneResourceTest {
         EntityManager em = emf.createEntityManager();
         c1 = new CityInfo("2630", "Værebro");
         c2 = new CityInfo("8880", "Aalborg");
-        a1 = new Address( "Bælgevej 16", "Til højre",c1);
+        a1 = new Address("Bælgevej 16", "Til højre", c1);
         a2 = new Address("Paradisæblevej 111", "Her", c2);
-        per1 = new Person("Denis@code1.dk","Denis","Pedersen",a1);
-        per2 = new Person("Denis@code2.dk","Denis","Nielsen",a2);
-        p1 = new Phone(12345678,"arbejde",per1);
-        p2 = new Phone(87654321,"hjem",per2);
+        per1 = new Person("Denis@code1.dk", "Denis", "Pedersen", a1);
+        per2 = new Person("Denis@code2.dk", "Denis", "Nielsen", a2);
+        p1 = new Phone(12345678, "arbejde", per1);
+        p2 = new Phone(87654321, "hjem", per2);
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.createNamedQuery("Address.deleteAllRows").executeUpdate();
             em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
-            em.persist(per2);
-            em.persist(per1);
             em.persist(a1);
             em.persist(a2);
-            em.persist(p2);
+            em.persist(per1);
+            em.persist(per2);
             em.persist(p1);
+            em.persist(p2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -107,6 +117,7 @@ public class PhoneResourceTest {
         System.out.println("Testing is server UP");
         given().when().get("/phone").then().statusCode(200);
     }
+
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
@@ -114,6 +125,7 @@ public class PhoneResourceTest {
                 .when().get("/phone")
                 .then().statusCode(200);
     }
+
     @Test
     public void testLogResponse() {
         System.out.println("Testing logging response details");
@@ -121,12 +133,13 @@ public class PhoneResourceTest {
                 .when().get("/phone")
                 .then().log().body().statusCode(200);
     }
+
     @Test
-    public void getById()  {
+    public void getById() {
         given()
                 .contentType(ContentType.JSON)
 //                .pathParam("id", p1.getId()).when()
-                .get("/phone/{id}",p1.getId())
+                .get("/phone/{id}", p1.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
@@ -135,6 +148,7 @@ public class PhoneResourceTest {
                 .body("description", equalTo(p1.getDescription()));
 
     }
+
     @Test
     public void getAll() throws Exception {
         List<PhoneDto> phoneDtos;
@@ -151,27 +165,61 @@ public class PhoneResourceTest {
         assertThat(phoneDtos, containsInAnyOrder(p1Dto, p2Dto));
 
     }
-   /* @Test
+
+
+    @Test
     public void create() {
-        Phone p = new Phone(23232323,"hjem");
+        Phone p = new Phone(23232323, "hjem", per1);
         PhoneDto phoneDto = new PhoneDto(p);
         String requestBody = GSON.toJson(phoneDto);
-        System.out.println(addressDto);
+        System.out.println(phoneDto);
 
         given()
                 .header("Content-type", ContentType.JSON)
                 .and()
                 .body(requestBody)
                 .when()
-                .post("/address")
+                .post("/phone")
                 .then()
                 .assertThat()
                 .statusCode(200)
                 .body("id", notNullValue())
-                .body("street", equalTo("Bjergevej 40"))
-                .body("additionalInfo", equalTo("1 st"))
-                .body("innerCityInfoDto", hasEntry("id", addressDto.getInnerCityInfoDto().getId()))
-                .body("innerCityInfoDto", hasEntry("zipcode", addressDto.getInnerCityInfoDto().getZipcode()))
-                .body("innerCityInfoDto", hasEntry("city", addressDto.getInnerCityInfoDto().getCity()));
-    }*/
+                .body("number", equalTo(23232323))
+                .body("description", equalTo("hjem"))
+                .body("person", hasEntry("id", phoneDto.getPerson().getId()))
+                .body("person", hasEntry("email", phoneDto.getPerson().getEmail()))
+                .body("person", hasEntry("firstName", phoneDto.getPerson().getFirstName()))
+                .body("person", hasEntry("lastName", phoneDto.getPerson().getLastName()));
+
+    }
+
+    @Test
+    public void updatePhone() {
+        p1.setNumber(88888888);
+        PhoneDto phoneDto = new PhoneDto(p1);
+        String requestBody = GSON.toJson(phoneDto);
+
+        given()
+                .header("Content-type", ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .put("/phone/" + p1.getId())
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("id", notNullValue())
+                .body("number", equalTo(88888888))
+                .body("description", equalTo("arbejde"));
+    }
+
+    @Test
+    public void deletePhone() {
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("id", p1.getId())
+                .delete("/phone/{id}")
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(p1.getId()));
+    }
 }
