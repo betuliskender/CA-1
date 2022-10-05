@@ -6,6 +6,8 @@ import entities.RenameMe;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -71,11 +73,12 @@ public class AddressResourceTest {
         EntityManager em = emf.createEntityManager();
         c1 = new CityInfo("2630", "Værebro");
         c2 = new CityInfo("8880", "Aalborg");
-        a1 = new Address( "Bælgevej 16", "Til højre",c1 );
+        a1 = new Address( "Bælgevej 16", "Til højre",c1);
         a2 = new Address("Paradisæblevej 111", "Her", c2);
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.persist(a1);
@@ -89,7 +92,7 @@ public class AddressResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/address").then().statusCode(200);
     }
     @Test
     public void testLogRequest() {
@@ -119,5 +122,27 @@ public class AddressResourceTest {
                 .body("additional_info", equalTo(a1.getAdditionalInfo()))
                 .body("city_info", hasItems(hasEntry("zip","2630"),hasEntry("city","Værebro")));
     }
+    @Test
+    public void testError() {
+        given()
+                .contentType(ContentType.JSON)
+//                .pathParam("id", p1.getId()).when()
+                .get("/address/{id}",999999999)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode())
+                .body("code", equalTo(404))
+                .body("message", equalTo("The Address entity with ID: 999999999 Was not found"));
+    }
+    @Test
+    public void testPrintResponse(){
+        Response response = given().when().get("/address/"+a1.getId());
+        ResponseBody body = response.getBody();
+        System.out.println(body.prettyPrint());
 
+        response
+                .then()
+                .assertThat()
+                .body("street",equalTo("Bælgevej 16"));
+    }
 }

@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name ="Address.deleteAllRows",query = "DELETE from Address ")
 @Table(name = "address")
 public class Address {
 
