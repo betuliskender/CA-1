@@ -2,9 +2,9 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.CityInfoDto;
 import dtos.PersonDto;
-import dtos.PhoneDto;
-import entities.Person;
+import errorhandling.CustomException;
 import facades.PersonFacade;
 import utils.EMF_Creator;
 
@@ -12,7 +12,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/person")
 public class PersonResource {
@@ -20,11 +19,12 @@ public class PersonResource {
     private static final PersonFacade FACADE = PersonFacade.getInstance(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    @Path("{id}")
     @GET
-    @Produces("text/plain")
-    public Response getPersonById(@PathParam("id") int id) {
-        return Response.ok().entity(GSON.toJson(FACADE.getById(id))).build();
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getById(@PathParam("id") int id) throws CustomException {
+        PersonDto p = FACADE.getById(id);
+        return Response.ok().entity(GSON.toJson(p)).build();
     }
 
     @GET
@@ -37,7 +37,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response update(@PathParam("id") int id, String jsonInput) {
+    public Response update(@PathParam("id") int id, String jsonInput) throws CustomException {
         PersonDto person = GSON.fromJson(jsonInput, PersonDto.class);
         person.setId(id);
         person = FACADE.update(person);
@@ -54,9 +54,9 @@ public class PersonResource {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) throws CustomException {
         PersonDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }

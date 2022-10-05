@@ -5,6 +5,7 @@ import dtos.CityInfoDto;
 import entities.Address;
 import entities.CityInfo;
 import entities.Person;
+import errorhandling.CustomException;
 import interfaces.facades.IFacade;
 import services.AddressHandler;
 
@@ -36,10 +37,13 @@ public class AddressFacade implements IFacade<AddressDto> {
     }
 
     @Override
-    public AddressDto getById(Integer id) {
+    public AddressDto getById(Integer id)  throws CustomException {
         EntityManager em = getEntityManager();
-        Address a = em.find(Address.class, id);
-        return new AddressDto(a);
+        Address address = em.find(Address.class, id);
+
+        if(address == null)
+            throw new CustomException("Could not find Address with id: " + id);
+        return new AddressDto(address);
     }
 
     @Override
@@ -67,13 +71,16 @@ public class AddressFacade implements IFacade<AddressDto> {
     }
 
     @Override
-    public AddressDto update(AddressDto addressdto) {
+    public AddressDto update(AddressDto addressdto) throws CustomException{
         EntityManager em = getEntityManager();
         Address existingAddress = em.find(Address.class, addressdto.getId());
+
+        if (existingAddress == null)
+            throw new EntityNotFoundException("Could not update Address with id: " + addressdto.getId());
+
+
         Address address = AddressHandler.mergmergeDTOAndEntity(addressdto, existingAddress);
-        if (existingAddress == null) {
-            throw new EntityNotFoundException("Adress not found");
-        }
+
         try {
             em.getTransaction().begin();
             em.merge(address);
@@ -86,18 +93,21 @@ public class AddressFacade implements IFacade<AddressDto> {
 
 
     @Override
-    public AddressDto delete(Integer id) {
+    public AddressDto delete(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-        Address a = em.find(Address.class, id);
+        Address address = em.find(Address.class, id);
+
+        if(address == null)
+            throw new CustomException("Could not delete Address with id: " + id);
 
         try {
             em.getTransaction().begin();
-            em.remove(a);
+            em.remove(address);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new AddressDto(a);
+        return new AddressDto(address);
     }
 
 //    @Override

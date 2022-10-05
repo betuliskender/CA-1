@@ -3,6 +3,7 @@ package facades;
 
 import dtos.HobbyDto;
 import entities.Hobby;
+import errorhandling.CustomException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -62,7 +63,7 @@ public class HobbyFacadeTest {
     }
 
     @Test
-    void getById() {
+    void getById() throws CustomException {
         HobbyDto expected = new HobbyDto(h1);
         HobbyDto actual = facade.getById(h1.getId());
         assertEquals(expected, actual);
@@ -84,7 +85,7 @@ public class HobbyFacadeTest {
     }
 
     @Test
-    void update() {
+    void update() throws CustomException {
         h1.setName("Hækleri");
         HobbyDto expected = new HobbyDto(h1);
         HobbyDto actual = facade.update(expected);
@@ -92,7 +93,7 @@ public class HobbyFacadeTest {
     }
 
     @Test
-    void delete(){
+    void delete() throws CustomException {
         facade.delete(h1.getId());
         int expected = 1;
         int actual = facade.getAll().size();

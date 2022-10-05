@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.HobbyDto;
+import errorhandling.CustomException;
 import facades.HobbyFacade;
 import facades.PhoneFacade;
 import utils.EMF_Creator;
@@ -27,7 +28,7 @@ public class HobbyResource {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("id") int id) {
+    public Response getById(@PathParam("id") int id) throws CustomException {
         HobbyDto hobbyDto = FACADE.getById(id);
         return Response.ok().entity(GSON.toJson(hobbyDto)).build();
     }
@@ -45,7 +46,7 @@ public class HobbyResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") int id, String content) {
+    public Response update(@PathParam("id") int id, String content) throws CustomException {
         HobbyDto hobbyDto = GSON.fromJson(content, HobbyDto.class);
         hobbyDto.setId(id);
         HobbyDto updated = FACADE.update(hobbyDto);
@@ -55,7 +56,7 @@ public class HobbyResource {
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) throws CustomException {
 
         HobbyDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();

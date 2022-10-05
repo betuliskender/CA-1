@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.CityInfoDto;
+import errorhandling.CustomException;
 import facades.CityInfoFacade;
 import utils.EMF_Creator;
 
@@ -26,7 +27,7 @@ public class CityInfoResource {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("id") int id) {
+    public Response getById(@PathParam("id") int id) throws CustomException {
         CityInfoDto c = FACADE.getById(id);
         return Response.ok().entity(GSON.toJson(c)).build();
     }
@@ -44,7 +45,7 @@ public class CityInfoResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") int id, String content) {
+    public Response update(@PathParam("id") int id, String content) throws CustomException {
         CityInfoDto c = GSON.fromJson(content, CityInfoDto.class);
         c.setId(id);
         CityInfoDto updated = FACADE.update(c);
@@ -54,7 +55,7 @@ public class CityInfoResource {
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) throws CustomException {
 
         CityInfoDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();

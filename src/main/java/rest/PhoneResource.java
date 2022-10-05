@@ -2,9 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.CityInfoDto;
 import dtos.PhoneDto;
-import facades.CityInfoFacade;
+import errorhandling.CustomException;
 import facades.PhoneFacade;
 import utils.EMF_Creator;
 
@@ -28,7 +27,7 @@ public class PhoneResource {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("id") int id) {
+    public Response getById(@PathParam("id") int id) throws CustomException {
         PhoneDto p = FACADE.getById(id);
         return Response.ok().entity(GSON.toJson(p)).build();
     }
@@ -46,7 +45,7 @@ public class PhoneResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") int id, String content) {
+    public Response update(@PathParam("id") int id, String content) throws CustomException {
         PhoneDto p = GSON.fromJson(content, PhoneDto.class);
         p.setId(id);
         p = FACADE.update(p);
@@ -56,7 +55,7 @@ public class PhoneResource {
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) throws CustomException {
         PhoneDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }

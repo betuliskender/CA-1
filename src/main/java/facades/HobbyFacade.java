@@ -2,11 +2,13 @@ package facades;
 
 import dtos.HobbyDto;
 import entities.Hobby;
+import errorhandling.CustomException;
 import interfaces.facades.IFacade;
 import services.HobbyHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +34,14 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     }
 
     @Override
-    public HobbyDto getById(Integer id) {
+    public HobbyDto getById(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-        Hobby h = em.find(Hobby.class, id);
-        return  new HobbyDto(h);
+        Hobby hobby = em.find(Hobby.class, id);
+
+        if(hobby == null)
+            throw new CustomException("Could not find Hobby with id: " + id);
+
+        return  new HobbyDto(hobby);
     }
 
     @Override
@@ -64,9 +70,13 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     }
 
     @Override
-    public HobbyDto update(HobbyDto hobbyDto) {
+    public HobbyDto update(HobbyDto hobbyDto) throws CustomException{
         EntityManager em = getEntityManager();
         Hobby existingHobby = em.find(Hobby.class, hobbyDto.getId());
+
+        if (existingHobby == null)
+            throw new CustomException("Could not update Hobby with id: " + hobbyDto.getId());
+
         Hobby hobby = HobbyHandler.mergeDTOAndEntity(hobbyDto, existingHobby);
         try {
             em.getTransaction().begin();
@@ -80,17 +90,20 @@ public class HobbyFacade implements IFacade<HobbyDto> {
     }
 
     @Override
-    public HobbyDto delete(Integer id) {
+    public HobbyDto delete(Integer id) throws CustomException{
         EntityManager em = getEntityManager();
-        Hobby h = em.find(Hobby.class, id);
+        Hobby hobby = em.find(Hobby.class, id);
+
+        if (hobby == null)
+            throw new CustomException("Could not remove Hobby with id: " + id);
 
         try{
             em.getTransaction().begin();
-            em.remove(h);
+            em.remove(hobby);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new HobbyDto(h);
+        return new HobbyDto(hobby);
     }
 }

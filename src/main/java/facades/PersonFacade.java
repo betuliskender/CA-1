@@ -2,9 +2,9 @@ package facades;
 
 import dtos.PersonDto;
 import entities.*;
+import errorhandling.CustomException;
 import interfaces.facades.IFacade;
 import services.PersonHandler;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,18 +33,20 @@ public class PersonFacade implements IFacade<PersonDto> {
     }
 
     @Override
-    public PersonDto getById(Integer id) {
-        EntityManager em = emf.createEntityManager();
-        Person p = em.find(Person.class, id);
-        if(p ==null)
-            throw new EntityNotFoundException("Not found");
-        return new PersonDto(p);
+    public PersonDto getById(Integer id) throws CustomException {
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, id);
+
+        if (person == null)
+            throw new CustomException("Could not remove Person with id: " + id);
+
+        return new PersonDto(person);
     }
 
     @Override
     public List<PersonDto> getAll() {
         List<PersonDto> personDtoList = new ArrayList<>();
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         query.getResultList().forEach(person -> {
             personDtoList.add(new PersonDto(person));
@@ -55,7 +57,7 @@ public class PersonFacade implements IFacade<PersonDto> {
     public List<PersonDto> getAllPersonsWithHobby(String hobbyName)
     {
         List<PersonDto> personDtoList = new ArrayList<>();
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :name", Person.class);
         query.setParameter("name" , hobbyName);
         query.getResultList().forEach(person -> {
@@ -122,11 +124,16 @@ public class PersonFacade implements IFacade<PersonDto> {
     }
 
 
-    public PersonDto update(PersonDto personDto) {
+    public PersonDto update(PersonDto personDto) throws CustomException {
 
         EntityManager em = getEntityManager();
         Person existingPerson = em.find(Person.class, personDto.getId());
+
+        if (existingPerson == null)
+            throw new CustomException("Could not update Person with id: " + personDto.getId());
+
         Person person = PersonHandler.mergeDTOAndEntity(personDto, existingPerson);
+
 
 
         try {
@@ -146,9 +153,13 @@ public class PersonFacade implements IFacade<PersonDto> {
     }
 
     @Override
-    public PersonDto delete(Integer Id) {
+    public PersonDto delete(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, Id);
+        Person p = em.find(Person.class, id);
+
+        if (p == null)
+            throw new CustomException("Could not remove Person with id: " + id);
+
         try {
 
             em.getTransaction().begin();

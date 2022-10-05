@@ -2,6 +2,7 @@ package facades;
 
 import dtos.CityInfoDto;
 import entities.CityInfo;
+import errorhandling.CustomException;
 import interfaces.facades.IFacade;
 
 import javax.persistence.EntityManager;
@@ -32,9 +33,12 @@ public class CityInfoFacade implements IFacade<CityInfoDto> {
     }
 
     @Override
-    public CityInfoDto getById(Integer id) {
+    public CityInfoDto getById(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
         CityInfo cityInfo = em.find(CityInfo.class, id);
+
+        if(cityInfo == null)
+            throw new CustomException("Could not find CityInfo with id: " + id);
         return new CityInfoDto(cityInfo);
     }
 
@@ -71,31 +75,40 @@ public class CityInfoFacade implements IFacade<CityInfoDto> {
     }
 
     @Override
-    public CityInfoDto update(CityInfoDto cityInfo) {
+    public CityInfoDto update(CityInfoDto cityInfoDto) throws CustomException {
         EntityManager em = getEntityManager();
-        CityInfo c = new CityInfo(cityInfo);
+        CityInfo c = em.find(CityInfo.class, cityInfoDto.getId());
+
+        if(c == null)
+            throw new CustomException("Could not update CityInfo with id: " + cityInfoDto.getId());
+
+        CityInfo cityInfo = new CityInfo(cityInfoDto);
 
         try {
             em.getTransaction().begin();
-            em.merge(c);
+            em.merge(cityInfo);
             em.getTransaction().commit();
         }finally {
             em.close();
         }
-        return new CityInfoDto(c);
+        return new CityInfoDto(cityInfo);
     }
 
     @Override
-    public CityInfoDto delete(Integer id) {
+    public CityInfoDto delete(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-        CityInfo c = em.find(CityInfo.class, id);
+        CityInfo cityInfo = em.find(CityInfo.class, id);
+
+        if(cityInfo == null)
+            throw new CustomException("Could not remove CityInfo with id: " + id);
+
         try {
             em.getTransaction().begin();
-            em.remove(c);
+            em.remove(cityInfo);
             em.getTransaction().commit();
         }finally {
             em.close();
         }
-        return new CityInfoDto(c);
+        return new CityInfoDto(cityInfo);
     }
 }

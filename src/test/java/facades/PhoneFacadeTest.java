@@ -3,6 +3,7 @@ package facades;
 import dtos.PhoneDto;
 import entities.*;
 import entities.Phone;
+import errorhandling.CustomException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -102,7 +103,7 @@ public class PhoneFacadeTest
     }
 
     @Test
-    void getById() {
+    void getById() throws CustomException {
         PhoneDto expected = new PhoneDto(phone1);
         PhoneDto actual = facade.getById(phone1.getId());
         assertEquals(expected, actual);
@@ -125,7 +126,7 @@ public class PhoneFacadeTest
     }
 
     @Test
-    void update() {
+    void update() throws CustomException {
         phone1.setDescription("Mobile");
         PhoneDto expected = new PhoneDto(phone1);
         PhoneDto actual = facade.update(expected);
@@ -133,7 +134,7 @@ public class PhoneFacadeTest
     }
 
     @Test
-    void delete(){
+    void delete() throws CustomException {
         facade.delete(phone1.getId());
         int expected = 1;
         int actual = facade.getAll().size();

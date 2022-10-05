@@ -3,6 +3,7 @@ package facades;
 
 import dtos.CityInfoDto;
 import entities.CityInfo;
+import errorhandling.CustomException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -59,7 +60,7 @@ public class CityInfoFacadeTest  {
     }
 
     @Test
-    void getById() {
+    void getById() throws CustomException {
         CityInfoDto expected = new CityInfoDto(c1);
         CityInfoDto actual = facade.getById(c1.getId());
         assertEquals(expected, actual);
@@ -82,7 +83,7 @@ public class CityInfoFacadeTest  {
     }
 
     @Test
-    void update() {
+    void update() throws CustomException {
         c1.setZipcode("2200");
         CityInfoDto expected = new CityInfoDto(c1);
         CityInfoDto actual = facade.update(expected);
@@ -90,7 +91,7 @@ public class CityInfoFacadeTest  {
     }
 
     @Test
-    void delete(){
+    void delete() throws CustomException {
         facade.delete(c1.getId());
         int expected = 1;
         int actual = facade.getAll().size();

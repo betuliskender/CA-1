@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface IFacade <T>
 {
-    T getById(Integer id);
+    T getById(Integer id) throws Exception;
     List<T> getAll();
-    T create(T t);
+    T create(T t) throws Exception;
 
-    T update(T t);
+    T update(T t) throws Exception;
 
-    T delete(Integer id);
+    T delete(Integer id) throws Exception;
 
 
 }

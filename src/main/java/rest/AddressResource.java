@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.AddressDto;
 import dtos.PhoneDto;
+import errorhandling.CustomException;
 import facades.AddressFacade;
 import facades.PhoneFacade;
 import utils.EMF_Creator;
@@ -29,7 +30,7 @@ public class AddressResource {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("id") int id) {
+    public Response getById(@PathParam("id") int id) throws CustomException {
         AddressDto a = FACADE.getById(id);
         return Response.ok().entity(GSON.toJson(a)).build();
     }
@@ -47,7 +48,7 @@ public class AddressResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") int id, String content) {
+    public Response update(@PathParam("id") int id, String content) throws CustomException {
         AddressDto a = GSON.fromJson(content, AddressDto.class);
         a.setId(id);
         AddressDto updated = FACADE.update(a);
@@ -57,7 +58,7 @@ public class AddressResource {
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) throws CustomException {
 
         AddressDto deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();

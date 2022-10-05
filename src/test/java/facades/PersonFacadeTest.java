@@ -3,6 +3,7 @@ package facades;
 
 import dtos.PersonDto;
 import entities.*;
+import errorhandling.CustomException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -123,7 +124,7 @@ public class PersonFacadeTest {
     }
 
    @Test
-    public void getById() {
+    public void getById() throws CustomException {
         PersonDto expected = new PersonDto(p1);
         PersonDto actual = facade.getById(p1.getId());
         assertEquals(expected, actual);
@@ -142,7 +143,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    void update() {
+    void update() throws CustomException {
         p1.setEmail("Bjergkøbing@email.com");
         p1.getHobbies().add(h2);
         p1.getHobbies().add(h1);
@@ -166,7 +167,7 @@ public class PersonFacadeTest {
 
 
     @Test
-    void delete() {
+    void delete() throws CustomException {
         facade.delete(p1.getId());
         int expected = 2;
         int actual = facade.getAll().size();

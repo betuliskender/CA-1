@@ -6,12 +6,15 @@ import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 import entities.Phone;
+import errorhandling.CustomException;
 import interfaces.facades.IFacade;
 import services.PhoneHandler;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
+import javax.swing.undo.CannotUndoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +39,12 @@ public class PhoneFacade implements IFacade<PhoneDto> {
     }
     
     @Override
-    public PhoneDto getById(Integer id) {
+    public PhoneDto getById(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-       Phone phone = em.find(Phone.class, id);
+        Phone phone = em.find(Phone.class, id);
+
+        if (phone == null)
+            throw new CustomException("Could not find Phone with id: " + id);
 
         if(phone != null)
         {
@@ -84,33 +90,40 @@ public class PhoneFacade implements IFacade<PhoneDto> {
     }
 
     @Override
-    public PhoneDto update(PhoneDto phone) {
+    public PhoneDto update(PhoneDto phoneDto) throws CustomException {
         EntityManager em = getEntityManager();
-        Phone existingPhone = em.find(Phone.class, phone.getId());
-        Phone p = PhoneHandler.mergeDTOAndEntity(phone, existingPhone);
+        Phone existingPhone = em.find(Phone.class, phoneDto.getId());
+
+        if (existingPhone == null)
+            throw new CustomException("Could not update Hobby with id: " + phoneDto.getId());
+
+        Phone phone = PhoneHandler.mergeDTOAndEntity(phoneDto, existingPhone);
 
         try {
             em.getTransaction().begin();
-            em.merge(p);
+            em.merge(phone);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PhoneDto(p);
+        return new PhoneDto(phone);
     }
 
     @Override
-    public PhoneDto delete(Integer id) {
+    public PhoneDto delete(Integer id) throws CustomException {
         EntityManager em = getEntityManager();
-        Phone p = em.find(Phone.class, id);
+        Phone phone = em.find(Phone.class, id);
+
+        if (phone == null)
+            throw new CustomException("Could not remove Phone with id: " + id);
 
         try{
             em.getTransaction().begin();
-            em.remove(p);
+            em.remove(phone);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new PhoneDto(p);
+        return new PhoneDto(phone);
     }
 }

@@ -26,13 +26,13 @@ Content-Type: application/json
 {"zipcode": "9689", "city": "Hej"}
 
 ###
-PUT http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
+PUT http://localhost:8080/devops_starter_war_exploded/api/cityinfo/109411122312
 Content-Type: application/json
 
 {"zipcode": "9989", "city": "Nej"}
 
 ###
-DELETE http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094
+DELETE http://localhost:8080/devops_starter_war_exploded/api/cityinfo/1094111
 Content-Type: application/json
 
 ###
@@ -40,7 +40,7 @@ GET http://localhost:8080/devops_starter_war_exploded/api/phone
 Accept: application/json
 
 ###
-GET http://localhost:8080/devops_starter_war_exploded/api/phone/1
+GET http://localhost:8080/devops_starter_war_exploded/api/phone/11111
 Accept: application/json
 
 ###
@@ -53,13 +53,13 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/devops_starter_war_exploded/api/phone/4
+PUT http://localhost:8080/devops_starter_war_exploded/api/phone/42222
 Content-Type: application/json
 
 {"number": 111111}
 
 ###
-DELETE http://localhost:8080/devops_starter_war_exploded/api/phone/2
+DELETE http://localhost:8080/devops_starter_war_exploded/api/phone/22222
 Content-Type: application/json
 
 ###
@@ -67,7 +67,7 @@ GET http://localhost:8080/devops_starter_war_exploded/api/phone
 Accept: application/json
 
 ###
-GET http://localhost:8080/devops_starter_war_exploded/api/hobby/1
+GET http://localhost:8080/devops_starter_war_exploded/api/hobby/1111
 Accept: application/json
 
 ###
@@ -115,7 +115,15 @@ DELETE http://localhost:8080/devops_starter_war_exploded/api/address/1
 Content-Type: application/json
 
 ###
-PUT http://localhost:8080/devops_starter_war_exploded/api/person/1
+GET http://localhost:8080/devops_starter_war_exploded/api/person
+Accept: application/json
+
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person/11111
+Accept: application/json
+
+###
+PUT http://localhost:8080/devops_starter_war_exploded/api/person/111111
 Content-Type:application/json
 
 {"email": "nej@jegvilhjem.dk"}
@@ -152,6 +160,10 @@ Content-Type: application/json
     }
   ]
 }
+
+###
+DELETE http://localhost:8080/devops_starter_war_exploded/api/person/11111
+Content-Type: application/json
 
 ###
 GET http://localhost:8080/devops_starter_war_exploded/api/person/hobby/something
