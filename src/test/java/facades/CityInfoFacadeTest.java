@@ -2,7 +2,6 @@ package facades;
 
 
 import dtos.CityInfoDto;
-import entities.Address;
 import entities.CityInfo;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;

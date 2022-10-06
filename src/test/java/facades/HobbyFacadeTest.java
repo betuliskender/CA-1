@@ -47,7 +47,6 @@ public class HobbyFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE Hobby AUTO_INCREMENT = 1").executeUpdate();
             em.persist(h1);
             em.persist(h2);
             em.getTransaction().commit();

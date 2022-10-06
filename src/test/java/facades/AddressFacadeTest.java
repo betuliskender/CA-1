@@ -22,28 +22,6 @@ public class AddressFacadeTest {
         public AddressFacadeTest() {
         }
 
-//        public static void deleteData()
-//        {
-//            EntityManager em = emf.createEntityManager();
-//
-//            try{
-//
-//                em.getTransaction().begin();
-//                em.createQuery("DELETE From Address ").executeUpdate();
-//                em.createNativeQuery("ALTER TABLE address AUTO_INCREMENT = 1").executeUpdate();
-//                em.createQuery("DELETE From CityInfo ").executeUpdate();
-//                em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-//                em.getTransaction().commit();
-//
-//                em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-//                em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-//
-//            }
-//            finally {
-//                em.close();
-//            }
-//        }
-
         @BeforeAll
         public static void setUpClass() {
             emf = EMF_Creator.createEntityManagerFactoryForTest();

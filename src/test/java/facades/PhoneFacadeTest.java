@@ -25,32 +25,6 @@ public class PhoneFacadeTest
     public PhoneFacadeTest() {
     }
 
-//    public static void deleteData()
-//    {
-//        EntityManager em = emf.createEntityManager();
-//
-//        try{
-//            em.getTransaction().begin();
-//            em.createQuery("DELETE From Phone").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE Phone AUTO_INCREMENT = 1").executeUpdate();
-//            em.createQuery("DELETE From Person ").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE Person AUTO_INCREMENT = 1").executeUpdate();
-//            em.createQuery("DELETE From Address ").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE Address AUTO_INCREMENT = 1").executeUpdate();
-//            em.createQuery("DELETE From CityInfo ").executeUpdate();
-//            em.createNativeQuery("ALTER TABLE City_Info AUTO_INCREMENT = 1").executeUpdate();
-//
-//            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-//            em.getTransaction().commit();
-//        }
-//        finally {
-//            em.close();
-//        }
-//    }
-
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
